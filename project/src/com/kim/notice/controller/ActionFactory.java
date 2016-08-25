@@ -2,7 +2,10 @@ package com.kim.notice.controller;
 
 import com.kim.notice.action.NoticeAddAction;
 import com.kim.notice.action.NoticeAddFormAction;
+import com.kim.notice.action.NoticeInfoAction;
 import com.kim.notice.action.NoticeListAction;
+import com.kim.notice.action.NoticeUpdateAction;
+import com.kim.notice.action.NoticeUpdateFormAction;
 import com.kim.project.common.controller.Action;
 
 public class ActionFactory {
@@ -25,8 +28,13 @@ public class ActionFactory {
 			action=new NoticeAddFormAction();
 		else if(command.equals("notice_add"))
 			action=new NoticeAddAction();
-		
-			
+		else if(command.equals("notice_info"))
+			action=new NoticeInfoAction();
+		else if(command.equals("notice_update"))
+			action=new NoticeUpdateAction();
+		else if(command.equals("notice_updateform"))
+			action=new NoticeUpdateFormAction();
+	
 		return action;
 	}
 	

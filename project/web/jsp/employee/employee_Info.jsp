@@ -28,8 +28,7 @@
 						<hr>
 					</div>
 				</div>
-				<div class="middle">
-					
+				<div class="middle">		
 					<div class="staff_info">					
 						<h2>기본 정보</h2>
 						<hr class="top_hr">
@@ -163,7 +162,7 @@
 								</div>
 							</div>
 							<div class="input_content">
-								<p>${employee.dept_id }</p>
+								<p>${employee.dept_name }</p>
 							</div>
 						</div>
 						<hr>
@@ -175,7 +174,7 @@
 								</div>
 							</div>
 							<div class="input_content">
-								<p>${employee.rank_id }</p>
+								<p>${employee.rank_name }</p>
 							</div>
 						</div>
 						<hr>

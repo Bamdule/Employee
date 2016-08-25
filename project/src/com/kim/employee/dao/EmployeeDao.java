@@ -115,7 +115,7 @@ public class EmployeeDao {
 
 	public EmployeeDto selectEmpById(String emp_id)
 	{
-		String sql = "select * from employee where emp_id = ?";
+		String sql = "SELECT D.DEPT_NAME, R.RANK_NAME, E.* FROM EMPLOYEE E ,RANK R ,DEPARTMENT D WHERE E.emp_id = ? AND E.dept_id = D.DEPT_ID AND E.RANK_ID = R.RANK_ID ";
 		EmployeeDto dto =null;
 		Connection conn =null;
 		PreparedStatement pstmt =null;
@@ -150,7 +150,9 @@ public class EmployeeDao {
 				dto.setEmp_sal(rs.getInt("emp_sal"));
 				dto.setEnter_dt(rs.getString("enter_dt"));
 				dto.setDept_id(rs.getString("dept_id"));
-				dto.setRank_id(rs.getString("rank_id"));			
+				dto.setRank_id(rs.getString("rank_id"));	
+				dto.setDept_name(rs.getString("dept_name"));
+				dto.setRank_name(rs.getString("rank_name"));
 			}
 			
 		} catch (SQLException e) {

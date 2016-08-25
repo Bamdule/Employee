@@ -39,7 +39,6 @@ $( function() {
 	<div id="main">
 		<div class="container">
 			<form method="post" action="EmployeeServlet?command=employee_add" enctype="multipart/form-data" name="frm" id="frm">
-				<!-- <input type="hidden" value="employee_add" name="command"> -->
 				<div class="top">
 					<div class="title">
 						<h2>사원 추가</h2>
@@ -276,7 +275,6 @@ $( function() {
 							</div>
 							<div class="input_content">
 							<p><input type="text" id="datepicker" name="enter_dt" class="input2" placeholder="yyyy-MM-dd" size="30"></p>
-							<!-- 	<input type="text" id="enter_dt" name="enter_dt" class="input2" placeholder="yyyy-MM-dd"/> -->
 							</div>
 						</div>
 						<hr>

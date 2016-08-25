@@ -1,7 +1,7 @@
 
 
 $(function() {
-	window.scroll(0, 300);
+	window.scroll(0, 200);
 
 	$(":text").css("margin", "13px");
 	$(":password").css("margin", "13px");

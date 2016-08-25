@@ -30,11 +30,12 @@
 			}
 		});
 
-		$(".empList .empRow").click(function() {
+		/* $(".notice .noticeRow").click(function() {
 			//선택한 유저의 id를 히든 값에 넣어서 보낸다.
-			$("#h_empid").val($(this).children().eq(1).text());
+			alert(message)
+			$("#notice_id").val($(this).children().eq(1).text());
 			$("#frm").submit();
-		});
+		}); */
 
 		$(".noticeRow").hover(function() {
 			$(this).css("background-color", "#eee");
@@ -57,16 +58,17 @@
 }
 
 .notice th {
+	height: 25px;
 	background-color: #F6F6F6;
-	border-bottom: 1px solid #eee;
+	font-weight: bold;
 }
 
 .notice td {
+	height: 35px;
 	border-bottom: 1px solid #eee;
 }
 
 .notice tr {
-	height: 35px;
 	text-align: center;
 }
 
@@ -91,8 +93,11 @@ table {
 	<jsp:include page="/header.jsp"></jsp:include>
 	<div id="main">
 		<div class="container">
-			<form>
-				<div class="top">
+			<form action="#" method="post" id="frm">
+				<!-- <input type="hidden" name="command" value="notice_info">
+				<input type="hidden" name="notice_id" >
+				 -->
+				 <div class="top">
 					<div class="title">
 						<h2>공지사항</h2>
 						<hr>
@@ -116,8 +121,8 @@ table {
 								<c:forEach var="notice" items="${noticeList}">
 									<tr class="noticeRow">
 										<td>${notice.seq }</td>
-										<td>${notice.notice_title }</td>
-										<td>${notice.emp_name }</td>
+										<td><a href="NoticeServlet?command=notice_info&notice_id=${notice.notice_id }">${notice.notice_title }</a></td>
+										<td><a href="NoticeServlet?command=notice_info&notice_id=${notice.notice_id }">${notice.emp_name }</a></td>
 										<td>${notice.register_dt }</td>
 										<td>${notice.readcount }</td>
 									</tr>

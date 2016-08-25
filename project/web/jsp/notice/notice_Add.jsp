@@ -78,8 +78,7 @@ table {
 						</tr>
 						<tr>
 							<th>내용</th>
-							<td><textarea cols="120" rows="20" name="notice_content" id="notice_content"
-							onChange="CheckStrLen('50')" onKeyUp="CheckStrLen('50')"></textarea>
+							<td><textarea cols="120" rows="20" name="notice_content" id="notice_content"></textarea>
 							</td>
 						</tr>
 					</table>

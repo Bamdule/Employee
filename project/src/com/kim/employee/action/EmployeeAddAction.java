@@ -53,6 +53,8 @@ public class EmployeeAddAction implements Action {
 		if (!dao.insertEmployeeInfo(dto)) {
 			url = "EmployeeServlet?command=employee_addform";
 		}
+		else
+			request.setAttribute("emp_id", dto.getEmp_id());
 		
 		RequestDispatcher disp = request.getRequestDispatcher(url);
 		disp.forward(request, response);

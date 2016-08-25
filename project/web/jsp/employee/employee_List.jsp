@@ -14,29 +14,82 @@
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 
 <style type="text/css">
+form {
+	height: 100%;
+}
+
+.top {
+	line-height: 80px;
+}
+
+#main {
+	height: 900px;
+}
+
+.container {
+	width: 1200px;
+}
+
+.empSearch {
+	height: 10%;
+}
+
+.empList {
+	height: 80%;
+}
+
+.empList table {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+.empList th {
+	background-color: #F6F6F6;
+	font-weight: bold;
+	border-bottom: 1px solid #eee;
+	height: 25px;
+
+}
+
+.empList td {
+	border-bottom: 1px solid #eee;
+	height: 35px;
+}
+
+.empList tr {
+	text-align: center;
+}
+
+.empList .empRow {
 	
-	form{height:100%;}
-	.top{line-height: 80px;}
-	#main {height:1250px;}
-	.container {width:1200px;}
-	.empSearch{height:10%;}
-	.empList{height:80%; }
-	.empList table{border-collapse: collapse; margin: 0 auto;}
-	
-	.empList th{background-color: #F6F6F6; border-bottom:1px solid #eee;  }
-	.empList td{border-bottom:1px solid #eee; }
-	.empList tr{height:50px; text-align: center;}
-	.empList .empRow{}
-	.empPaging{height:10%; text-align: center;}
-	.pageBlock {width:100%;height:100%; text-align: center;}
-	.pageBlock strong { line-height:80px; width:40px; display: inline-block;}
+}
+
+.empPaging {
+	height: 10%;
+	text-align: center;
+}
+
+.pageBlock {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.pageBlock strong {
+	line-height: 80px;
+	width: 40px;
+	display: inline-block;
+}
+.btnArea { text-align: right;
+}
+.btnArea input {width:100px;}
 </style>
 
 <script type="text/javascript">
 
 	$(function(){
 		
-		window.scroll(0, 500);
+		window.scroll(0, 215);
 		$(".empList th").each(function(i,k){
 			switch(i)
 			{
@@ -122,6 +175,9 @@
 						</c:if>			
 						</tbody>
 					</table>
+				</div>
+				<div class="btnArea">
+					<input type="button" value="사원 추가" onclick="location.href='EmployeeServlet?command=employee_addform';">
 				</div>
 				<div class="empPaging">
 					<div class="pageBlock">
