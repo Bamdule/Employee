@@ -1,0 +1,105 @@
+@CHARSET "UTF-8";
+
+#main {
+	height: 2000px;
+}
+#main .bottom  {
+	text-align: right;
+	line-height: 60px;
+	
+}
+
+hr {
+	border: 1px solid #eee;
+}
+
+img {
+	width: 120px;
+	height: 130px;
+	background-color: #F6F6F6;
+	margin: 5px;
+}
+
+form {
+	height: 100%;
+}
+
+.staff_info {
+	height: 900px;
+}
+
+.dept_info {
+	height: 300px;
+}
+
+.spec_info {
+	height: 300px;
+	background-color: #F6F6F6;
+}
+
+#main .top .title {
+	line-height: 80px;
+}
+
+#main .top_hr {
+	border: 1px solid red;
+}
+
+.input_title_frame {
+	width: 20%;
+	height: 100%;
+	background-color: #F6F6F6;
+	float: left;
+}
+
+.input_title_name {
+	width: 120px;
+	height: 100%;
+	line-height: 45px;
+	font-weight: bold;
+	font-size: 17px;
+	padding-left: 20px;
+}
+
+.input_title_name p {
+	font-size: 17px;
+}
+
+.input_content p { margin : 13px;}
+.input_content {
+	width: 80%;
+	height: 100%;
+	float: left;
+}
+
+.input_frame {
+	height: 50px;
+}
+
+.input_frame2 {
+	height: 75px;
+}
+
+.input_frame3 {
+	height: 220px;
+}
+
+.staff_img {
+	height: 200px;
+}
+
+.input1 {
+	width: 50px;
+}
+
+.input2 {
+	width: 150px;
+}
+
+.input3 {
+	width: 400px;
+}
+
+#enter_date {
+	margin: 13px;
+}

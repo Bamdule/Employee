@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+
+#header {
+	width: 100%;
+	height: 300px;
+}
+
+#header .container{
+	width: 1200px;
+}
+#header .top {
+	width: 100%;
+	height: 200px;
+}
+
+#header .top .container {
+	background-color: #eeeeee;
+}
+
+/* #header .top h1 {
+	height: 80px;
+	line-height: 130px;
+	text-align: center;
+	font-size: 50px;
+} */
+#header .top .user_info{height:10%;text-align: right;}
+#header .top .main_title{height:30%;text-align: center; font-size: 30px;}
+#header .top .sub_title{height:60%;text-align: center; font-size: 30px;}
+
+
+
+#header .bottom {
+	width: 100%;
+	height: 100px;
+}
+
+#header .main_memu {
+	width: 100%;
+	height: 50%;
+}
+
+#header .main_memu .container {
+	background-color: #eeeeee;
+}
+
+#header .main_memu ul {
+	width: 100%;
+	height: 50%;
+}
+
+#header .main_memu li {
+	width: 150px;
+	height: 100%;
+	color: black;
+	float: left;
+	text-align: center;
+	line-height: 50px;
+}
+
+#header .sub_menu {
+	height: 50%;
+}
+
+#header .sub_menu .container {
+	background-color: #5D5D5D;
+}
+
+#header .sub_menu ul {
+	width: 100%;
+	height: 50%;
+	display: none;
+	text-align: center;
+}
+
+#header .sub_menu li {
+	width: 150px;
+	height: 50%;
+	color: white;
+	float: left;
+	line-height: 50px;
+}
+
+#header .sub_menu a {
+	color: white;
+}
