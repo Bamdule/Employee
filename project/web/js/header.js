@@ -1,4 +1,4 @@
-$(function() {
+ $(function() {
 	
 /*
 	alert($(window).width());

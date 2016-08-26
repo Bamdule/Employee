@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kim.notice.dto.NoticeDto;
+import com.kim.notice.dto.ReplyDto;
 
 import util.DBManager;
 
@@ -69,8 +70,9 @@ public class NoticeDao {
 		String sql = "SELECT E.emp_name,N.emp_id, N.notice_id, N.notice_title, N.register_dt, N.readcount "
 				+ " FROM ( SELECT ROWNUM Ro, N.* "
 				+ " FROM ( SELECT emp_id, notice_id, notice_title, register_dt, readcount "
-				+ " FROM notice ORDER BY register_dt DESC) N) N, employee E " + " WHERE Ro BETWEEN ? AND ? "
-				+ "AND N.emp_id = E.emp_id ";
+				+ " FROM notice ORDER BY register_dt DESC) N) N, employee E " 
+				+ " WHERE Ro BETWEEN ? AND ? "
+				+ " AND N.emp_id = E.emp_id ";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -205,6 +207,32 @@ public class NoticeDao {
 
 		return result;
 	}
+	public boolean insertReplyToNotice(ReplyDto rDto)
+	{
+		//noit_id,emp_id,rep_id,rep_cont,regdt
+		String sql ="insert into reply values(?,?,REPLY_SEQ.NEXTVAL,?,sysdate)";
+		boolean result = false;
+		Connection conn = null;;
+		PreparedStatement pstmt = null;;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rDto.getNotice_id());
+			pstmt.setString(2, rDto.getEmp_id());
+			pstmt.setString(3, rDto.getReply_content());
+			
+			if(pstmt.executeUpdate()==1)
+				result=true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			DBManager.close(conn, pstmt);
+		}
+
+		return result;
+	}
+	
 	
 /*		public NoticeDto selectNoticeById(String notice_id)
 	{

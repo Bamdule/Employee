@@ -37,6 +37,7 @@ ul {
 	height: 150px;
 	text-align: center;
 	padding-top: 50px;
+	position: relative;
 }
 
 #main .top {
