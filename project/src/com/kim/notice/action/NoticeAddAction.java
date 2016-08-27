@@ -29,7 +29,7 @@ public class NoticeAddAction implements Action {
 		
 		NoticeDao nDao = NoticeDao.getInstance();
 		if(!nDao.insertNotice(nDto)){
-			response.sendRedirect("NoticeServlet?command=notice_add");
+			response.sendRedirect("NoticeServlet?command=notice_list");
 		}
 		else{	
 			RequestDispatcher disp = request.getRequestDispatcher(url);

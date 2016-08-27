@@ -16,7 +16,7 @@ public class NoticeDao {
 
 	/*
 	 * EMP_ID NOT NULL VARCHAR2(15) 
-	 * NOTICE_ID NOT NULL VARCHAR2(10) 
+	 * NOTICE_ID NOT NULL number 
 	 * NOTICE_TITLE VARCHAR2(30)
 	 * NOTICE_CONTENT VARCHAR2(4000) 
 	 * REGISTER_DT DATE 
@@ -207,19 +207,21 @@ public class NoticeDao {
 
 		return result;
 	}
-	public boolean insertReplyToNotice(ReplyDto rDto)
+	public List<ReplyDto> insertReplyToNotice(ReplyDto rDto)
 	{
-		//noit_id,emp_id,rep_id,rep_cont,regdt
-		String sql ="insert into reply values(?,?,REPLY_SEQ.NEXTVAL,?,sysdate)";
+
+		String sql ="insert into reply values( CREATE_replyid(?),?,?,?,sysdate)";
 		boolean result = false;
 		Connection conn = null;;
+		System.out.println("insertReplyToNotice : "+rDto);
 		PreparedStatement pstmt = null;;
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, rDto.getNotice_id());
-			pstmt.setString(2, rDto.getEmp_id());
-			pstmt.setString(3, rDto.getReply_content());
+			pstmt.setString(2, rDto.getNotice_id());
+			pstmt.setString(3, rDto.getEmp_id());
+			pstmt.setString(4, rDto.getReply_content());
 			
 			if(pstmt.executeUpdate()==1)
 				result=true;
@@ -230,8 +232,46 @@ public class NoticeDao {
 			DBManager.close(conn, pstmt);
 		}
 
-		return result;
+		return selectNoticeReplyListById(rDto.getNotice_id());
 	}
+	public List<ReplyDto> selectNoticeReplyListById(String notice_id)
+	{
+		String sql ="select R.*, E.EMP_NAME from REPLY R, EMPLOYEE E where R.notice_id=? AND R.EMP_ID = e.emp_id";
+		List<ReplyDto> replyList = new ArrayList<ReplyDto>();
+		ReplyDto rDto = null;
+		Connection conn = null;;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		System.out.println("selectNoticeReplyListById : "+notice_id);
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, notice_id);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				rDto=new ReplyDto();
+				rDto.setEmp_id(rs.getString("emp_id"));
+				rDto.setReply_id(rs.getInt("reply_id"));
+				rDto.setNotice_id(rs.getString("notice_id"));
+				rDto.setReply_content(rs.getString("reply_content"));
+				rDto.setRegister_dt(rs.getString("register_dt"));
+				rDto.setEmp_name(rs.getString("emp_name"));
+				
+				replyList.add(rDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			DBManager.close(conn, pstmt);
+		}
+
+		return replyList;
+	}
+	
 	
 	
 /*		public NoticeDto selectNoticeById(String notice_id)

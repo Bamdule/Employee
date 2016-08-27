@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,26 +10,55 @@
 <script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript">
 	$(function(){
-		
+
 	});
 	function replyAdd(){
 		var reply =$("#reply_inputform");
 		if(reply.val().length>1){
-			$(".replyArea").append(
-					"<div class='reply'>"+
-						"<div class='reply_img'></div>"
-					   +"<div class='reply_delete'>"
-					        +"<span>삭제</span>"
-					   +"</div>"
-					   +"<div class='reply_top'>"
-					   		+"<b>감자나무</b><span>2014-04-24 05:22</span>"
-					   +"</div>"
-					   +"<div class='reply_bottom'>"
-					  		 +"<p>"+reply.val()+"</p></div>"
-					   +"</div>"
-			);
-			reply.val("");
-			$('html, body').scrollTop(document.body.scrollHeight)
+			
+			var replyJson= new Object();
+			replyJson.notice_id = ${notice.notice_id};
+			replyJson.emp_id=${notice.emp_id};
+			replyJson.reply_content=reply.val();
+			//jsonStr=JSON.stringify(replyJson);
+			//alert(jsonStr);
+			
+			$.ajax({
+				url: "NoticeServlet?command=notice_replyadd"
+					  , type:"post"
+					  , data:replyJson
+					  , datatype : "json"
+					  , success:function(result){
+						  $(".replyArea").html("");
+						  for(var index=0;index<result.length;index++)
+					      {
+							  var replyStrArray = JSON.stringify(result[index]);
+							  
+							 // alert(replyStrArray);
+							  var replyStr=JSON.parse(replyStrArray);
+							 // alert(replyStr.reply_content);
+								$(".replyArea").append(
+										"<div class='reply'>"+
+											"<div class='reply_img'></div>"
+										   +"<div class='reply_delete'>"
+										        +"<span>삭제</span>"
+										   +"</div>"
+										   +"<div class='reply_top'>"
+										   		+"<b>"+replyStr.emp_name+"</b><span>"+replyStr.register_dt+"</span>"
+										   +"</div>"
+										   +"<div class='reply_bottom'>"
+										  		 +"<p>"+replyStr.reply_content+"</p></div>"
+										   +"</div>"
+								);
+								reply.val("");
+								$('html, body').scrollTop(document.body.scrollHeight);
+							  
+							  
+							  
+					      }
+						  
+					  }
+			}); 
 				
 		}
 		else{
@@ -135,22 +164,23 @@
 				</div>
 		
 				<div class="replyArea">
-					<!-- <div class="reply">
+					<c:forEach var="reply" items="${replyList}">
+					 <div class="reply">
 						<div class="reply_img">
 						</div>
 						<div class="reply_delete">
 							<span>삭제</span>
 						</div>
 						<div class="reply_top">
-							<b>감자나무</b>
-							<span>2014-04-24 05:22</span>
+							<b>${reply.emp_name }</b>
+							<span>${reply.register_dt }</span>
 						</div>
 						<div class="reply_bottom">
-							<p>내용입니다. 안녕하세요^^!!</p>
+							<p>${reply.reply_content }</p>
 						</div>
 					</div>	
 				
- -->
+ 					</c:forEach>
 					
 				</div> <!--replyArea End-->
 				<div class="reply_inputArea">
