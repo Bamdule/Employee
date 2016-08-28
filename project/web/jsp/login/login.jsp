@@ -13,7 +13,7 @@
 		
 		
 		$("#frm").on("submit", function(event) {		
-				var valid =  loginCheck();
+				var valid = loginCheck();
 			return valid;
 		});
 
@@ -67,7 +67,7 @@
 					<div class="login_title"><h2>Login</h2></div>
 				</div>
 				<div class="middle">
-					<form action="EmployeeServlet?command=employee_list" method="post" id="frm">
+					<form action="NoticeServlet?command=notice_list" method="post" id="frm">
 						<div class="id_div">
 							<input type="text" name="emp_id" id="emp_id" value="201608230000" placeholder="User ID">
 						</div>

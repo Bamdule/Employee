@@ -276,7 +276,7 @@ public class NoticeDao {
 	}
 	public void deleteNoticeById(String notice_id)
 	{
-		String sql ="call deleteNoticeReplyByNoticeId(?)";
+		String sql ="call deleteNoticeByNoticeId(?)";
 		Connection conn=null;
 		PreparedStatement pstmt = null;
 		int result=-1;

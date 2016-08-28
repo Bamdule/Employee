@@ -140,7 +140,10 @@ table {
 
 				<div class="bottom">
 					<div class="btnArea">
+					
+						<c:if test="${sessionScope.isManager==true}">
 						<a href="NoticeServlet?command=notice_addform"><input type="button" value="글 쓰기"></a>
+						</c:if>
 					</div>
 					<div class="pageBlock">
 						<p>

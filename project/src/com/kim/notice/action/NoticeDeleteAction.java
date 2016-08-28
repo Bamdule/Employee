@@ -14,8 +14,9 @@ public class NoticeDeleteAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "NoticeServlet";
+		String url = "NoticeServlet?command=notice_list";
 		String notice_id =request.getParameter("notice_id");
+		System.out.println("notice_id : "+notice_id);
 		NoticeDao nDao = NoticeDao.getInstance();
 		
 		nDao.deleteNoticeById(notice_id);
