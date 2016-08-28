@@ -12,6 +12,53 @@
 	$(function(){
 
 	});
+	
+	function replyDelete(nid,rid){
+		alert(nid+" "+rid);
+		if(nid!=undefined && rid!=undefined &&nid!=null &&rid!=null&&nid!="" &&rid!="")
+		{
+			$.ajax({
+				url: "NoticeServlet?command=noticereply_delete&notice_id="+nid+"&reply_id="+rid
+					  , type:"post"
+					  , success:function(result){
+						  $(".replyArea").html("");
+						  for(var index=0;index<result.length;index++)
+					      {
+							  var replyStrArray = JSON.stringify(result[index]);
+							  
+							 // alert(replyStrArray);
+							  var replyStr=JSON.parse(replyStrArray);
+							 // alert(replyStr.reply_content);
+								$(".replyArea").append(
+										"<div class='reply'>"+
+											"<div class='reply_img'></div>"
+										   +"<div class='reply_delete'>"
+										        +"<span class='"+replyStr.reply_id+"'>삭제</span>"
+										        +"<span class='reply_id'>"+replyStr.reply_id+"</span>"
+										   +"</div>"
+										   +"<div class='reply_top'>"
+										   		+"<b>"+replyStr.emp_name+"</b><span>"+replyStr.register_dt+"</span>"
+										   +"</div>"
+										   +"<div class='reply_bottom'>"
+										  		 +"<p>"+replyStr.reply_content+"</p></div>"
+										   +"</div>"
+								);
+						
+								$("."+replyStr.reply_id).on("click",function(){
+									
+									var pnid=${notice.notice_id};
+								    var prid=$(this).attr("class");
+								    alert("value : "+pnid+" "+prid);
+									replyDelete(pnid,prid);
+								});
+								
+					      }				  
+						  $('html, body').scrollTop(document.body.scrollHeight);  
+					  }
+			}); 
+		}
+		
+	}
 	function replyAdd(){
 		var reply =$("#reply_inputform");
 		if(reply.val().length>1){
@@ -51,12 +98,8 @@
 										   +"</div>"
 								);
 								reply.val("");
-								$('html, body').scrollTop(document.body.scrollHeight);
-							  
-							  
-							  
-					      }
-						  
+								$('html, body').scrollTop(document.body.scrollHeight);  
+					      }				  
 					  }
 			}); 
 				
@@ -168,8 +211,9 @@
 					 <div class="reply">
 						<div class="reply_img">
 						</div>
-						<div class="reply_delete">
+						<div class="reply_delete" onclick="replyDelete(${reply.notice_id},${reply.reply_id});">
 							<span>삭제</span>
+							<span class="reply_id">${reply.reply_id}</span>
 						</div>
 						<div class="reply_top">
 							<b>${reply.emp_name }</b>

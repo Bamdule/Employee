@@ -112,7 +112,7 @@ public class NoticeDao {
 
 	public NoticeDto selectNoticeById(String notice_id)
 	{
-		String sql ="SELECT N.*,E.emp_name FROM NOTICE N, EMPLOYEE E WHERE N.notice_id = ? AND E.emp_id = N.EMP_ID";
+		String sql ="SELECT N.*,E.emp_name FROM NOTICE N, EMPLOYEE E WHERE N.notice_id = ? AND E.emp_id = N.EMP_ID order by N.notice_id asc";
 		NoticeDto nDto = new NoticeDto();
 		Connection conn = null;;
 		PreparedStatement pstmt = null;
@@ -236,7 +236,11 @@ public class NoticeDao {
 	}
 	public List<ReplyDto> selectNoticeReplyListById(String notice_id)
 	{
-		String sql ="select R.*, E.EMP_NAME from REPLY R, EMPLOYEE E where R.notice_id=? AND R.EMP_ID = e.emp_id";
+		String sql ="select R.*, E.EMP_NAME "
+				+ "from REPLY R, EMPLOYEE E "
+				+ "where R.notice_id=? "
+				+   "AND R.EMP_ID = e.emp_id "
+				+ "order by R.reply_id";
 		List<ReplyDto> replyList = new ArrayList<ReplyDto>();
 		ReplyDto rDto = null;
 		Connection conn = null;;
@@ -268,10 +272,48 @@ public class NoticeDao {
 		} finally{
 			DBManager.close(conn, pstmt);
 		}
-
 		return replyList;
 	}
+	public void deleteNoticeById(String notice_id)
+	{
+		String sql ="call deleteNoticeReplyByNoticeId(?)";
+		Connection conn=null;
+		PreparedStatement pstmt = null;
+		int result=-1;
+		try {
+			conn = DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, notice_id);
+			result=pstmt.executeUpdate();
+			System.out.println("deleteNoticeByNoticeId : "+result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
 	
+	public List<ReplyDto> deleteNoticeReplyById(String notice_id,int reply_id)
+	{
+		String sql ="call deleteNoticeReply(?,?)";
+		Connection conn=null;
+		PreparedStatement pstmt = null;
+		int result=-1;
+		try {
+			conn = DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, notice_id);
+			pstmt.setInt(2, reply_id);	
+			result=pstmt.executeUpdate();
+			System.out.println("deleteNoticeReply : "+result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+		
+		return selectNoticeReplyListById(notice_id);
+	}
 	
 	
 /*		public NoticeDto selectNoticeById(String notice_id)

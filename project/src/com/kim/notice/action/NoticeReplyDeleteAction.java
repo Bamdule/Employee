@@ -13,20 +13,19 @@ import com.kim.notice.dao.NoticeDao;
 import com.kim.notice.dto.ReplyDto;
 import com.kim.project.common.controller.Action;
 
-public class NoticeReplyAddAction implements Action {
+public class NoticeReplyDeleteAction implements Action {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+	request.setCharacterEncoding("UTF-8");
 		
-		ReplyDto rDto = new ReplyDto();
 		List<ReplyDto> replyList = null;
-		rDto.setNotice_id(request.getParameter("notice_id"));
-		rDto.setEmp_id(request.getParameter("emp_id"));
-		rDto.setReply_content(request.getParameter("reply_content"));
+		String notice_id=request.getParameter("notice_id");
+		int reply_id=Integer.parseInt(request.getParameter("reply_id"));
 		
+		System.out.println(notice_id + "  "+ reply_id);
 		NoticeDao nDao =NoticeDao.getInstance();
-		replyList=nDao.insertReplyToNotice(rDto);
+		replyList=nDao.deleteNoticeReplyById(notice_id, reply_id);
 		
 		JsonArray jsonArray =new JsonArray(); 
 		
@@ -43,7 +42,6 @@ public class NoticeReplyAddAction implements Action {
 		
 		response.setContentType("application/x-json; charset=UTF-8");
 		response.getWriter().print(jsonArray);
-
 	}
 
 }
