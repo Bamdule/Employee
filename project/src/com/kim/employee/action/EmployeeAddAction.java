@@ -1,27 +1,27 @@
 package com.kim.employee.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kim.employee.dao.EmployeeDao;
-import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmployeeDto;
-import com.kim.employee.dto.RankDto;
 import com.kim.project.common.controller.Action;
+import com.kim.project.common.dto.SkillDto;
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import util.CreateEmployeeID;
 import util.UploadManager;
 
 public class EmployeeAddAction implements Action {
 
+	@SuppressWarnings("null")
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -32,8 +32,24 @@ public class EmployeeAddAction implements Action {
 		EmployeeDao dao = EmployeeDao.getInstance();
 		EmployeeDto dto = new EmployeeDto();
 		MultipartRequest multi = UploadManager.getMultiPartRequest(request);
-
-		dto.setEmp_id(CreateEmployeeID.createEmpID(multi.getParameter("enter_dt")));
+		String skill_names[] = multi.getParameterValues("skills");
+		
+		List<SkillDto> skillList = null;
+		SkillDto sDto =null;
+	
+		
+		System.out.println(skill_names[0]);
+		if(skill_names!=null){
+			skillList = new ArrayList<SkillDto>();
+			for(int index=0;index<skill_names.length;index++)
+			{
+				sDto=new SkillDto();
+				sDto.setSkill_id(skill_names[index]);
+				skillList.add(sDto);
+			}
+		}
+		dto.setSkillList(skillList);
+		dto.setEmp_id(dao.createEmpId());
 		dto.setEmp_name(multi.getParameter("emp_name"));
 		dto.setEmp_pwd(multi.getParameter("emp_pwd"));
 		dto.setRes_num(multi.getParameter("front_resident_num") + multi.getParameter("back_resident_num"));

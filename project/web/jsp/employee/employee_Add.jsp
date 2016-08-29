@@ -15,7 +15,7 @@
 <script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript" src="js/emp_validation.js"></script>
 <script type="text/javascript" src="js/employee.js"></script>
-
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -24,8 +24,20 @@ $( function() {
     $( "#datepicker" ).datepicker({
     	dateFormat: "yy-mm-dd"
     });
-   
   });
+  
+  
+  function openAddrPopup()
+  {
+	  new daum.Postcode({
+	        oncomplete: function(data) {
+	        	console.log(data);
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        }
+	    }).open();
+  }
+
 </script>
 
 
@@ -116,7 +128,7 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_phone" name="emp_phone" class="input2" placeholder="('-')를 빼고 입력해주세요"/>
+								<input type="text" id="emp_phone" maxlength="11" name="emp_phone" class="input2" placeholder="('-')를 빼고 입력해주세요"/>
 							</div>
 						</div>
 						<hr>
@@ -143,6 +155,7 @@ $( function() {
 							</div>
 							<div class="input_content">
 								<input type="text" id="zipcode" name="zipcode" class="input2" placeholder="우편번호"/>
+								<input type="button" onclick="openAddrPopup();" value="주소 찾기" class="input2">
 							</div>
 						</div>
 						<hr>
@@ -177,39 +190,27 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_sal" name="emp_sal" class="input2" placeholder="단위  : 만 " />
+								<input type="number" id="emp_sal" name="emp_sal" class="input2" placeholder="단위  : 만 " />
 							</div>
 						</div>
 						<hr>
 
 
-						<div class="input_frame2">
+						<div class="input_frame3">
 							<div class="input_title_frame">
 								<div class="input_title_name">
 									<p>보유 스킬</p>
 								</div>
 							</div>
 							<div class="input_content">
-								<p>
-									<input type="checkbox" id="skill" name="skill" value="1" />JAVA
-									<input type="checkbox" id="skill" name="skill" value="2" />JavaScript
-									<input type="checkbox" id="skill" name="skill" value="3" />JQuery
-									<input type="checkbox" id="skill" name="skill" value="4" />JSP
-									<input type="checkbox" id="skill" name="skill" value="5" />Servlet
-									<input type="checkbox" id="skill" name="skill" value="6" />HTML
-									<input type="checkbox" id="skill" name="skill" value="7" />CSS
-									<input type="checkbox" id="skill" name="skill" value="8" />Node.JS
-								</p>
-								<p>
-									<input type="checkbox" id="skill" name="skill" value="1" />Oracle
-									<input type="checkbox" id="skill" name="skill" value="2" />Mysql
-									<input type="checkbox" id="skill" name="skill" value="3" />Mssql
-									<input type="checkbox" id="skill" name="skill" value="4" />C 			
-									<input type="checkbox" id="skill" name="skill" value="5" />C++ 
-									<input type="checkbox" id="skill" name="skill" value="6" /> C# 
-									<input type="checkbox" id="skill" name="skill" value="7" />Android 
-									<input type="checkbox" id="skill" name="skill" value="8" />IOS
-								</p>
+								<c:forEach var="skill" items="${skillList}" varStatus="status">
+										<span class="skillArea">
+											<input type="checkbox" id="skills" name="skills" value="${skill.skill_id}"/>${skill.skill_name}
+										</span>
+									<c:if test="${status.count%4==0}">
+										<br>				
+									</c:if>
+									</c:forEach>			
 							</div>
 						</div>
 						<hr>
@@ -226,8 +227,8 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<select name="dept_id">			
-									<option value="">:: 없음 ::</option>
+								<select name="dept_id" id="dept_id">			
+									<option value="none">:: 없음 ::</option>
 									<c:forEach var="dept" items="${deptList}">
 										<c:if test="${employee.dept_id == dept.dept_id}">
 											<option value="${dept.dept_id}" selected="selected">${dept.dept_name}</option>
@@ -251,8 +252,8 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<select name="rank_id">
-									<option value="">:: 없음 ::</option>
+								<select name="rank_id" id="rank_id">
+									<option value="none">:: 없음 ::</option>
 										<c:forEach var="rank" items="${rankList}">				
 										<c:if test="${employee.rank_id == rank.rank_id}">
 											<option value="${rank.rank_id}" selected="selected">${rank.rank_name}</option>
@@ -267,7 +268,7 @@ $( function() {
 						<hr>
 
 
-						<div class="input_frame">
+						<div class="input_frame2">
 							<div class="input_title_frame">
 								<div class="input_title_name">
 									<p>입사일</p>
@@ -280,10 +281,10 @@ $( function() {
 						<hr>
 
 					</div>
-					<div class="spec_info">
+					<!-- <div class="spec_info">
 						<h2>기타 정보</h2>
 						<hr class="top_hr">
-					</div>
+					</div> -->
 				</div>
 				<div class="bottom">
 					<hr>

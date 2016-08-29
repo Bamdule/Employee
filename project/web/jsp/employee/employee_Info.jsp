@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,6 +146,19 @@
 							</div>
 							<div class="input_content">
 								<p>${employee.emp_sal }</p>
+							</div>
+						</div>
+						<hr>
+						<div class="input_frame">
+							<div class="input_title_frame">
+								<div class="input_title_name">
+									<p>습득 스킬</p>
+								</div>
+							</div>
+							<div class="input_content">
+								<c:forEach var="skill" items="${employee.skillList}">
+								<span>${skill.skill_name }, </span>
+								</c:forEach>
 							</div>
 						</div>
 						<hr>

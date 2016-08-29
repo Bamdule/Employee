@@ -30,12 +30,12 @@ public class PageHelper {
 			return pDto;
 		}
 		else{
-			pDto.setIsEmpty(1);		
+			 pDto.setIsEmpty(1);		
 		}
 		
 		int pagePerBlock = 5;//블록 그룹 - 블록을 5개로 묶는다.
-		int lastBlockGroup=0;
-		int curBlockGroup= 1 ; //현재 위치한 블록 그룹
+		int lastBlockGroup = 0;
+		int curBlockGroup = 1 ; //현재 위치한 블록 그룹
 
 		int totalPage =0; // 총 페이지 수(총 블록 수)
 		int firstBlock; // 현재 블록 그룹의 첫번째 블록번호
@@ -84,6 +84,8 @@ public class PageHelper {
 		else {
 			prevPage=0;
 		}
+		
+		
 		if(curBlockGroup< lastBlockGroup) {
 			nextPage = lastBlock + 1;
 		}

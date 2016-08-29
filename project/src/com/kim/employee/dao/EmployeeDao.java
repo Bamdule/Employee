@@ -11,6 +11,7 @@ import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
 import com.kim.project.common.dto.EmployeeSimpleDto;
+import com.kim.project.common.dto.SkillDto;
 
 import util.DBManager;
 import util.StringUtil;
@@ -165,9 +166,89 @@ public class EmployeeDao {
 			DBManager.close(conn, pstmt, rs);
 		}
 		
-		
-		
+		dto.setSkillList(selectEmpSkillsById(dto.getEmp_id()));
 		return dto;
+	}
+	public List<SkillDto> selectEmpSkillsById(String emp_id)
+	{
+		List<SkillDto> skillDto =new ArrayList<SkillDto>();
+		SkillDto sDto = null;
+		String sql="SELECT s.SKILL_ID,s.SKILL_NAME FROM EMP_HAS_SKILL ehs, SKILL s WHERE ehs.emp_id = ? AND ehs.SKILL_ID = s.SKILL_ID";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, emp_id);
+			rs=pstmt.executeQuery();
+			while(rs.next())
+			{
+				sDto = new SkillDto();
+				sDto.setSkill_id(rs.getString(1));
+				sDto.setSkill_name(rs.getString(2));
+				
+				skillDto.add(sDto);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return skillDto;
+	}
+	public void insertEmployeeSkills(String emp_id,List<SkillDto> skillList)
+	{
+			String sql="insert into emp_has_skill values(?,?)";
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			try {
+				conn = DBManager.getConnection();
+				pstmt= conn.prepareStatement(sql);
+				if(skillList!=null)
+				for(int index=0; index<skillList.size();index++)
+				{
+					pstmt.setString(1, emp_id);
+					pstmt.setString(2, skillList.get(index).getSkill_id());
+					pstmt.executeUpdate();
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				DBManager.close(conn, pstmt);
+			}
+	}
+	public String createEmpId()
+	{
+		String sql="select emp_seq from dual";
+		String emp_id=null;
+		
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		
+		try {
+			conn=DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			rs.next();
+			emp_id=rs.getString(1);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		
+		return emp_id;
 	}
 	public boolean insertEmployeeInfo(EmployeeDto dto) {
 		boolean result=false;
@@ -221,6 +302,8 @@ public class EmployeeDao {
 		finally{
 			DBManager.close(conn, pstmt);
 		}
+		
+		insertEmployeeSkills(dto.getEmp_id(),dto.getSkillList());
 		
 		return result;
 	}

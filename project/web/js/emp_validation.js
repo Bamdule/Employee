@@ -21,6 +21,8 @@ function addEmployee()
 	var phone_FailMsg="휴대폰 번호에는 숫자만 입력 되야합니다."
 	var email_FailMsg="이메일은 [ exam01@exam.com ] 형식으로 입력되어야합니다.";
 	var enter_dt_FailMsg = "날짜 형식에 맞지 않습니다.";
+	var dept_FailMsg ="부서를 선택해 주세요.";
+	var rank_FailMsg ="직급을 선택해 주세요.";
 	
 	var emp_name = $("#emp_name");
 	var emp_pwd = $("#emp_pwd");
@@ -31,7 +33,9 @@ function addEmployee()
 	var front_email=$("#front_email");
 	var back_email=$("#back_email");
 	var enter_dt = $("#datepicker");
-		
+	var dept_id = $("#dept_id");
+	var rank_id = $("#rank_id");
+
 	var nameReg=/^[가-힣]{3,20}$/;
 	var pwdReg=/^[^\s]{4,13}$/;
 	var front_res_Reg=/^[0-9]{6}$/;
@@ -40,7 +44,20 @@ function addEmployee()
 	var front_email_Reg=/^\w{5,12}$/;
 	var back_email_Reg=/^[a-z]{2,10}[\.][a-z]{2,3}$/;
 	var enter_dt_Reg=/^(19[2-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+	
+	alert(dept_id.val());
+	console.log(dept_id.val());
+	if(dept_id.val()=="none")
+	{
+		alert(dept_FailMsg);
+		return false;
+	}
+	if(rank_id.val()=="none"){
 
+		alert(rank_FailMsg);
+		return false;
+	}
+		
 	
 	valid = valid && checkReg(emp_name,nameReg,nameFailMsg);		
 	if(emp_pwd.val()!=emp_pwd_check.val()){
@@ -54,6 +71,7 @@ function addEmployee()
 	valid = valid && checkReg(front_email,front_email_Reg,email_FailMsg);	
 	valid = valid && checkReg(back_email,back_email_Reg,email_FailMsg);	
 	valid = valid && checkReg(enter_dt,enter_dt_Reg,enter_dt_FailMsg);	
+	return false;
 	return valid;
 }
 

@@ -1,5 +1,9 @@
 package com.kim.employee.dto;
 
+import java.util.List;
+
+import com.kim.project.common.dto.SkillDto;
+
 public class EmployeeDto {
 	private int emp_seq;
 	private String emp_id;
@@ -28,7 +32,15 @@ public class EmployeeDto {
 	private String dept_name;
 	private String rank_id;
 	private String rank_name;
+	private List<SkillDto> skillList;
 	
+	
+	public List<SkillDto> getSkillList() {
+		return skillList;
+	}
+	public void setSkillList(List<SkillDto> skillList) {
+		this.skillList = skillList;
+	}
 	public String getFront_email() {
 		return front_email;
 	}
@@ -162,10 +174,11 @@ public class EmployeeDto {
 	public String toString() {
 		return "EmployeeDto [emp_seq=" + emp_seq + ", emp_id=" + emp_id + ", emp_pwd=" + emp_pwd + ", emp_name="
 				+ emp_name + ", res_num=" + res_num + ", emp_phone=" + emp_phone + ", emp_addr=" + emp_addr
-				+ ", emp_detailaddr=" + emp_detailaddr + ", emp_email=" + emp_email + ", zipcode=" + zipcode
-				+ ", enter_dt=" + enter_dt + ", retire_dt=" + retire_dt + ", update_dt=" + update_dt + ", emp_sal="
-				+ emp_sal + ", emp_imgpath=" + emp_imgpath + ", emp_imgpathorn=" + emp_imgpathorn + ", dept_id="
-				+ dept_id + ", dept_name=" + dept_name + ", rank_id=" + rank_id + ", rank_name=" + rank_name + "]";
+				+ ", emp_detailaddr=" + emp_detailaddr + ", emp_email=" + emp_email + ", front_email=" + front_email
+				+ ", back_email=" + back_email + ", zipcode=" + zipcode + ", enter_dt=" + enter_dt + ", retire_dt="
+				+ retire_dt + ", update_dt=" + update_dt + ", emp_sal=" + emp_sal + ", emp_imgpath=" + emp_imgpath
+				+ ", emp_imgpathorn=" + emp_imgpathorn + ", dept_id=" + dept_id + ", dept_name=" + dept_name
+				+ ", rank_id=" + rank_id + ", rank_name=" + rank_name + ", skillList=" + skillList + "]";
 	}
 	public String getZipcode() {
 		return zipcode;

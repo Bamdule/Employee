@@ -36,6 +36,7 @@ public class EmployeeListAction implements Action{
 		EmployeeDao dao = EmployeeDao.getInstance();
 		List<EmployeeDto> empList =dao.selectAllEmployee(curPage,pagePerRecord);
 		int totalRecord = dao.getEmpCount();
+		
 		PageDto pDto=PageHelper.getBlockGroup(curPage, pagePerRecord,totalRecord);
 		
 		

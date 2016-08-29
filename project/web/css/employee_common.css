@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 
 #main {
-	height: 2000px;
+	height: auto;
+	
 }
 #main .bottom  {
 	text-align: right;
@@ -25,15 +26,19 @@ form {
 }
 
 .staff_info {
-	height: 900px;
+	margin-top:30px;
+	/* height: 900px; */
+	height: auto;
 }
 
 .dept_info {
-	height: 300px;
+	margin-top:30px;
+	height: auto;
 }
 
 .spec_info {
-	height: 300px;
+	margin-top:30px;
+	height: auto;
 	background-color: #F6F6F6;
 }
 
@@ -68,20 +73,25 @@ form {
 .input_content p { margin : 13px;}
 .input_content {
 	width: 80%;
-	height: 100%;
+	height: auto;
 	float: left;
 }
 
+.input_skill_title_frame{
+	width: 20%;
+	height: 100%;
+	float: left;
+}
 .input_frame {
 	height: 50px;
 }
 
 .input_frame2 {
-	height: 75px;
+	height: 80px;
 }
 
 .input_frame3 {
-	height: 220px;
+	height: 240px;
 }
 
 .staff_img {
@@ -94,6 +104,7 @@ form {
 
 .input2 {
 	width: 150px;
+	
 }
 
 .input3 {
@@ -103,3 +114,4 @@ form {
 #enter_date {
 	margin: 13px;
 }
+.skillArea {width: 150px; display: inline-block; margin-left: 5px; margin-top: 5px;}
