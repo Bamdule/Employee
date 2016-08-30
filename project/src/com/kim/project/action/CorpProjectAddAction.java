@@ -1,4 +1,4 @@
-package com.kim.employee.action;
+package com.kim.project.action;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,28 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.kim.common.controller.Action;
 import com.kim.common.dao.SkillDao;
 import com.kim.common.dto.SkillDto;
-import com.kim.employee.dao.EmployeeDao;
-import com.kim.employee.dto.DepartmentDto;
-import com.kim.employee.dto.RankDto;
 
-public class EmployeeAddFormAction implements Action{
+public class CorpProjectAddAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String url ="jsp/corp_project/corp_project_Add.jsp";
 		
-
-		EmployeeDao dao = EmployeeDao.getInstance(); 
-	
-		List<RankDto> rankList = dao.selectAllRank();
-		List<DepartmentDto> deptList = dao.selectAllDept();
 		SkillDao sDao =SkillDao.getInstance();
 		List<SkillDto> skillList =sDao.selectAllSkills();
 		request.setAttribute("skillList", skillList);
 		
-		request.setAttribute("rankList", rankList);
-		request.setAttribute("deptList", deptList);
-		RequestDispatcher disp = request.getRequestDispatcher("jsp/employee/employee_Add.jsp");
-		disp.forward(request, response);		
+		RequestDispatcher disp = request.getRequestDispatcher(url);
+		disp.forward(request, response);
 	}
 
 }

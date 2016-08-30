@@ -40,7 +40,7 @@
 				</ul>
 				<ul>
 					<li><a href="NoticeServlet">공지사항</a></li>
-					<li><a href="#">회사 프로젝트</a></li>
+					<li><a href="ProjectServlet?command=corp_project_list">회사 프로젝트</a></li>
 				</ul>
 				<ul>
 					<li>자유게시판</li>

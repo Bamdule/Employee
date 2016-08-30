@@ -49,6 +49,7 @@
 <link type="text/css" rel="stylesheet" href="css/common.css"></link>
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 <style type="text/css">
+
 .black {
 	height: 10%;
 }
@@ -142,7 +143,7 @@ table {
 					<div class="btnArea">
 					
 						<c:if test="${sessionScope.isManager==true}">
-						<a href="NoticeServlet?command=notice_addform"><input type="button" value="글 쓰기"></a>
+							<a href="NoticeServlet?command=notice_addform"><input type="button" value="글 쓰기"></a>
 						</c:if>
 					</div>
 					<div class="pageBlock">
@@ -151,8 +152,7 @@ table {
 								<strong>
 								<a href="NoticeServlet?command=notice_list&curPage=${paging.prevPage}">[<]</a></strong>
 							</c:if>
-							<c:forEach var="block" begin="${paging.firstBlock}"
-								end="${paging.lastBlock }">
+							<c:forEach var="block" begin="${paging.firstBlock}" end="${paging.lastBlock }">
 								<strong><a href="NoticeServlet?command=notice_list&curPage=${block}">${block}</a></strong>
 							</c:forEach>
 							<c:if test="${paging.nextPage !=0 }">
