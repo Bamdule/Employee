@@ -1,4 +1,4 @@
-package com.kim.project.common.dto;
+package com.kim.common.dto;
 
 public class PageDto {
 	private int firstBlock;

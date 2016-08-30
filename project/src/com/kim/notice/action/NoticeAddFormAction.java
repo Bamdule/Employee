@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kim.project.common.controller.Action;
+import com.kim.common.controller.Action;
 
 public class NoticeAddFormAction implements Action {
 

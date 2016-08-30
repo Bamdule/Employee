@@ -9,6 +9,24 @@ function addCheck(){
 	return true;
 }
 
+function inputCheck(o,name,len)
+{
+	if(o.val()==null && o.val()==undefined){
+		o.focus();
+		alert(name+"를/을 입력해주세요");
+		return false;
+	}
+	else if(o.val().length<len){
+		o.focus();
+		alert(name+"는/은 "+len+"자 이상 입력하셔야합니다.");
+		return false;
+	}
+	return true;
+	
+}
+/*
+ *  이름 - 비밀번호 - 주민번호 - 휴대폰 - 이메일 - 우편번호 - 주소 - 상세주소 - 급여 - 보유스킬 - 부서명 - 직급 - 입사일 
+ */
 function addEmployee()
 {
 	var valid = true;
@@ -24,6 +42,12 @@ function addEmployee()
 	var dept_FailMsg ="부서를 선택해 주세요.";
 	var rank_FailMsg ="직급을 선택해 주세요.";
 	
+
+	var zipcode_FailMsg ="주소를 선택해주세요."; 
+	var emp_addr_FailMsg ="주소를 선택해주세요.";
+	var emp_detailaddr_FailMsg = "상세주소를 입력해주세요.";
+	var emp_sal_FailMsg= "연봉을 입력해주세요";
+	
 	var emp_name = $("#emp_name");
 	var emp_pwd = $("#emp_pwd");
 	var emp_pwd_check = $("#emp_pwd_check");
@@ -35,6 +59,12 @@ function addEmployee()
 	var enter_dt = $("#datepicker");
 	var dept_id = $("#dept_id");
 	var rank_id = $("#rank_id");
+	
+	var zipcode = $("#zipcode");
+	var emp_addr = $("#emp_addr");
+	var emp_detailaddr = $("#emp_detailaddr");
+	var emp_sal= $("#emp_sal");
+	
 
 	var nameReg=/^[가-힣]{3,20}$/;
 	var pwdReg=/^[^\s]{4,13}$/;
@@ -44,34 +74,43 @@ function addEmployee()
 	var front_email_Reg=/^\w{5,12}$/;
 	var back_email_Reg=/^[a-z]{2,10}[\.][a-z]{2,3}$/;
 	var enter_dt_Reg=/^(19[2-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+	var emp_sal_Reg =/^[0-9]{2,10}$/;
 	
-	alert(dept_id.val());
-	console.log(dept_id.val());
-	if(dept_id.val()=="none")
-	{
-		alert(dept_FailMsg);
-		return false;
-	}
-	if(rank_id.val()=="none"){
+	
+	 // 이름 - 비밀번호 - 주민번호 - 휴대폰 - 이메일 - 우편번호 - 주소 - 상세주소 - 급여 - 보유스킬 - 부서명 - 직급 - 입사일 
+	 
 
-		alert(rank_FailMsg);
-		return false;
-	}
-		
+	valid = valid && checkReg(emp_name,nameReg,nameFailMsg);	//이름
+	valid = valid && checkReg(emp_pwd,pwdReg,pwdFailMsg);		//비밀번호
 	
-	valid = valid && checkReg(emp_name,nameReg,nameFailMsg);		
-	if(emp_pwd.val()!=emp_pwd_check.val()){
+	if(valid&&emp_pwd.val()!=emp_pwd_check.val()){
+		emp_pwd_check.focus();
 		alert("두 개의 비밀번호가 일치하지 않습니다.");
 		return false;
 	}
-	valid = valid && checkReg(emp_pwd,pwdReg,pwdFailMsg);	
-	valid = valid && checkReg(front_resident_num,front_res_Reg,front_res_FailMsg);	
-	valid = valid && checkReg(back_resident_num,back_res_Reg,back_res_FailMsg);	
-	valid = valid && checkReg(emp_phone,phone_Reg,phone_FailMsg);	
-	valid = valid && checkReg(front_email,front_email_Reg,email_FailMsg);	
-	valid = valid && checkReg(back_email,back_email_Reg,email_FailMsg);	
-	valid = valid && checkReg(enter_dt,enter_dt_Reg,enter_dt_FailMsg);	
-	return false;
+	valid = valid && checkReg(front_resident_num,front_res_Reg,front_res_FailMsg);	//주민번호 앞
+	valid = valid && checkReg(back_resident_num,back_res_Reg,back_res_FailMsg);		//주민번호 뒷
+	valid = valid && checkReg(emp_phone,phone_Reg,phone_FailMsg);					//휴대폰번호
+	valid = valid && checkReg(front_email,front_email_Reg,email_FailMsg);			// 이메일앞
+	valid = valid && checkReg(back_email,back_email_Reg,email_FailMsg); 			//이메일 뒤	
+	valid = valid && inputCheck(zipcode,"우편 번호",4);									//우편번호
+	valid = valid && inputCheck(emp_addr,"주소",4);									// 주소
+	valid = valid && inputCheck(emp_detailaddr,"상세주소",4);							// 상세주소
+	valid = valid && checkReg(emp_sal,emp_sal_Reg,emp_sal_FailMsg);	 				// 급여
+	if(valid&&dept_id.val()=="none")												//부서
+	{
+		dept_id.focus();
+		alert(dept_FailMsg);
+		return false;
+	}
+	if(valid&&rank_id.val()=="none"){												//직급
+		dept_id.focus();
+		alert(rank_FailMsg);
+		return false;
+	}
+	valid = valid && checkReg(enter_dt,enter_dt_Reg,enter_dt_FailMsg);				//입사일
+		
+		
 	return valid;
 }
 

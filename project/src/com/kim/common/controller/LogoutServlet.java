@@ -1,4 +1,4 @@
-package com.kim.project.common.controller;
+package com.kim.common.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

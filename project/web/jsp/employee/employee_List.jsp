@@ -193,7 +193,7 @@ form {
 							</c:if>								
 					</p>
 					</div>
-				</div>
+				</div>     
 				</form>
 			</div>
 			<div class="bottom">

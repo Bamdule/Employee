@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kim.project.common.controller.Action;
-import com.kim.project.common.controller.LoginServlet;
+import com.kim.common.controller.Action;
+import com.kim.common.controller.LoginServlet;
 
 @WebServlet("/EmployeeServlet")
 public class EmployeeServlet extends HttpServlet {
@@ -34,7 +34,6 @@ public class EmployeeServlet extends HttpServlet {
 			String msg = request.getParameter("imgNotUpdate");
 			String command = request.getParameter("command");
 			System.out.println("Command : " + command);
-			System.out.println("testMsg : " + msg);
 
 			if (command == null) {
 				command = "employee_list";

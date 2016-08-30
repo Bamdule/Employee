@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kim.common.dto.EmployeeSimpleDto;
+import com.kim.common.dto.SkillDto;
 import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
-import com.kim.project.common.dto.EmployeeSimpleDto;
-import com.kim.project.common.dto.SkillDto;
 
 import util.DBManager;
 import util.StringUtil;
@@ -42,11 +42,13 @@ public class EmployeeDao {
 		
 		String sql = "SELECT E.emp_id, E.emp_name, E.enter_dt ,d.dept_name ,r.rank_name "
 				   + "FROM ( SELECT ROWNUM Ro, E.*  "
-				   +          "FROM ( SELECT emp_id ,emp_name, enter_dt ,dept_id ,rank_id  "
-				   +                   "FROM employee ORDER BY enter_dt DESC) E) E,department d ,rank r "
-				   + "WHERE Ro BETWEEN ? AND ? "
-				   +                    "AND E.dept_id = d.dept_id "
-				   +                    "AND E.rank_id = r.rank_id";
+				   			+ "FROM ( SELECT emp_id ,emp_name, enter_dt ,dept_id ,rank_id  "
+				   					  + "FROM employee ORDER BY enter_dt DESC) E) "
+					   + "E left outer join department d "
+					   + "on E.dept_id = d.dept_id "
+					   + "left outer join rank r "
+					   + "on E.rank_id = r.rank_id "
+				   + "WHERE Ro BETWEEN ? AND ? ";
 	
 		
 		
@@ -82,7 +84,6 @@ public class EmployeeDao {
 		}finally {
 			DBManager.close(conn, pstmt, rs);
 		}
-		
 		
 		return empList;
 	}
@@ -204,20 +205,19 @@ public class EmployeeDao {
 	public void insertEmployeeSkills(String emp_id,List<SkillDto> skillList)
 	{
 			String sql="insert into emp_has_skill values(?,?)";
-			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			try {
 				conn = DBManager.getConnection();
-				pstmt= conn.prepareStatement(sql);
-				if(skillList!=null)
-				for(int index=0; index<skillList.size();index++)
-				{
-					pstmt.setString(1, emp_id);
-					pstmt.setString(2, skillList.get(index).getSkill_id());
-					pstmt.executeUpdate();
+				pstmt= conn.prepareStatement(sql);{
+				if(skillList!=null&&skillList.size()!=0)
+					for(int index=0; index<skillList.size();index++)
+					{
+						pstmt.setString(1, emp_id);
+						pstmt.setString(2, skillList.get(index).getSkill_id());
+						pstmt.executeUpdate();
+					}
 				}
-			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally{
@@ -303,7 +303,8 @@ public class EmployeeDao {
 			DBManager.close(conn, pstmt);
 		}
 		
-		insertEmployeeSkills(dto.getEmp_id(),dto.getSkillList());
+		if(dto.getSkillList()!=null&&dto.getSkillList().size()!=0)
+			insertEmployeeSkills(dto.getEmp_id(),dto.getSkillList());
 		
 		return result;
 	}
@@ -369,7 +370,7 @@ public class EmployeeDao {
 	public boolean employeeUpdate(EmployeeDto dto) {
 		boolean result=false;
 		String sql= "update employee "
-				 + "set emp_pwd=?"
+				 + 	  "set emp_pwd=?"
 				 	  + ",dept_id=?"
 				 	  + ",rank_id=?"
 				 	  + ",emp_name=?"
@@ -410,7 +411,7 @@ public class EmployeeDao {
 		finally{
 			DBManager.close(conn, pstmt);
 		}
-		
+		insertEmployeeSkills(dto.getEmp_id(),dto.getSkillList());
 		return result;
 	}
 	/*

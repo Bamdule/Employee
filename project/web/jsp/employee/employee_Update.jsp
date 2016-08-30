@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Project - 사원 추가</title>
+<title>Project - 사원 수정</title>
 
 
 
@@ -20,10 +20,38 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script type="text/javascript">
-$( function() {
-    $( "#datepicker" ).datepicker({
-    	dateFormat: "yy-mm-dd"
-    });
+$(function() {
+	
+	
+	var emp_skills = new Array();
+	<c:forEach items="${employee.skillList}" var="skill">
+	emp_skills.push("${skill.skill_id}");
+	</c:forEach>
+	for (var i = 0; i < emp_skills.length; i++) {
+		console.log(emp_skills[i]);
+	}
+	
+	
+	var checkboxArray = new Array();
+	$(".skillsArea :checkbox").each(function(){
+		checkboxArray.push($(this));			
+	});
+	
+	for(var i = 0 ; i <emp_skills.length;i++)
+	{
+		
+		if(!checkboxArray[i].is(":checked")){
+			for(var j = 0 ; j <checkboxArray.length;j++){
+				if(emp_skills[i] == checkboxArray[j].val()){
+						checkboxArray[j].attr("checked","true");
+						console.log(emp_skills[i]);
+						break;
+				}
+			}
+		}	
+	}
+	
+
    
   });
 </script>
@@ -42,7 +70,7 @@ $( function() {
 				<input type="hidden" name="imgNotUpdate" value="${employee.emp_imgpath }"/>	
 				<div class="top">
 					<div class="title">
-						<h2>사원 추가</h2>
+						<h2>사원 수정</h2>
 						<hr>
 					</div>
 				</div>
@@ -195,33 +223,24 @@ $( function() {
 						<hr>
 
 
-						<div class="input_frame2">
+						<div class="input_frame3">
 							<div class="input_title_frame">
 								<div class="input_title_name">
 									<p>보유 스킬</p>
 								</div>
 							</div>
 							<div class="input_content">
-								<p>
-									<input type="checkbox" id="skill" name="skill" value="1" />JAVA
-									<input type="checkbox" id="skill" name="skill" value="2" />JavaScript
-									<input type="checkbox" id="skill" name="skill" value="3" />JQuery
-									<input type="checkbox" id="skill" name="skill" value="4" />JSP
-									<input type="checkbox" id="skill" name="skill" value="5" />Servlet
-									<input type="checkbox" id="skill" name="skill" value="6" />HTML
-									<input type="checkbox" id="skill" name="skill" value="7" />CSS
-									<input type="checkbox" id="skill" name="skill" value="8" />Node.JS
-								</p>
-								<p>
-									<input type="checkbox" id="skill" name="skill" value="1" />Oracle
-									<input type="checkbox" id="skill" name="skill" value="2" />Mysql
-									<input type="checkbox" id="skill" name="skill" value="3" />Mssql
-									<input type="checkbox" id="skill" name="skill" value="4" />C 			
-									<input type="checkbox" id="skill" name="skill" value="5" />C++ 
-									<input type="checkbox" id="skill" name="skill" value="6" /> C# 
-									<input type="checkbox" id="skill" name="skill" value="7" />Android 
-									<input type="checkbox" id="skill" name="skill" value="8" />IOS
-								</p>
+							<div class="skillsArea">
+								<c:forEach var="skill" items="${skillList}" varStatus="status">
+										<span class="skillArea">
+											<c:if test=""></c:if>
+											<input type="checkbox" id="skills" name="skills" value="${skill.skill_id}"/>${skill.skill_name}
+										</span>
+									<c:if test="${status.count%4==0}">
+										<br>				
+									</c:if>
+								</c:forEach>		
+							</div>
 							</div>
 						</div>
 						<hr>
@@ -238,8 +257,8 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<select name="dept_id">			
-									<option value="">:: 없음 ::</option>
+								<select name="dept_id" id="dept_id">			
+									<option value="none">:: 없음 ::</option>
 									<c:forEach var="dept" items="${deptList}">
 										
 										<c:if test="${employee.dept_id == dept.dept_id}">
@@ -264,8 +283,8 @@ $( function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<select name="rank_id">
-									<option value="">:: 없음 ::</option>
+								<select name="rank_id" id="rank_id">
+									<option value="none">:: 없음 ::</option>
 										<c:forEach var="rank" items="${rankList}">
 										
 										<c:if test="${employee.rank_id == rank.rank_id}">

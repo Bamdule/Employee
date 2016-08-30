@@ -2,7 +2,7 @@ package com.kim.employee.dto;
 
 import java.util.List;
 
-import com.kim.project.common.dto.SkillDto;
+import com.kim.common.dto.SkillDto;
 
 public class EmployeeDto {
 	private int emp_seq;

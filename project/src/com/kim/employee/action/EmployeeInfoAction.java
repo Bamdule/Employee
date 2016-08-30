@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kim.common.controller.Action;
 import com.kim.employee.dao.EmployeeDao;
 import com.kim.employee.dto.EmployeeDto;
-import com.kim.project.common.controller.Action;
 
 public class EmployeeInfoAction  implements Action{
 

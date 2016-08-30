@@ -1,4 +1,4 @@
-package com.kim.project.common.controller;
+package com.kim.common.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kim.common.dto.EmployeeSimpleDto;
 import com.kim.employee.dao.EmployeeDao;
-import com.kim.project.common.dto.EmployeeSimpleDto;
 
 /**
  * Servlet implementation class LoginServlet

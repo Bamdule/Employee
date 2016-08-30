@@ -1,4 +1,4 @@
-package com.kim.project.common.dto;
+package com.kim.common.dto;
 
 public class EmployeeSimpleDto {
 	private String emp_id;

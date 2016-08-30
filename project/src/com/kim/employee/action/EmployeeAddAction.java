@@ -10,10 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kim.common.controller.Action;
+import com.kim.common.dto.SkillDto;
 import com.kim.employee.dao.EmployeeDao;
 import com.kim.employee.dto.EmployeeDto;
-import com.kim.project.common.controller.Action;
-import com.kim.project.common.dto.SkillDto;
 import com.oreilly.servlet.MultipartRequest;
 
 import util.CreateEmployeeID;
@@ -37,8 +37,6 @@ public class EmployeeAddAction implements Action {
 		List<SkillDto> skillList = null;
 		SkillDto sDto =null;
 	
-		
-		System.out.println(skill_names[0]);
 		if(skill_names!=null){
 			skillList = new ArrayList<SkillDto>();
 			for(int index=0;index<skill_names.length;index++)

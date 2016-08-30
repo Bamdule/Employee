@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kim.common.controller.Action;
 import com.kim.notice.dao.NoticeDao;
 import com.kim.notice.dto.NoticeDto;
-import com.kim.project.common.controller.Action;
 
 public class NoticeAddAction implements Action {
 

@@ -1,4 +1,4 @@
-package com.kim.project.common.dto;
+package com.kim.common.dto;
 
 public class SkillDto {
 	private String skill_id;

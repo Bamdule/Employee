@@ -8,10 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kim.common.controller.Action;
+import com.kim.common.dto.PageDto;
 import com.kim.notice.dao.NoticeDao;
 import com.kim.notice.dto.NoticeDto;
-import com.kim.project.common.controller.Action;
-import com.kim.project.common.dto.PageDto;
 
 import util.PageHelper;
 

@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.kim.common.controller.Action;
 import com.kim.notice.dao.NoticeDao;
 import com.kim.notice.dto.ReplyDto;
-import com.kim.project.common.controller.Action;
 
 public class NoticeReplyAddAction implements Action {
 

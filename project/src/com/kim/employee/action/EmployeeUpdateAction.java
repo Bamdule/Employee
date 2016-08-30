@@ -1,15 +1,18 @@
 package com.kim.employee.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kim.common.controller.Action;
+import com.kim.common.dto.SkillDto;
 import com.kim.employee.dao.EmployeeDao;
 import com.kim.employee.dto.EmployeeDto;
-import com.kim.project.common.controller.Action;
 import com.oreilly.servlet.MultipartRequest;
 
 import util.CreateEmployeeID;
@@ -31,7 +34,21 @@ public class EmployeeUpdateAction implements Action {
 			if(imgPath==null){
 				imgPath=multi.getParameter("imgNotUpdate");
 			}
+			String skill_names[] = multi.getParameterValues("skills");
 			
+			List<SkillDto> skillList = null;
+			SkillDto sDto =null;
+		
+			if(skill_names!=null){
+				skillList = new ArrayList<SkillDto>();
+				for(int index=0;index<skill_names.length;index++)
+				{
+					sDto=new SkillDto();
+					sDto.setSkill_id(skill_names[index]);
+					skillList.add(sDto);
+				}
+			}
+			dto.setSkillList(skillList);
 			dto.setEmp_id(multi.getParameter("emp_id"));
 			dto.setEmp_name(multi.getParameter("emp_name"));
 			dto.setEmp_pwd(multi.getParameter("emp_pwd"));

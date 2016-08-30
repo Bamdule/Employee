@@ -1,12 +1,12 @@
 package com.kim.employee.controller;
 
+import com.kim.common.controller.Action;
 import com.kim.employee.action.EmployeeAddAction;
 import com.kim.employee.action.EmployeeAddFormAction;
 import com.kim.employee.action.EmployeeInfoAction;
 import com.kim.employee.action.EmployeeListAction;
 import com.kim.employee.action.EmployeeUpdateAction;
 import com.kim.employee.action.EmployeeUpdateFormAction;
-import com.kim.project.common.controller.Action;
 
 public class ActionFactory {
 	private static ActionFactory instance=null;

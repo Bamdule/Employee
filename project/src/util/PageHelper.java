@@ -1,6 +1,6 @@
 package util;
 
-import com.kim.project.common.dto.PageDto;
+import com.kim.common.dto.PageDto;
 
 //import dto.PageDto;
 

@@ -1,5 +1,6 @@
 package com.kim.notice.controller;
 
+import com.kim.common.controller.Action;
 import com.kim.notice.action.NoticeAddAction;
 import com.kim.notice.action.NoticeAddFormAction;
 import com.kim.notice.action.NoticeDeleteAction;
@@ -9,7 +10,6 @@ import com.kim.notice.action.NoticeReplyAddAction;
 import com.kim.notice.action.NoticeReplyDeleteAction;
 import com.kim.notice.action.NoticeUpdateAction;
 import com.kim.notice.action.NoticeUpdateFormAction;
-import com.kim.project.common.controller.Action;
 
 public class ActionFactory {
 	private static ActionFactory instance =null;

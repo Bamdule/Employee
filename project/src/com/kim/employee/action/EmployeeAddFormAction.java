@@ -8,12 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kim.common.controller.Action;
+import com.kim.common.dao.SkillDao;
+import com.kim.common.dto.SkillDto;
 import com.kim.employee.dao.EmployeeDao;
 import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.RankDto;
-import com.kim.project.common.controller.Action;
-import com.kim.project.common.dao.SkillDao;
-import com.kim.project.common.dto.SkillDto;
 
 public class EmployeeAddFormAction implements Action{
 
@@ -27,7 +27,6 @@ public class EmployeeAddFormAction implements Action{
 		List<DepartmentDto> deptList = dao.selectAllDept();
 		List<SkillDto> skillList =sDao.selectAllSkills();
 		
-		//System.out.println(skillList);
 		
 		request.setAttribute("rankList", rankList);
 		request.setAttribute("deptList", deptList);

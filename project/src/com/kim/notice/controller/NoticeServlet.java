@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kim.project.common.controller.Action;
+import com.kim.common.controller.Action;
 
 @WebServlet("/NoticeServlet")
 public class NoticeServlet extends HttpServlet {

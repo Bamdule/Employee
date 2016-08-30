@@ -1,11 +1,11 @@
-package com.kim.project.common.dao;
+package com.kim.common.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.kim.project.common.dto.EmployeeSimpleDto;
+import com.kim.common.dto.EmployeeSimpleDto;
 
 import util.DBManager;
 
