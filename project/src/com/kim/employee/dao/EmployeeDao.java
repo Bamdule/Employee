@@ -117,11 +117,13 @@ public class EmployeeDao {
 
 	public EmployeeDto selectEmpById(String emp_id)
 	{
-		String sql = "SELECT D.DEPT_NAME, R.RANK_NAME, E.* "
-				   + "FROM EMPLOYEE E ,RANK R ,DEPARTMENT D "
-				   + "WHERE E.emp_id = ? "
-				   + "AND E.dept_id = D.DEPT_ID "
-				   + "AND E.RANK_ID = R.RANK_ID ";
+		StringBuilder sql = new StringBuilder(); 
+		        sql.append("SELECT D.DEPT_NAME, R.RANK_NAME, E.* "); 
+				sql.append("FROM EMPLOYEE E left outer JOIN RANK R ");
+				sql.append("ON E.RANK_ID = R.RANK_ID ");
+				sql.append("left outer JOIN DEPARTMENT D ");
+				sql.append("ON E.dept_id = D.DEPT_ID ");
+				sql.append("WHERE E.emp_id = ? ");
 		EmployeeDto dto =null;
 		Connection conn =null;
 		PreparedStatement pstmt =null;
@@ -129,7 +131,7 @@ public class EmployeeDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, emp_id);
 			rs=pstmt.executeQuery();
 			

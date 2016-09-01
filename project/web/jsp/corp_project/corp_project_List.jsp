@@ -89,7 +89,7 @@
 			</div>
 			<div class="bottom">
 				<div class="btnArea">
-					<input type="button" value="새 프로젝트 작성" onclick="location.href='ProjectServlet?command=corp_project_add'"> 
+					<input type="button" value="새 프로젝트 작성" onclick="location.href='ProjectServlet?command=corp_project_addform'"> 
 				</div>
 				<div class="pageArea"></div>
 			</div>

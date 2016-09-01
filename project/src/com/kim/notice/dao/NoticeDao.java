@@ -274,6 +274,8 @@ public class NoticeDao {
 		}
 		return replyList;
 	}
+	
+	
 	public void deleteNoticeById(String notice_id)
 	{
 		String sql ="call deleteNoticeByNoticeId(?)";

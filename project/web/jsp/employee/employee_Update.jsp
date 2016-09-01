@@ -25,30 +25,24 @@ $(function() {
 	
 	var emp_skills = new Array();
 	<c:forEach items="${employee.skillList}" var="skill">
-	emp_skills.push("${skill.skill_id}");
+		emp_skills.push("${skill.skill_id}");
 	</c:forEach>
-	for (var i = 0; i < emp_skills.length; i++) {
-		console.log(emp_skills[i]);
-	}
-	
+
 	
 	var checkboxArray = new Array();
 	$(".skillsArea :checkbox").each(function(){
 		checkboxArray.push($(this));			
 	});
 	
-	for(var i = 0 ; i <emp_skills.length;i++)
-	{
-		
-		if(!checkboxArray[i].is(":checked")){
+	for(var i = 0 ; i <emp_skills.length;i++){
 			for(var j = 0 ; j <checkboxArray.length;j++){
 				if(emp_skills[i] == checkboxArray[j].val()){
 						checkboxArray[j].attr("checked","true");
-						console.log(emp_skills[i]);
+						checkboxArray[j].attr("disabled","disabled");
 						break;
 				}
 			}
-		}	
+	
 	}
 	
 

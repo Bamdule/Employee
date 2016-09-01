@@ -39,13 +39,13 @@ public class EmployeeAddAction implements Action {
 	
 		if(skill_names!=null){
 			skillList = new ArrayList<SkillDto>();
-			for(int index=0;index<skill_names.length;index++)
-			{
+			for(int index=0;index<skill_names.length;index++){
 				sDto=new SkillDto();
 				sDto.setSkill_id(skill_names[index]);
 				skillList.add(sDto);
 			}
 		}
+		
 		dto.setSkillList(skillList);
 		dto.setEmp_id(dao.createEmpId());
 		dto.setEmp_name(multi.getParameter("emp_name"));
@@ -63,7 +63,6 @@ public class EmployeeAddAction implements Action {
 		dto.setDept_id(multi.getParameter("dept_id"));
 		dto.setRank_id(multi.getParameter("rank_id"));
 		
-
 		if (!dao.insertEmployeeInfo(dto)) {
 			url = "EmployeeServlet?command=employee_addform";
 		}

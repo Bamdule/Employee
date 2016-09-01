@@ -1,5 +1,6 @@
 package com.kim.employee.controller;
 
+import com.kim.common.action.AjaxAddressSearchAction;
 import com.kim.common.controller.Action;
 import com.kim.employee.action.EmployeeAddAction;
 import com.kim.employee.action.EmployeeAddFormAction;
@@ -49,6 +50,10 @@ public class ActionFactory {
 		else if(command.equals("employee_update"))
 		{
 			action = new EmployeeUpdateAction();
+		}
+		else if(command.equals("address_search"))
+		{
+			action = new AjaxAddressSearchAction();
 		}
 		
 		return action;

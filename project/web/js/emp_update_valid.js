@@ -5,7 +5,18 @@ function addCheck(){
 	{
 		return false;
 	}
+	skillCheck();
 	return true;
+}
+function skillCheck(){
+	$(".skillsArea :checked").each(function(){
+		
+		if($(this).attr("disabled"))
+		{
+			$(this).attr("checked","false");
+		}
+	});
+	
 }
 function inputCheck(o,name,len)
 {
@@ -20,7 +31,6 @@ function inputCheck(o,name,len)
 		return false;
 	}
 	return true;
-	
 }
 /*
  *  이름 - 비밀번호 - 주민번호 - 휴대폰 - 이메일 - 우편번호 - 주소 - 상세주소 - 급여 - 보유스킬 - 부서명 - 직급 - 입사일 
@@ -68,7 +78,8 @@ function addEmployee()
 	
 	 // 이름 - 비밀번호 - 주민번호 - 휴대폰 - 이메일 - 우편번호 - 주소 - 상세주소 - 급여 - 보유스킬 - 부서명 - 직급 - 입사일 
 	 
-
+	
+	
 	valid = valid && checkReg(emp_name,nameReg,nameFailMsg);	//이름
 	valid = valid && checkReg(emp_pwd,pwdReg,pwdFailMsg);		//비밀번호
 	
