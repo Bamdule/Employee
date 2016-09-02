@@ -32,9 +32,26 @@ public class EmployeeDto {
 	private String dept_name;
 	private String rank_id;
 	private String rank_name;
+	private String role_id;
+	private String role_name;
+
+
+	public String getRole_id() {
+		return role_id;
+	}
+	public void setRole_id(String role_id) {
+		this.role_id = role_id;
+	}
 	private List<SkillDto> skillList;
 	
 	
+	
+	public String getRole_name() {
+		return role_name;
+	}
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
+	}
 	public List<SkillDto> getSkillList() {
 		return skillList;
 	}
@@ -178,7 +195,8 @@ public class EmployeeDto {
 				+ ", back_email=" + back_email + ", zipcode=" + zipcode + ", enter_dt=" + enter_dt + ", retire_dt="
 				+ retire_dt + ", update_dt=" + update_dt + ", emp_sal=" + emp_sal + ", emp_imgpath=" + emp_imgpath
 				+ ", emp_imgpathorn=" + emp_imgpathorn + ", dept_id=" + dept_id + ", dept_name=" + dept_name
-				+ ", rank_id=" + rank_id + ", rank_name=" + rank_name + ", skillList=" + skillList + "]";
+				+ ", rank_id=" + rank_id + ", rank_name=" + rank_name + ", role_name=" + role_name + ", role_id="
+				+ role_id + ", skillList=" + skillList + "]";
 	}
 	public String getZipcode() {
 		return zipcode;

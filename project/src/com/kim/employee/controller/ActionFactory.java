@@ -6,6 +6,7 @@ import com.kim.employee.action.EmployeeAddAction;
 import com.kim.employee.action.EmployeeAddFormAction;
 import com.kim.employee.action.EmployeeInfoAction;
 import com.kim.employee.action.EmployeeListAction;
+import com.kim.employee.action.EmployeeSpecAddFormAction;
 import com.kim.employee.action.EmployeeUpdateAction;
 import com.kim.employee.action.EmployeeUpdateFormAction;
 
@@ -55,6 +56,8 @@ public class ActionFactory {
 		{
 			action = new AjaxAddressSearchAction();
 		}
+		else if(command.equals("employee_spec_addform"))
+			action = new EmployeeSpecAddFormAction();
 		
 		return action;
 		

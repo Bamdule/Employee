@@ -1,6 +1,7 @@
 package com.kim.project.dto;
 
 public class CorpProjectDto {
+	private int project_seq;
 	private String project_id;
 	private String project_name;
 	private String corp_name;
@@ -9,7 +10,20 @@ public class CorpProjectDto {
 	private String project_content;
 	private String corp_own;
 	private String remarks;
+	private String join_num;
 	
+	public int getProject_seq() {
+		return project_seq;
+	}
+	public void setProject_seq(int project_seq) {
+		this.project_seq = project_seq;
+	}
+	public String getJoin_num() {
+		return join_num;
+	}
+	public void setJoin_num(String join_num) {
+		this.join_num = join_num;
+	}
 	public String getProject_id() {
 		return project_id;
 	}
@@ -60,9 +74,10 @@ public class CorpProjectDto {
 	}
 	@Override
 	public String toString() {
-		return "CorpProjectDto [project_id=" + project_id + ", project_name=" + project_name + ", corp_name="
-				+ corp_name + ", start_dt=" + start_dt + ", end_dt=" + end_dt + ", project_content=" + project_content
-				+ ", corp_own=" + corp_own + ", remarks=" + remarks + "]";
+		return "CorpProjectDto [project_seq=" + project_seq + ", project_id=" + project_id + ", project_name="
+				+ project_name + ", corp_name=" + corp_name + ", start_dt=" + start_dt + ", end_dt=" + end_dt
+				+ ", project_content=" + project_content + ", corp_own=" + corp_own + ", remarks=" + remarks
+				+ ", join_num=" + join_num + "]";
 	}
 
 }

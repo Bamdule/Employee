@@ -63,30 +63,17 @@ $("#dialog_search_btn").on("click",function(){
 									+"<td>"+addr.gugun+"</td>"
 									+"<td>"+addr.dong+"</td>"
 									+"<td>"+addr.ri+"</td>"
-									+"<td>"+addr.bldg+"</td></tr>");
+									+"<td>"+addr.bldg+"</td>"
+									+"<td>"+addr.bunji+"</td></tr>");
 							
 							$(document).on("click",".addr",function(){
 								$("#emp_addr").val($(this).text());
+								$("#zipcode").val(addr.zipcode);
 								dialog.dialog( "close" );
 							});
 				 	    }  
 				  }
 		}); 
-	/* 
-    private String seq;
-    private String zipcode;
-    private String sido;
-    private String gugun;
-    private String dong;
-    private String ri;
-    private String bldg;
-    private String bunji; 
-	<th>시/도</th>
-	<th>구/군</th>
-	<th>동</th>
-	<th>리</th>
-	<th>지역 정보</th>
-    */
     
 	else{
 		alert('(동/면/읍)을 입력해주세요!');
@@ -254,7 +241,7 @@ $( "#zipcode_open").button().on( "click", function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="zipcode" name="zipcode" class="input3" placeholder="우편번호"/>
+								<input type="text" id="zipcode" name="zipcode" class="input3" readonly="readonly" placeholder="우편번호"/>
 								<input type="button" id="zipcode_open" value="주소 찾기" class="input2">
 							</div>
 						</div>
@@ -266,7 +253,7 @@ $( "#zipcode_open").button().on( "click", function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_addr" name="emp_addr" class="input3" placeholder="주소를 입력해주세요."/>
+								<input type="text" id="emp_addr" name="emp_addr" class="input3"  readonly="readonly"  placeholder="주소를 입력해주세요."/>
 							</div>
 						</div>
 						<hr>
@@ -414,7 +401,8 @@ ZIPCODE	SIDO	GUGUN	DONG	RI	BLDG	BUNJI
 						<th>구/군</th>
 						<th>동</th>
 						<th>리</th>
-						<th>지역 정보</th>
+						<th>상세 정보</th>
+						<th>번지</th>
 					</tr>
 				</thead>
 				<tbody class="dialog_tbody">

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ public class CorpProjectAddAction implements Action {
 		System.out.println(data);
 		ProjectDao pDao = ProjectDao.getInstance();
 		String project_id = pDao.getNextCorpProjectId();
+
 	
 		
 		
@@ -39,11 +41,12 @@ public class CorpProjectAddAction implements Action {
 		String[] skills=request.getParameterValues("skills[]");
 		String[] empList=request.getParameterValues("empList[]");
 		String[] emp_Roles=request.getParameterValues("emp_roles[]");
-		
-		if(pDao.insertCorpProject(cpDto))
+
+		boolean cps=false;
+		boolean cpje=false;
+		boolean insertCorpProject = pDao.insertCorpProject(cpDto);
+		if(insertCorpProject)
 		{
-			boolean cps=false;
-			boolean cpje=false;
 			System.out.println(cpDto);
 			if(empList!=null)
 				cpje=pDao.insertCorpProjectJoinEmps(project_id, empList, emp_Roles);
@@ -51,11 +54,17 @@ public class CorpProjectAddAction implements Action {
 				cps=pDao.insertCorpProjectSkills(project_id, skills);
 			System.out.println("joinEmps : "+cpje);
 			System.out.println("projectSkills : "+cps);
-			result=true;
+			result=cps&&cpje;
 			
 		}
+		System.out.println(result);
 		response.setContentType("application/x-json; charset=UTF-8");
-		response.getWriter().print(result);
+		if(result){
+			response.getWriter().print(project_id);
+		}
+		else{
+			response.getWriter().print("false");
+		}
 	}
 
 }

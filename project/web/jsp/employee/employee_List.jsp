@@ -39,6 +39,7 @@ form {
 }
 
 .empList table {
+	width:100%;
 	border-collapse: collapse;
 	margin: 0 auto;
 }
@@ -90,35 +91,13 @@ form {
 	$(function(){
 		
 		window.scroll(0, 215);
-		$(".empList th").each(function(i,k){
-			switch(i)
-			{
-			case 0:
-				$(k).css("width","100px");
-				break;
-			case 1:
-				$(k).css("width","300px");
-				break;
-			case 2:
-				$(k).css("width","200px");
-				break;
-			case 3:
-				$(k).css("width","200px");
-				break;
-			case 4:
-				$(k).css("width","200px");
-				break;
-			case 5:
-				$(k).css("width","200px");
-				break;
-			}
-		});
 		
-		$(".empList .empRow").click(function(){
+		
+		/* $(".empList .empRow").click(function(){
 			//선택한 유저의 id를 히든 값에 넣어서 보낸다.
 			$("#emp_id").val($(this).children().eq(1).text());
 			$("#frm").submit();
-		});
+		}); */
 		
 		$(".empRow").hover(function(){
 			$(this).css("background-color","#eee");
@@ -153,6 +132,7 @@ form {
 								<th>부서</th>
 								<th>직급</th>
 								<th>입사일</th>
+								<th>추가 정보</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -161,10 +141,11 @@ form {
 							<tr class="empRow">
 								<td>${employee.emp_seq}</td>
 								<td>${employee.emp_id}</td>
-								<td>${employee.emp_name}</td>
+								<td><a href='EmployeeServlet?command=employee_info&emp_id=${employee.emp_id}'>${employee.emp_name}</a></td>
 								<td>${employee.dept_name}</td>
 								<td>${employee.rank_name}</td>
 								<td>${employee.enter_dt}</td>
+								<td><input type="button" value="추가" onclick="location.href='EmployeeServlet?command=employee_spec_addform&emp_id=${employee.emp_id}'"></td>
 							</tr>
 						</c:forEach>
 						</c:if>

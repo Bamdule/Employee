@@ -22,8 +22,60 @@
 <script type="text/javascript">
 $(function() {
 	
+	var dialog = $(".addr_search_dialog").dialog({
+	    autoOpen: false,
+	    height: 500,
+	    width: 800,
+	    modal: true,
+	    close: function() {
+	    }
+	  });  
+
+	$("#dialog_search_btn").on("click",function(){
+		$(".dialog_tbody").html("");
+		var search_text = $("#dialog_search_text").val();
+
+		if(search_text!=null && search_text!=undefined && search_text.length>1)
+			$.ajax({
+				url: "EmployeeServlet?command=address_search"
+					  , type:"post"
+					  , data:'dong='+search_text
+					  
+					  , success:function(result){
+						  for(var index=0;index<result.length;index++)
+						  {
+								var jsonObject = JSON.stringify(result[index]);
+								var addr = JSON.parse(jsonObject);
+								
+								$(".dialog_tbody").append(
+									"<tr class='addr'>"
+										+"<td>"+addr.sido+"</td>"
+										+"<td>"+addr.gugun+"</td>"
+										+"<td>"+addr.dong+"</td>"
+										+"<td>"+addr.ri+"</td>"
+										+"<td>"+addr.bldg+"</td>"
+										+"<td>"+addr.bunji+"</td></tr>");
+								
+								$(document).on("click",".addr",function(){
+									$("#emp_addr").val($(this).text());
+									$("#zipcode").val(addr.zipcode);
+									dialog.dialog( "close" );
+								});
+					 	    }  
+					  }
+			}); 
+	    
+		else{
+			alert('(동/면/읍)을 입력해주세요!');
+		}
+	});
+	$( "#zipcode_open").button().on( "click", function() {
+	    dialog.dialog( "open" );
+	});
+	
 	
 	var emp_skills = new Array();
+	
 	<c:forEach items="${employee.skillList}" var="skill">
 		emp_skills.push("${skill.skill_id}");
 	</c:forEach>
@@ -54,6 +106,36 @@ $(function() {
 <link type="text/css" rel="stylesheet" href="css/common.css"></link>
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 <link type="text/css" rel="stylesheet" href="css/employee_common.css"></link>
+
+<style type="text/css">
+.addr_search_dialog{
+	
+}
+.addr_search_dialog .addr_search_Area{
+	height: 20%;
+}
+.addr_search_dialog .addr_view_Area{
+	height: 80%;
+}
+
+.addr_view_Area table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+}
+.addr_view_Area th{
+	height: 25px;
+	border-bottom: 1px solid #eee;
+	/*
+	background-color: #F6F6F6; */
+}
+.addr_view_Area td{
+	height: 35px;
+	border-bottom: 1px solid #eee;
+}
+
+
+</style>
 
 </head>
 <body>
@@ -176,7 +258,8 @@ $(function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="zipcode" name="zipcode" class="input2" value="${employee.zipcode}" placeholder="우편번호"/>
+								<input type="text" id="zipcode" name="zipcode" class="input3" readonly="readonly" placeholder="우편번호"/>
+								<input type="button" id="zipcode_open" value="주소 찾기" class="input2">
 							</div>
 						</div>
 						<hr>
@@ -187,7 +270,7 @@ $(function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_addr" name="emp_addr" value="${employee.emp_addr}" class="input3" placeholder="주소를 입력해주세요."/>
+								<input type="text" id="emp_addr" name="emp_addr" class="input3"  readonly="readonly"  placeholder="주소를 입력해주세요."/>
 							</div>
 						</div>
 						<hr>
@@ -320,7 +403,31 @@ $(function() {
 			</form>
 		</div>
 	</div>
-
 	<jsp:include page="/footer.jsp"></jsp:include>
+		<div class="addr_search_dialog">
+		<div class="addr_search_Area">
+			<p>
+				<input type="text" id="dialog_search_text" class="input3" placeholder="(동/면/읍) 입력">
+				<input type="button" id="dialog_search_btn" value="주소검색">
+			</p>
+		</div>
+		<div class="addr_view_Area">
+			<table>
+				<thead>
+					<tr>
+						<!-- <th>순번</th> -->
+						<th>시/도</th>
+						<th>구/군</th>
+						<th>동</th>
+						<th>리</th>
+						<th>상세 정보</th>
+						<th>번지</th>
+					</tr>
+				</thead>
+				<tbody class="dialog_tbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
