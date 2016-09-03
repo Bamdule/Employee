@@ -77,7 +77,7 @@ $( function() {
     	     , success:function(result){
     	    	 if(result!=false)
     	    	 {
-    	    		//location.href="ProjectServlet?command=corp_project_info&project_id="+result; 
+    	    		location.href="ProjectServlet?command=corp_project_info&project_id="+result; 
     	    	 }else
     	    	 	console.log('실패');
     	    }

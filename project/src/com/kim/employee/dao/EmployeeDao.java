@@ -9,6 +9,8 @@ import java.util.List;
 
 import com.kim.common.dto.EmployeeSimpleDto;
 import com.kim.common.dto.SkillDto;
+import com.kim.employee.dto.AcademicLevelDto;
+import com.kim.employee.dto.AcademicStatusDto;
 import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
@@ -481,6 +483,62 @@ public class EmployeeDao {
 		}
 		
 		return eSimpleDto;
+	}
+	
+	public List<AcademicLevelDto> selectAllAcademicLevel(){
+		String sql = "select * from academic_level";
+		List<AcademicLevelDto> academicLevelList = new ArrayList<AcademicLevelDto>();
+		AcademicLevelDto alDto = null;
+		PreparedStatement pstmt = null;
+		Connection conn =null;
+		ResultSet rs = null;
+		try {
+			conn= DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);			
+			rs= pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				alDto = new AcademicLevelDto();
+				alDto.setAcademic_lev_id(rs.getString("academic_lev_id"));
+				alDto.setAcademic_lev_name(rs.getString("academic_lev_name"));
+				academicLevelList.add(alDto);
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			DBManager.close(conn, pstmt, rs);
+		}
+		return academicLevelList;
+	}
+	
+	public List<AcademicStatusDto> selectAllAcademicStatus(){
+		String sql = "select * from academic_status";
+		List<AcademicStatusDto> academicStatusList = new ArrayList<AcademicStatusDto>();
+		AcademicStatusDto asDto = null;
+		PreparedStatement pstmt = null;
+		Connection conn =null;
+		ResultSet rs = null;
+		try {
+			conn= DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);			
+			rs= pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				asDto = new AcademicStatusDto();
+				asDto.setAcademic_status_id(rs.getString("academic_status_id"));
+				asDto.setAcademic_status_name(rs.getString("academic_status_name"));
+				academicStatusList.add(asDto);
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			DBManager.close(conn, pstmt, rs);
+		}
+		return academicStatusList;
 	}
 
 }

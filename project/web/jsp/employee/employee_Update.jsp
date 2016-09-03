@@ -258,7 +258,7 @@ $(function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="zipcode" name="zipcode" class="input3" readonly="readonly" placeholder="우편번호"/>
+								<input type="text" id="zipcode" name="zipcode" value="${employee.zipcode}" class="input3" readonly="readonly" placeholder="우편번호"/>
 								<input type="button" id="zipcode_open" value="주소 찾기" class="input2">
 							</div>
 						</div>
@@ -270,7 +270,7 @@ $(function() {
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_addr" name="emp_addr" class="input3"  readonly="readonly"  placeholder="주소를 입력해주세요."/>
+								<input type="text" id="emp_addr" name="emp_addr" value="${employee.emp_addr}" class="input3"  readonly="readonly"  placeholder="주소를 입력해주세요."/>
 							</div>
 						</div>
 						<hr>

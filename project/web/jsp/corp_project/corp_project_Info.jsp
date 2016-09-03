@@ -203,6 +203,10 @@ table {
 				<div class="projectArea">
 					<table>
 						<tbody>
+						<tr>
+							<th><span>프로젝트 ID</span></th>
+								<td><p id="project_name"> ${corpProject.project_id} </p></td>
+							</tr>
 							<tr>
 								<th><span>프로젝트 이름</span></th>
 								<td><p id="project_name"> ${corpProject.project_name} </p></td>
