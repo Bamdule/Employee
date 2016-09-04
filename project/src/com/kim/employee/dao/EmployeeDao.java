@@ -12,6 +12,7 @@ import com.kim.common.dto.SkillDto;
 import com.kim.employee.dto.AcademicLevelDto;
 import com.kim.employee.dto.AcademicStatusDto;
 import com.kim.employee.dto.DepartmentDto;
+import com.kim.employee.dto.EmpAcademicDto;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
 
@@ -539,6 +540,48 @@ public class EmployeeDao {
 			DBManager.close(conn, pstmt, rs);
 		}
 		return academicStatusList;
+	}
+	/*
+	ACADEMIC_SEQ	NOT NULL	VARCHAR2(10)
+	EMP_ID	NOT NULL	VARCHAR2(15)
+	ACADEMIC_LEV_ID	NOT NULL	VARCHAR2(10)
+	ACADEMIC_STATUS_ID	NOT NULL	VARCHAR2(10)
+	ACADEMIC_NAME	NOT NULL	VARCHAR2(50)
+	MAJOR_NAME		VARCHAR2(50)
+	ENTER_DT	NOT NULL	DATE
+	GRADUATION_DT	NOT NULL	DATE*/
+	public boolean insertEmpAcademic(String emp_id,List<EmpAcademicDto> academicList )
+	{
+
+		String sql="INSERT INTO EMP_ACADEMIC VALUES(emp_academic_seq.nextval,?,?,?,?,?,?,?)";
+		boolean result = true;
+		PreparedStatement pstmt = null;
+		Connection conn =null;
+		try {
+			conn= DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);	
+			for(int i=0;i<academicList.size();i++){
+				pstmt.setString(1, emp_id);
+				pstmt.setString(2, academicList.get(i).getAcademic_lev_id());
+				pstmt.setString(3, academicList.get(i).getAcademic_status_id());
+				pstmt.setString(4, academicList.get(i).getAcademic_name());
+				pstmt.setString(5, academicList.get(i).getMajor_name());
+				pstmt.setString(6, academicList.get(i).getEnter_dt());
+				pstmt.setString(7, academicList.get(i).getGraduation_dt());
+			
+				if(pstmt.executeUpdate()!=1)
+					result=false;
+				}		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			DBManager.close(conn, pstmt);
+		}
+		
+		
+		return result;
 	}
 
 }
