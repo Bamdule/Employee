@@ -36,7 +36,7 @@ public class EmployeeServlet extends HttpServlet {
 			System.out.println("Command : " + command);
 
 			if (command == null) {
-				command = "employee_list";
+				command = "employee_info";
 			}
 
 			ActionFactory af = ActionFactory.getInstance();

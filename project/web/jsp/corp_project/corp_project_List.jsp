@@ -112,7 +112,9 @@
 			</div>
 			<div class="bottom">
 				<div class="btnArea">
-					<input type="button" value="새 프로젝트 작성" onclick="location.href='ProjectServlet?command=corp_project_addform'"> 
+					<c:if test="${sessionScope.isManager!=false}">
+						<input type="button" value="새 프로젝트 작성" onclick="location.href='ProjectServlet?command=corp_project_addform'"> 
+					</c:if>
 				</div>
 				<div class="pageArea">
 					<div class="pageBlock">

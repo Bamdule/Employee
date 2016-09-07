@@ -15,37 +15,37 @@ import com.kim.project.dto.CorpProjectDto;
 
 import util.PageHelper;
 
-public class CorpProjectListAction implements Action {
+public class EmpProjectListAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url ="jsp/corp_project/corp_project_List.jsp";
+		String url = "jsp/employee/employee_Project_List.jsp";
+		
+		ProjectDao pDao = ProjectDao.getInstance();
+		final int pagePerRecord=10;
+		List<CorpProjectDto> projectList =null;
+		
 		
 		String pageNum = request.getParameter("curPage");
-		int curPage = 1;
-		int recordPerPage=15;
-		try {
-			curPage = (pageNum == null) ? 1 : Integer.parseInt(pageNum);
-		} catch (Exception e) {
+		int curPage=1;
+		try{
+			curPage= (pageNum==null)?1:Integer.parseInt(pageNum);
+		}catch(Exception e)
+		{
 			e.printStackTrace();
-			curPage = 1;
+			curPage=1;
 		}
-
-		ProjectDao pDao = ProjectDao.getInstance();
-		int totalRecord=pDao.getCorpProjectTotal();
-		List<CorpProjectDto> projectList = null;
-		PageDto pageDto=null;
 		
-		if(totalRecord>0)
-			projectList=pDao.selectAllCorpPorject(curPage, recordPerPage);
+		int totalRecord=pDao.getEmpProjectTotal();
+		projectList=pDao.selectAllEmpPorject(curPage, pagePerRecord);
+		PageDto pDto=PageHelper.getBlockGroup(curPage, pagePerRecord, totalRecord);
 		
-		pageDto=PageHelper.getBlockGroup(curPage, recordPerPage, totalRecord);
-		System.out.println(projectList);
 		request.setAttribute("projectList", projectList);
-		request.setAttribute("page", pageDto);
+		request.setAttribute("page", pDto);
 		
 		RequestDispatcher disp = request.getRequestDispatcher(url);
 		disp.forward(request, response);
 	}
 
+	
 }

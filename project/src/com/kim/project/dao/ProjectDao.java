@@ -27,25 +27,7 @@ public class ProjectDao {
 			instance=new ProjectDao();
 		return instance;
 	}
-	/*
-	 * PROJECT_ID	NOT NULL	VARCHAR2(15)
-PROJECT_NAME		VARCHAR2(30)
-CORP_NAME		VARCHAR2(30)
-START_DT		DATE
-END_DT		DATE
-PROJECT_CONTENT		VARCHAR2(3000)
-CORP_OWN		VARCHAR2(10)
-REMARKS		VARCHAR2(300)
-	 */
-	/*
-	 * 
-								<th>순번</th>
-								<th>프로젝트 이름</th>
-								<th>회사</th>
-								<th>시작일</th>
-								<th>종료일</th>
-								<th>인원</th>
-	 */
+	
 	
 	public List<CorpProjectDto> selectAllCorpPorject(int curPage, int recordPerPage){
 		StringBuilder sql = new StringBuilder();
@@ -98,7 +80,89 @@ REMARKS		VARCHAR2(300)
 		return projectList;
 	}
 	
+	public List<CorpProjectDto> selectAllEmpPorject(int curPage, int recordPerPage){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT PROJECT_ID, project_name, CORP_NAME, START_DT, END_DT,CORP_OWN,role ");
+		sql.append("FROM (SELECT ROWNUM Ro, project_id,project_name, corp_name, start_dt, end_dt ,CORP_OWN ,role ");
+		sql.append("FROM (SELECT  project_id,project_name, corp_name, start_dt, end_dt,CORP_OWN,role  FROM emp_PROJECT cp ORDER BY cp.START_DT DESC )cp) ");
+		sql.append("WHERE Ro BETWEEN ? AND ? ");
+			
+		
+		
+			
+		List<CorpProjectDto> projectList =null;
+		CorpProjectDto cpDto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		if(curPage<1)
+			curPage=1;
+		
+		int start =((curPage-1)*recordPerPage)+1;
+		int end = start+recordPerPage -1;
+		
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rs=pstmt.executeQuery();
+			projectList=new ArrayList<CorpProjectDto>();
+			int seq=start;
+			while(rs.next()){
+				cpDto=new CorpProjectDto();
+				cpDto.setProject_seq(seq);
+				cpDto.setProject_id(rs.getString("PROJECT_ID"));
+				cpDto.setProject_name(rs.getString("PROJECT_NAME"));
+				cpDto.setCorp_name(rs.getString("CORP_NAME"));
+				if(rs.getString("START_DT")!=null)
+					cpDto.setStart_dt(rs.getString("START_DT").substring(0, 10));
+				if(rs.getString("END_DT")!=null)
+					cpDto.setEnd_dt(rs.getString("END_DT").substring(0, 10));
+				cpDto.setCorp_own(rs.getString("CORP_OWN"));
+				projectList.add(cpDto);
+				seq++;
+			}
+		}
+		//PROJECT_ID, project_name, CORP_NAME, START_DT, END_DT,CORP_OWN,role
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return projectList;
+	}
 	
+	
+	
+	
+	public int getEmpProjectTotal(){
+		String sql = "select count(*) from emp_project";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int total=0;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				total=rs.getInt(1);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return total;
+	}
 	public int getCorpProjectTotal(){
 		String sql = "select count(*) from corp_project";
 		Connection conn = null;
@@ -156,6 +220,41 @@ REMARKS		VARCHAR2(300)
 		}
 		return cpDto;
 	}
+	
+/*	public CorpProjectDto selectEmpPorjectById(String project_id){
+		CorpProjectDto cpDto = null;
+		String sql = "select * from emp_project where project_id = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, project_id);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				cpDto=new CorpProjectDto();
+				cpDto.setProject_id(rs.getString("PROJECT_ID"));
+				cpDto.setProject_name(rs.getString("PROJECT_NAME"));
+				cpDto.setCorp_name(rs.getString("CORP_NAME"));
+				cpDto.setStart_dt(rs.getString("START_DT"));
+				cpDto.setEnd_dt(rs.getString("END_DT"));
+				cpDto.setProject_content(rs.getString("PROJECT_CONTENT"));
+				cpDto.setCorp_own(rs.getString("CORP_OWN"));
+				cpDto.setRole(rs.getString("ROLE"));
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return cpDto;
+	}*/
+	
+	
 	
 	public List<SkillDto> selectCorpPorjectSkillsById(String project_id){
 		StringBuilder sql = new StringBuilder();
@@ -309,6 +408,29 @@ REMARKS		VARCHAR2(300)
 		
 		return project_id;
 	}
+	
+	
+	public String getNextEmpProjectId(){
+		String sql = "select emp_project_SEQ from dual";
+		String project_id=null;;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			rs.next();
+			project_id=rs.getString(1);
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt,rs);
+		}
+		return project_id;
+	}
+	
 	public boolean insertCorpProject(CorpProjectDto cpDto){
 		String sql ="insert into corp_project values(?,?,?,?,?,?,?,?)";
 		boolean result = false;
@@ -340,6 +462,45 @@ REMARKS		VARCHAR2(300)
 	}
 	
 
+	public boolean insertEmpProject(String emp_id, CorpProjectDto cpDto){
+		String sql ="insert into emp_project values(?,?,?,?,?,?,?,?,?)";
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		/*
+EMP_ID
+PROJECT_ID
+PROJECT_NAME
+CORP_NAME
+PROJECT_CONTENT
+ROLE
+START_DT
+END_DT
+CORP_OWN*/
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, emp_id);
+			pstmt.setString(2, cpDto.getProject_id());
+			pstmt.setString(3, cpDto.getProject_name());
+			pstmt.setString(4, cpDto.getCorp_name());
+			pstmt.setString(5, cpDto.getProject_content());
+			pstmt.setString(6, cpDto.getRole());
+			pstmt.setString(7, cpDto.getStart_dt());
+			pstmt.setString(8, cpDto.getEnd_dt());
+			pstmt.setString(9, cpDto.getCorp_own());
+			if(pstmt.executeUpdate()==1)
+				result=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	
 /*	public CorpProjectDto selectCorpPorjectById(String project_id)
 	{
 		CorpProjectDto cpDto = null;

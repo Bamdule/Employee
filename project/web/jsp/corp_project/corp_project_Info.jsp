@@ -286,7 +286,9 @@ table {
 			</div>
 			<div class="bottom">
 				<div class="btnArea">
-					<input type="button" id="projectSaveBtn" value="수정">
+					<c:if test="${sessionScope.isManager!=false}">
+						<input type="button" id="projectSaveBtn" value="수정">
+					</c:if>
 					<input type="button" value="목록" onclick="location.href='ProjectServlet?command=corp_project_list';">
 				</div>
 			</div>

@@ -7,13 +7,75 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Project - 사원 정보 보기</title>
 
+
+
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+<!--Tabs-->
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+<!--Tabs-->
+
+
+<!--datePicker-->
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!--datePicker-->
+
+
 <script type="text/javascript" src="js/employee_common.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
 <link type="text/css" rel="stylesheet" href="css/common.css"></link>
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 <link type="text/css" rel="stylesheet" href="css/employee_common.css"></link>
 
+ 
+
+<script type="text/javascript">
+$( function() {
+   
+	
+	$( "#tabs" ).tabs({
+    	activate: function( event, ui ) { 
+    		switch(ui.newTab.index())
+    		{
+    		case 0:
+    			tabSelector=0;
+    			break;
+    		case 1:
+    			tabSelector=1;
+    			break;
+    		case 2:
+    			tabSelector=2;
+    			break;
+    		}
+    	}
+    });
+  });
+</script>
+<style>
+	.spec_info table{
+		width: 100%;
+		border-collapse: collapse;
+	}
+	
+	.spec_info tr{
+	
+	}
+	.spec_info td{
+		height:50px;
+		font-size:15px;
+		border-bottom: 1px solid #eee;
+		text-align: center;
+	}
+	.spec_info th{
+		height:40px;
+		font-size:13px;
+		border-bottom: 1px solid #eee;
+	}
+</style>
 
 </head>
 <body>
@@ -30,7 +92,7 @@
 					</div>
 				</div>
 				<div class="middle">		
-					<div class="staff_info">					
+					 <div class="staff_info">					
 						<h2>기본 정보</h2>
 						<hr class="top_hr">
 						<div class="input_frame3">							
@@ -163,10 +225,10 @@
 						</div>
 						<hr>
 
-					</div>
+					</div> 
 
 					
-					<div class="dept_info">
+					 <div class="dept_info">
 						<h2>부서 정보</h2>
 						<hr class="top_hr">
 						<div class="input_frame">
@@ -206,16 +268,100 @@
 						</div>
 						<hr>
 
-					</div>
+					</div> 
 					<div class="spec_info">
 						<h2>기타 정보</h2>
-						<hr class="top_hr">
+						
+						<div id="tabs">
+						<ul>
+							<li><a href="#academic_tab"><b>학력 사항</b></a></li>
+							<li><a href="#career_tab"><b>경력 사항</b></a></li>
+							<li><a href="#license_tab"><b>자격 사항</b></a></li>
+						</ul>
+						
+						<div id="academic_tab">
+							<table>
+								<thead>
+									<tr>
+										<th>학력구분</th>															
+										<th>학교명</th>									
+										<th>전공</th>	
+										<th>졸업여부</th>									
+										<th>입학일자</th>
+										<th>졸업일자</th>
+									</tr>
+								</thead>
+								<tbody id="academic_tbody">
+									<c:forEach var="academic" items="${academicList}">
+										<tr>
+											<td>${academic.academic_lev_name }</td>
+											<td>${academic.academic_name }</td>
+											<td>${academic.major_name }</td>
+											<td>${academic.academic_status_name }</td>
+											<td>${academic.enter_dt }</td>
+											<td>${academic.graduation_dt }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div id="career_tab">
+							<table>
+								<thead>
+									<tr>														
+										<th>회사명</th>									
+										<th>직급</th>	
+										<th>담당업무</th>									
+										<th>입사일</th>
+										<th>퇴사일</th>
+									</tr>
+								</thead>
+								<tbody id="career_tbody">
+									<c:forEach var="career" items="${careerList}">
+										<tr>
+											<td>${career.corp_name }</td>
+											<td>${career.rank_name }</td>
+											<td>${career.emp_role }</td>
+											<td>${career.career_enter_dt }</td>
+											<td>${career.career_retire_dt }</td>
+										</tr>
+									</c:forEach>	
+								</tbody>
+							</table>	
+						</div>
+						<div id="license_tab">
+							<table>
+								<thead>
+									<tr>														
+										<th>시행기관</th>									
+										<th>자격증 명</th>	
+										<th>자격증 ID</th>									
+										<th>취득일</th>
+										<th>자격증종류</th>
+									</tr>
+								</thead>
+								<tbody id="licence_tbody">
+									<c:forEach var="licence" items="${licenceList}">
+										<tr>
+											<td>${licence.institution }</td>
+											<td>${licence.licence_name }</td>
+											<td>${licence.licence_number }</td>
+											<td>${licence.get_dt }</td>
+											<td>${licence.ins_type }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
 					</div>
 				</div>
 				<div class="bottom">
 				<hr>
 					<input type="submit" value="수정">
-					<input type="button" value="목록" onclick="location='EmployeeServlet?command=employee_list';">
+					<c:if test="${sessionScope.isManager!=false}">
+						<input type="button" value="목록" onclick="location='EmployeeServlet?command=employee_list';">
+					</c:if>
 				</div>
 			</form>
 		</div>

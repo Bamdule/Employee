@@ -1,113 +1,135 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회사 프로젝트 리스트</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
-<script type="text/javascript" src="/project/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		<jsp:include page="../../js/header.js"></jsp:include>
-		$("#search").css("width","100px");
-		
-		$("#project_write").click(function(){
-			$(location).attr("href","/project/jsp/company/projectWrite.jsp")
-		});
-	});
-</script>
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/header.js"></script>
+<link type="text/css" rel="stylesheet" href="css/common.css"></link>
+<link type="text/css" rel="stylesheet" href="css/header.css"></link>
 
-<link type="text/css" rel="stylesheet" href="../../css/common.css"  ></link>
 <style type="text/css">
+.middle	.searchArea {
+	height: 10%;
+}
 
-#main .top{height:10%;}
-#main .middle{height:80%;}
-#main .bottom{height:10%;}
+.middle	.projectArea {
+	height: 90%;
+}
+.projectArea table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
 
+.projectArea th {
+	height: 25px;
+	background-color: #F6F6F6;
+	font-weight: bold;
+}
 
-#main .top .title{line-height: 80px;}
+.projectArea td {
+	height: 35px;
+	border-bottom: 1px solid #eee;
+}
 
-#main .middle .search {height:20%; text-align: center;}
-#main .middle .list {height:80%;}
-#main .middle .search strong{display: inline-block; width: 70px;}
-#main .bottom .navi{height:100%; text-align: center;}
-#main .bottom .addbtn{height:50%; text-align: right; padding-top:20px;}
-.navi strong { width:30px;height:100%; display: inline-block;}
-.navi p{height:100%; line-height: 80px;}
+.projectArea tr {
+	text-align: center;
+}
 
-#main td {border: 1px solid #D5D5D5;}
-#main table {width: 100%; height: 100%; border-collapse: collapse; text-align: center;}
-#main th { background-color: #E4F7BA; border: 1px solid #D5D5D5;}
+.bottom .btnArea {
+	text-align: right;
+	height: 33%;
+}
+
+.btnArea input {
+	width: 120px;
+}
+
+.buttom .pageArea {
+
+	height: 33%;
+}
+.pageBlock{
+	text-align:center;
+}
 
 </style>
+
 </head>
 <body>
-<jsp:include page="/header.jsp"></jsp:include>
-
-
+	<jsp:include page="/header.jsp"></jsp:include>
 	<div id="main">
 		<div class="container">
 			<div class="top">
 				<div class="title">
-					<h2>프로젝트 참가 이력</h2>
+					<h2>회사 프로젝트 리스트</h2>
+					<hr>
 				</div>
 			</div>
 			<div class="middle">
-			<div class="search">
-				<table>
-					<tr>
-						<th><strong>ID</strong></th>
-						<td><input type="text" name="projectid" style="width: 100%;height: 100%; border: none;"/></td>
-						<th>등록일</th>
-						<td>
-						  <input type="text" name="beforedate"/> ~ 
-						  <input type="text" name="afterdate"/>
-						</td>
-					</tr>
-					<tr>
-						<th>프로젝트 명</th>
-						<td colspan="3"><input type="text" name="projectname" style="width: 100%;height: 100%; border: none;"/></td>
-						
-					</tr>
-					<tr>
-						<td colspan="4" style="border: none;">
-							<input type="button" value="조회" id="search"/>
-						</td>
-					</tr>
-				</table>
-			</div>
-		
-			<div class="list">
-				<table>
-					<tr>
-						<th style="width:10%">번호</th>
-						<th style="width:10%">ID</th>
-						<th style="width:60%">프로젝트명</th>
-						<th style="width:20%">등록일</th>
-					</tr>
-					<c:forEach begin="1" end="15" varStatus="status">
-					<tr>
-						<td>${status.count}</td>
-						<td>ID${status.count}</td>
-						<td><a href="staffProjectDetail.jsp">프로젝트 ${status.count}</a></td>
-						<td>2016-04-12</td>
-					</tr>
-					</c:forEach>
-					
-				</table>
-			</div>
+				<div class="searchArea"></div>
+				<div class="projectArea">
+					<table>
+						<thead>
+							<tr>
+								<th>순번</th>
+								<th>회사</th>
+								<th>프로젝트 이름</th>
+								<th>시작일</th>
+								<th>종료일</th>
+								<th>내/외</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${page.isEmpty !=0}">
+							<c:forEach var="project" items="${projectList}">
+								<tr>
+									<td>${project.project_seq}</td>
+									<td><a href="ProjectServlet?command=corp_project_info&project_id=${project.project_id}">${project.project_name}</a></td>
+									<td>${project.corp_name}</td>
+									<td>${project.start_dt}</td>
+									<td>${project.end_dt}</td>
+									<td>${project.corp_own}</td>
+								</tr>
+							</c:forEach>
+							</c:if>
+								<c:if test="${page.isEmpty == 0}">
+							<tr>
+								<td colspan="7">프로젝트 정보가 없습니다.</td>
+							</tr>
+						</c:if>	
+						</tbody>
+					</table>
+
+				</div>
 			</div>
 			<div class="bottom">
-			
-				<div class="navi">
-					<p><strong>1</strong><strong>2</strong><strong>3</strong><strong>4</strong><strong>5</strong><strong>6</strong></p>
+				<div class="btnArea">
+						<input type="button" value="새 프로젝트 작성" onclick="location.href='ProjectServlet?command=emp_project_addform'"> 
+				</div>
+				<div class="pageArea">
+			<%-- 		<div class="pageBlock">
+					<p>
+							<c:if test="${page.prevPage !=0 }">
+								<strong><a href="ProjectServlet?command=corp_project_list&curPage=${page.prevPage}">[<]</a></strong>
+							</c:if>
+							<c:forEach var="block" begin="${page.firstBlock}" end="${page.lastBlock }">
+								<strong><a href="ProjectServlet?command=corp_project_list&curPage=${block}">${block}</a></strong>
+							</c:forEach>		
+							<c:if test="${page.nextPage !=0 }">
+								<strong><a href="ProjectServlet?command=corp_project_list&curPage=${page.nextPage}">[>]</a></strong>
+							</c:if>								
+					</p>
+					</div> --%>
 				</div>
 			</div>
 		</div>
 	</div>
-
-<jsp:include page="/footer.jsp"></jsp:include>
+	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>

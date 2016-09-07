@@ -26,12 +26,13 @@
 <!--datePicker-->
 <script type="text/javascript">
 $( function() {
+	
+	
     $( "#datepicker" ).datepicker({
     	dateFormat: "yy-mm-dd"
     });
-
-  
-  
+    
+//주소 다이알로그 선언
 var dialog = $(".addr_search_dialog").dialog({
     autoOpen: false,
     height: 500,
@@ -40,23 +41,24 @@ var dialog = $(".addr_search_dialog").dialog({
     close: function() {
     }
   });  
+//주소 찾기 버튼을 누를 시 다이알로그  hide -> show
+$( "#zipcode_open").button().on( "click", function() {
+    dialog.dialog( "open" );
+});
+  
 
 $("#dialog_search_btn").on("click",function(){
 	$(".dialog_tbody").html("");
 	var search_text = $("#dialog_search_text").val();
-
 	if(search_text!=null && search_text!=undefined && search_text.length>1)
 		$.ajax({
 			url: "EmployeeServlet?command=address_search"
 				  , type:"post"
 				  , data:'dong='+search_text
-				  
 				  , success:function(result){
-					  for(var index=0;index<result.length;index++)
-					  {
+					  for(var index=0;index<result.length;index++){
 							var jsonObject = JSON.stringify(result[index]);
 							var addr = JSON.parse(jsonObject);
-							
 							$(".dialog_tbody").append(
 								"<tr class='addr'>"
 									+"<td>"+addr.sido+"</td>"
@@ -65,7 +67,6 @@ $("#dialog_search_btn").on("click",function(){
 									+"<td>"+addr.ri+"</td>"
 									+"<td>"+addr.bldg+"</td>"
 									+"<td>"+addr.bunji+"</td></tr>");
-							
 							$(document).on("click",".addr",function(){
 								$("#emp_addr").val($(this).text());
 								$("#zipcode").val(addr.zipcode);
@@ -79,20 +80,11 @@ $("#dialog_search_btn").on("click",function(){
 		alert('(동/면/읍)을 입력해주세요!');
 	}
 });
-$( "#zipcode_open").button().on( "click", function() {
-    dialog.dialog( "open" );
-});
-  
-  function openAddrPopup()
-  {
-	  new daum.Postcode({
-	        oncomplete: function(data) {
-	        	console.log(data);
-	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-	        }
-	    }).open();
-  }
+
+
+
+
+
 });
 
 </script>

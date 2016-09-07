@@ -16,31 +16,26 @@
 	function replyElementCreate(replyArrayList)
 	{
 		  $(".replyArea").html("");
-		  for(var index=0;index<replyArrayList.length;index++)
-	      {
+		  for(var index=0;index<replyArrayList.length;index++)  {
 			  var replyArrayStr = JSON.stringify(replyArrayList[index]);
-			  
 			  var replyStr=JSON.parse(replyArrayStr);
-				$(".replyArea").append(
-						"<div class='reply'>"+
-							"<div class='reply_img'></div>"
-						   +"<div class='reply_delete'>"
-						      /*   +"<span class='"+replyStr.reply_id+"'>삭제</span>" */
-						        +"<span class='"+replyStr.reply_id+"'></span>"
-						   +"</div>"
-						   +"<div class='reply_top'>"
-						   		+"<b>"+replyStr.emp_name+"</b><span>"+replyStr.register_dt+"</span>"
-						   +"</div>"
-						   +"<div class='reply_bottom'>"
-						  		 +"<p>"+replyStr.reply_content+"</p></div>"
-						   +"</div>"
+			  $(".replyArea").append(
+				"<div class='reply'>"+
+					"<div class='reply_img'></div>"
+				   +"<div class='reply_delete'>"
+				        +"<span class='"+replyStr.reply_id+"'></span>"
+				   +"</div>"
+				   +"<div class='reply_top'>"
+					   	+"<b>"+replyStr.emp_name+"</b><span>"+replyStr.register_dt+"</span>"
+				   +"</div>"
+				   +"<div class='reply_bottom'>"
+				  		 +"<p>"+replyStr.reply_content+"</p></div>"
+				   +"</div>"
 				);
-				
 				var isManager=${sessionScope.isManager};
 				if(isManager==true){
 					$("."+replyStr.reply_id).text("삭제");
 					$("."+replyStr.reply_id).on("click",function(){
-						
 						var pnid=${notice.notice_id};
 					    var prid=$(this).attr("class");
 						replyDelete(pnid,prid);
@@ -49,6 +44,8 @@
 	      }				  
 		  $('html, body').scrollTop(document.body.scrollHeight);  
 	}
+	
+	
 	function replyDelete(nid,rid){
 		alert(nid+" "+rid);
 		if(nid!=undefined && rid!=undefined &&nid!=null &&rid!=null&&nid!="" &&rid!="")
@@ -71,9 +68,7 @@
 			replyJson.notice_id = ${notice.notice_id};
 			replyJson.emp_id=${notice.emp_id};
 			replyJson.reply_content=reply.val();
-			//jsonStr=JSON.stringify(replyJson);
-			//alert(jsonStr);
-			
+		
 			$.ajax({
 				url: "NoticeServlet?command=notice_replyadd"
 					  , type:"post"
@@ -83,9 +78,7 @@
 						  replyElementCreate(result);
 					  }
 			}); 
-			
 			reply.val("");
-				
 		}
 		else{
 			alert('댓글을 한 글자 이상 써주세요!');
@@ -106,11 +99,12 @@
 }
 
 .middle .noticeArea {
-	
+	width:100%;
 	text-align: center;
 }
 
 .noticeArea table {
+	width:100%;
 	border-collapse: collapse;
 }
 
@@ -127,6 +121,7 @@
 }
 
 .noticeArea textarea {
+	width:100%;
 	resize: none;
 	outline: none;
 }
@@ -149,7 +144,7 @@
 .reply_bottom p {font-size: 13px;}
 
 .reply_inputArea .reply_input {width:90%;height:100%;float:left; }
-.reply_input textarea {resize:none;}
+.reply_input textarea {resize:none; width: 95%;}
 .reply_inputArea .reply_send{width:10%;height:100%;float:right; }
 .reply_send input { width:80px;}
 

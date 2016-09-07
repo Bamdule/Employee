@@ -122,14 +122,12 @@ $( function() {
     	dialog_EmpList();
         dialog.dialog( "open" );
       });
+    
     //다이알로그에 사원 리스트를 뿌린다.
-    function dialog_EmpList()
-    {
+    function dialog_EmpList(){
     	empList=new Array();
     	for(var i =0 ; i<empList.length; i++)
      		empList.pop();		
-     	
-    	
     	$.ajax({
     		url: "ProjectServlet?command=ajax_emp_list"
     	     , type:"post"
@@ -158,28 +156,22 @@ $( function() {
 	}
 
 	//페이지에 사원 리스트를 뿌린다.
-    function registerEmp()
-    {
+    function registerEmp(){
     	$(".eList").html("");//사원리스트 초기화
     	$(".empListFrame :checked").each(function(){
     		empList.push($(this).val());
     	});
-    	
     	emp_tbody.html("");//다이알로그 사원 리스트 초기화
-    	
-    	if(empList.length!=0)
-    	{
+    	if(empList.length!=0){
 	    	$.ajax({
 	    		url: "ProjectServlet?command=ajax_emp_list"
 	    	     , type:"post"
 	    	     , data : {'empList':empList}
 	    	 	 , dataType : 'json'
 	    	     , success:function(result){
-	    	    	 for(var index=0;index<result.length;index++)
-	    	 		{
+	    	    	 for(var index=0;index<result.length;index++){
 	    	 			var jsonObject = JSON.stringify(result[index]);
 	    	 			var emp_info = JSON.parse(jsonObject);
-	    	 			
 	    	 			$(".eList").append(
 	    	 					"<tr>"
 	    	    				+"<td>"+emp_info.emp_seq+"</td>"
@@ -196,8 +188,6 @@ $( function() {
 	    	    					+"</select></td>"
 	    	    			+"</tr>"
 	    	    			);
-	
-	    	 			console.log(emp_info.emp_name);
 	    	  	       }
 	    	    }
 	   		 }); 
@@ -428,7 +418,7 @@ table {
 			<div class="bottom">
 				<div class="btnArea">
 					<input type="button" id="projectSaveBtn" value="프로젝트 저장">
-					<input type="button" value="취소">
+					<input type="button" value="취소" onclick="location.href='ProjectServlet';">
 				</div>
 			</div>
 		</div>

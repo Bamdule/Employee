@@ -21,14 +21,11 @@ import util.UploadManager;
 
 public class EmployeeAddAction implements Action {
 
-	@SuppressWarnings("null")
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String url = "EmployeeServlet?command=employee_info";
+		String url = "EmployeeServlet?command=employee_spec_addform";
 
-		
-			
 		EmployeeDao dao = EmployeeDao.getInstance();
 		EmployeeDto dto = new EmployeeDto();
 		MultipartRequest multi = UploadManager.getMultiPartRequest(request);

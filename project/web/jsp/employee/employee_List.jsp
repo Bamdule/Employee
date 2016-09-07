@@ -21,14 +21,10 @@ form {
 .top {
 	line-height: 80px;
 }
-
 #main {
-	height: 900px;
+	height: 630px;;
 }
 
-.container {
-	width: 1200px;
-}
 
 .empSearch {
 	height: 10%;
@@ -66,7 +62,6 @@ form {
 }
 
 .empPaging {
-	height: 10%;
 	text-align: center;
 }
 
@@ -77,27 +72,31 @@ form {
 }
 
 .pageBlock strong {
-	line-height: 80px;
-	width: 40px;
+/* 	line-height: 80px; */
 	display: inline-block;
 }
-.btnArea { text-align: right;
+.block{
+	cursor:pointer;
+	width: 20px;
+	display: inline-block;
+}
+
+.btnArea { 
+	text-align: right;
 }
 .btnArea input {width:100px;}
+.bottom .searchArea{
+	margin-top:20px;
+	text-align: center;
+}
 </style>
 
 <script type="text/javascript">
 
+	var keyword_value;
+	var searchField_value;
 	$(function(){
-		
 		window.scroll(0, 215);
-		
-		
-		/* $(".empList .empRow").click(function(){
-			//선택한 유저의 id를 히든 값에 넣어서 보낸다.
-			$("#emp_id").val($(this).children().eq(1).text());
-			$("#frm").submit();
-		}); */
 		
 		$(".empRow").hover(function(){
 			$(this).css("background-color","#eee");
@@ -105,7 +104,101 @@ form {
 
 			$(this).css("background-color","white");
 		});
+		
+		
+		//검색 버튼 누를 시 실행되는 이벤트
+		$("#searchBtn").click(function(){
+			controllEmpList();
+		});
+		
+		//EmployeeList Controll
+		function controllEmpList(){
+			var keyword =$(".keyword").val();
+			var searchField =$(".searchField :selected").val();
+			createEmpList(keyword,searchField,1);
+		}
+		
+		//EmployeeList를 뿌려주는 함수
+		function createEmpList(keyword, searchField, curPage){
+			if(keyword==null)
+				keyword="";
+			if(searchField==null)
+				searchField="";
+			
+			$(".employee_tbody").html("");
+			$(".employee_thead").html("");
+			
+			$(".empPaging").html("");
+			console.log(searchField+" "+keyword);
+			
+			$.ajax({
+	    		url: "EmployeeServlet?command=ajax_search_employee"
+	    	     , type:"post"
+	    	     , data:{
+	    	    	 'keyword':keyword
+	    	       , 'searchField':searchField	 
+	    	       , 'requestInfo':'empList'
+	     	       , 'curPage': curPage
+	    	    }
+	     	     , dataType:"json" 
+	     	     
+	    	     , success:function(result){
+	    	    	 var curPage = result.curPage;
+	    	    	 keyword_value = result.keyword;
+	    	    	 searchField_value = result.searchField;  	    	 
+	    	    	 var jsonArray=JSON.parse(result.empList);//JsonArray로 만든다.
+	    	    	 $(".employee_thead").append("<tr><th>순번</th><th>사번</th><th>이름</th><th>부서</th><th>직급</th><th>입사일</th></tr>");
+	    			 var count = 0;
+	    	    	 for(;count<jsonArray.length;count++){
+	    	    	 	var JsonObject=JSON.stringify(jsonArray[count]);//JsonObject를 한개씩 꺼낸다.
+	    	    	 	var emp =JSON.parse(JsonObject);//JsonObject를 파싱한다.
+	    	    	 	$(".employee_tbody").append(
+	    	    	 			"<tr class='empRow'>"
+	    						+"<td>"+emp.emp_seq+"</td>"
+	    						+"<td>"+emp.emp_id+"</td>"
+	    						+"<td><a href='EmployeeServlet?command=employee_info&emp_id="+emp.emp_id+"'>"+emp.emp_name+"</a></td>"
+	    						+"<td>"+emp.dept_name+"</td>"
+	    						+"<td>"+emp.rank_name+"</td>"
+	    						+"<td>"+emp.enter_dt+"</td>"
+	    					+"</tr>"	
+	    	    	 	);
+	    	    	 }
+	    	    	$(".empPaging").append("<div class='pageBlock'><p>");
+	    	        if(result.prevPage!=0){
+		    	    	 $(".empPaging").append("<strong id='prevPage'>[<]</strong>");
+		    	    	 $("#prevPage").on("click",function(){
+		    	    		 createEmpList(keyword_value,searchField_value,result.prevPage);
+		    	    	 });
+	    	    	}	
+	    			for(var start=result.firstBlock;start<=result.lastBlock;start++){
+	    				 $(".empPaging").append("<strong class='block' id='p"+start+"'>"+start+"</strong>");
+	    				 if(start==curPage)
+	    					 $("#p"+start).css("color","red");
+	    				 $("#p"+start).on("click",function(){
+	    	    				createEmpList(keyword_value,searchField_value,$(this).text());
+	    	    			});
+	    			}
+	    			if(result.nextPage!=0){			
+		    			 $(".empPaging").append("<strong id='nextPage'>[>]</strong>");			
+		    			 $("#nextPage").on("click",function(){
+		    	    		 createEmpList(keyword_value,searchField_value,result.nextPage);
+		    	    	 });
+	    			} 
+	    			$(".empPaging").append("</p></div>");
+	    	    }
+	     	     
+	     	     ,error:function(msg1,msg2,msg3){
+	    	    	alert(msg1+" "+msg2+""+msg3);
+	    	    }
+	    	}); 
+		} 
+		createEmpList();
 	});
+	
+
+	
+	
+	
 </script>
 </head>
 <body>
@@ -124,7 +217,7 @@ form {
 				<div class="empSearch"></div>
 				<div class="empList">
 					<table>
-						<thead>
+						<thead class="employee_thead">
 							<tr>
 								<th>순번</th>
 								<th>사번</th>
@@ -132,28 +225,9 @@ form {
 								<th>부서</th>
 								<th>직급</th>
 								<th>입사일</th>
-								<th>추가 정보</th>
 							</tr>
 						</thead>
-						<tbody>
-						<c:if test="${paging.isEmpty !=0}">
-						<c:forEach var="employee" items="${empList}">
-							<tr class="empRow">
-								<td>${employee.emp_seq}</td>
-								<td>${employee.emp_id}</td>
-								<td><a href='EmployeeServlet?command=employee_info&emp_id=${employee.emp_id}'>${employee.emp_name}</a></td>
-								<td>${employee.dept_name}</td>
-								<td>${employee.rank_name}</td>
-								<td>${employee.enter_dt}</td>
-								<td><input type="button" value="추가" onclick="location.href='EmployeeServlet?command=employee_spec_addform&emp_id=${employee.emp_id}'"></td>
-							</tr>
-						</c:forEach>
-						</c:if>
-						<c:if test="${paging.isEmpty == 0}">
-							<tr>
-								<td colspan="6">사원 정보가 없습니다.</td>
-							</tr>
-						</c:if>			
+						<tbody class="employee_tbody">			
 						</tbody>
 					</table>
 				</div>
@@ -161,30 +235,25 @@ form {
 					<input type="button" value="사원 추가" onclick="location.href='EmployeeServlet?command=employee_addform';">
 				</div>
 				<div class="empPaging">
-					<div class="pageBlock">
-					<p>
-							<c:if test="${paging.prevPage !=0 }">
-								<strong><a href="EmployeeServlet?command=employee_list&curPage=${paging.prevPage}">[<]</a></strong>
-							</c:if>
-							<c:forEach var="block" begin="${paging.firstBlock}" end="${paging.lastBlock }">
-								<strong><a href="EmployeeServlet?command=employee_list&curPage=${block}">${block}</a></strong>
-							</c:forEach>		
-							<c:if test="${paging.nextPage !=0 }">
-								<strong><a href="EmployeeServlet?command=employee_list&curPage=${paging.nextPage}">[>]</a></strong>
-							</c:if>								
-					</p>
-					</div>
 				</div>     
 				</form>
 			</div>
 			<div class="bottom">
+				<div class="searchArea">
+					<select class="searchField">
+						<option value="emp_id" selected="selected">사번</option>
+						<option value="emp_name">이름</option>
+						<option value="dept_name">부서</option>
+						<option value="rank_name">직급</option>
+					</select>
+					<input type="text" class="keyword">
+					<input type="button" value="검색" id="searchBtn">
+				</div>
+				
 			
 			</div>			
 		</div>
 	</div>
-
-
-
 	<jsp:include page="/footer.jsp"></jsp:include>
 </body>
 </html>

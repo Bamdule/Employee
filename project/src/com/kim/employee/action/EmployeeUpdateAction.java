@@ -59,7 +59,15 @@ public class EmployeeUpdateAction implements Action {
 			
 			
 			dto.setEmp_email(multi.getParameter("front_email")+"@"+multi.getParameter("back_email"));
-			dto.setEmp_sal(Integer.parseInt(multi.getParameter("emp_sal")));
+			
+			try{
+				dto.setEmp_sal(Integer.parseInt(multi.getParameter("emp_sal")));
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				dto.setEmp_sal(100);
+			}
 			dto.setEmp_imgpath(imgPath);
 			dto.setEmp_imgpathorn(imgPath);
 			dto.setDept_id(multi.getParameter("dept_id"));

@@ -47,7 +47,7 @@
 					<li>건의 사항</li>
 				</ul>
 				<ul>
-					<li><a href="#">프로젝트이력</a></li>
+					<li><a href="ProjectServlet?command=emp_project_list">개인 프로젝트</a></li>
 					<li><a href="EmployeeServlet?command=employee_info">내정보 보기</a></li>
 				</ul>
 				<ul>

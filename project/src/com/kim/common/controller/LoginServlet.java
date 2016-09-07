@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
 		System.out.println("LoginPost");
 		String emp_id = request.getParameter("emp_id");
 		String emp_pwd = request.getParameter("emp_pwd");
@@ -41,17 +40,9 @@ public class LoginServlet extends HttpServlet {
 		EmployeeSimpleDto simpleDto=null;
 		EmployeeDao dao =EmployeeDao.getInstance();
 		simpleDto=dao.loginCheck(emp_id, emp_pwd);
-		
-		System.out.println(simpleDto);
-		/*
-		 * result : 
-		 * 1 : success
-		 * 2 : id check failed
-		 * 3 : pass check faild
-		 */
-		switch(simpleDto.getResult())
-		{
-		case 1:
+
+		switch(simpleDto.getResult()){
+		case 1:// success
 			result_msg="success";
 			HttpSession session =request.getSession();
 			session.setAttribute("emp_name", simpleDto.getEmp_name());
@@ -59,17 +50,16 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("isManager", simpleDto.isManager());
 			session.setMaxInactiveInterval(1800);//30분	
 			break;
-		case 2:
+		case 2: //id check failed
 			result_msg="id_failed";
 			break;
-		case 3:
+		case 3: //pass check faild
 			result_msg="pass_failed";
 			break;
 		default:
 			result_msg="id_failed";
 			break;
 		}
-		
 		System.out.println("Login Info : "+result_msg);
 		PrintWriter out = response.getWriter();	
 		out.print(result_msg);

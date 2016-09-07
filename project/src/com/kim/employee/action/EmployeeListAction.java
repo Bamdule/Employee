@@ -21,7 +21,7 @@ public class EmployeeListAction implements Action{
 		request.setCharacterEncoding("UTF-8");
 		
 		String url="jsp/employee/employee_List.jsp";		
-		final int pagePerRecord=15;
+		/*final int pagePerRecord=15;
 		
 		String pageNum = request.getParameter("curPage");
 		int curPage=1;
@@ -41,7 +41,7 @@ public class EmployeeListAction implements Action{
 		
 		
 		request.setAttribute("empList", empList);
-		request.setAttribute("paging", pDto);
+		request.setAttribute("paging", pDto);*/
 		
 		
 		RequestDispatcher disp = request.getRequestDispatcher(url);

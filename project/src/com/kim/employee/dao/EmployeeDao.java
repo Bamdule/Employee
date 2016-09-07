@@ -13,6 +13,8 @@ import com.kim.employee.dto.AcademicLevelDto;
 import com.kim.employee.dto.AcademicStatusDto;
 import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmpAcademicDto;
+import com.kim.employee.dto.EmpCareerDto;
+import com.kim.employee.dto.EmpLicenceDto;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
 
@@ -52,20 +54,15 @@ public class EmployeeDao {
 					   + "left outer join rank r "
 					   + "on E.rank_id = r.rank_id "
 				   + "WHERE Ro BETWEEN ? AND ? ";
-	
-		
-		
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		EmployeeDto dto = null;
 		try {
-			
 			conn=DBManager.getConnection();
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
 			pstmt.setInt(2, end);
-			
 			rs=pstmt.executeQuery();
 			
 			int seq=start;
@@ -77,8 +74,6 @@ public class EmployeeDao {
 				dto.setDept_name(rs.getString("dept_name"));
 				dto.setRank_name(rs.getString("rank_name"));
 				dto.setEnter_dt(rs.getString("enter_dt").substring(0, 10));
-				
-				
 				empList.add(dto);
 				seq++;
 			}
@@ -216,8 +211,7 @@ public class EmployeeDao {
 				conn = DBManager.getConnection();
 				pstmt= conn.prepareStatement(sql);{
 				if(skillList!=null&&skillList.size()!=0)
-					for(int index=0; index<skillList.size();index++)
-					{
+					for(int index=0; index<skillList.size();index++){
 						pstmt.setString(1, emp_id);
 						pstmt.setString(2, skillList.get(index).getSkill_id());
 						pstmt.executeUpdate();
@@ -541,15 +535,7 @@ public class EmployeeDao {
 		}
 		return academicStatusList;
 	}
-	/*
-	ACADEMIC_SEQ	NOT NULL	VARCHAR2(10)
-	EMP_ID	NOT NULL	VARCHAR2(15)
-	ACADEMIC_LEV_ID	NOT NULL	VARCHAR2(10)
-	ACADEMIC_STATUS_ID	NOT NULL	VARCHAR2(10)
-	ACADEMIC_NAME	NOT NULL	VARCHAR2(50)
-	MAJOR_NAME		VARCHAR2(50)
-	ENTER_DT	NOT NULL	DATE
-	GRADUATION_DT	NOT NULL	DATE*/
+
 	public boolean insertEmpAcademic(String emp_id,List<EmpAcademicDto> academicList )
 	{
 
@@ -579,9 +565,275 @@ public class EmployeeDao {
 		{
 			DBManager.close(conn, pstmt);
 		}
-		
-		
 		return result;
 	}
 
+	public boolean insertEmpCareer(String emp_id,List<EmpCareerDto> careerList )
+	{
+
+		String sql="INSERT INTO EMP_CAREER VALUES(emp_career_seq.nextval,?,?,?,?,?,?)";
+		boolean result = true;
+		PreparedStatement pstmt = null;
+		Connection conn =null;
+		try {
+			conn= DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);	
+			for(int i=0;i<careerList.size();i++){
+				pstmt.setString(1, emp_id);
+				pstmt.setString(2, careerList.get(i).getCorp_name());
+				pstmt.setString(3, careerList.get(i).getRank_name());
+				pstmt.setString(4, careerList.get(i).getEmp_role());
+				pstmt.setString(5, careerList.get(i).getCareer_enter_dt());
+				pstmt.setString(6, careerList.get(i).getCareer_retire_dt());
+			
+				if(pstmt.executeUpdate()!=1)
+					result=false;
+				}		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public boolean insertEmpLicence(String emp_id,List<EmpLicenceDto> licenceList ){
+		String sql="INSERT INTO EMP_LICENCE VALUES(emp_licence_seq.nextval,?,?,?,?,?,?)";
+		boolean result = true;
+		PreparedStatement pstmt = null;
+		Connection conn =null;
+		try {
+			conn= DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);	
+			for(int i=0;i<licenceList.size();i++){
+				pstmt.setString(1, emp_id);
+				pstmt.setString(2, licenceList.get(i).getInstitution());
+				pstmt.setString(3, licenceList.get(i).getLicence_name());
+				pstmt.setString(4, licenceList.get(i).getLicence_number());
+				pstmt.setString(5, licenceList.get(i).getGet_dt());
+				pstmt.setString(6, licenceList.get(i).getIns_type());
+			
+				if(pstmt.executeUpdate()!=1)
+					result=false;
+				}		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public List<EmpAcademicDto> selectAllEmpAcademicById(String emp_id)
+	{
+		StringBuilder sql =new StringBuilder();
+		sql.append("SELECT al.ACADEMIC_LEV_NAME,s.ACADEMIC_STATUS_NAME,a.* ");
+		sql.append("FROM emp_academic a, academic_level al, academic_status s ");
+		sql.append("WHERE a.ACADEMIC_LEV_ID=al.ACADEMIC_LEV_ID ");
+		sql.append("AND a.ACADEMIC_STATUS_ID= s.ACADEMIC_STATUS_ID ");
+		sql.append("AND a.EMP_ID=? ");
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		List<EmpAcademicDto> academicList=null;
+		try {
+			conn=DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql.toString());
+			pstmt.setString(1, emp_id);
+			rs=pstmt.executeQuery();
+			academicList=new ArrayList<EmpAcademicDto>();
+			EmpAcademicDto eaDto=null;
+			
+			while(rs.next())
+			{
+				eaDto =new EmpAcademicDto();
+				eaDto.setAcademic_lev_name(rs.getString(1));
+				eaDto.setAcademic_status_name(rs.getString(2));
+				eaDto.setAcademic_name(rs.getString("academic_name"));
+				eaDto.setMajor_name(rs.getString("major_name"));
+				eaDto.setEnter_dt(rs.getString("enter_dt"));
+				eaDto.setGraduation_dt(rs.getString("graduation_dt"));
+				academicList.add(eaDto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return academicList;
+	}
+
+
+	public List<EmpCareerDto> selectAllEmpCareerById(String emp_id)
+	{
+		String sql = "SELECT * FROM emp_career WHERE EMP_ID=?";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		List<EmpCareerDto> careerList=null;
+		try {
+			conn=DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, emp_id);
+			rs=pstmt.executeQuery();
+			careerList=new ArrayList<EmpCareerDto>();
+			EmpCareerDto ecDto=null;
+			
+			while(rs.next())
+			{
+				ecDto =new EmpCareerDto();
+				ecDto.setCorp_name(rs.getString("corp_name"));
+				ecDto.setRank_name(rs.getString("RANK_NAME"));
+				ecDto.setEmp_role(rs.getString("emp_role"));
+				ecDto.setCareer_enter_dt(rs.getString("enter_dt"));
+				ecDto.setCareer_retire_dt(rs.getString("retire_dt"));
+				careerList.add(ecDto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return careerList;
+	}
+	
+	public List<EmpLicenceDto> selectAllEmpLicenceById(String emp_id){
+		String sql ="SELECT * FROM emp_licence WHERE EMP_ID=?";
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		List<EmpLicenceDto> licenceList=null;
+		try {
+			conn=DBManager.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, emp_id);
+			rs=pstmt.executeQuery();
+			licenceList=new ArrayList<EmpLicenceDto>();
+			EmpLicenceDto elDto=null;
+
+			while(rs.next())
+			{
+				elDto =new EmpLicenceDto();
+				elDto.setInstitution(rs.getString("institution"));
+				elDto.setLicence_name(rs.getString("licence_name"));
+				elDto.setLicence_number(rs.getString("licence_number"));
+				elDto.setGet_dt(rs.getString("get_dt"));
+				elDto.setIns_type(rs.getString("ins_type"));
+				licenceList.add(elDto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{
+			DBManager.close(conn, pstmt, rs);
+		}
+		return licenceList;
+	}
+	public List<EmployeeDto> searchEmployee(int curPage,int pagePerRecord,String searchField,String keyword){
+		List<EmployeeDto> empList=null;
+		StringBuilder sql = new StringBuilder();
+		if(curPage<1)
+			curPage=1;
+		int start =((curPage-1)*pagePerRecord)+1;
+		int end = start+pagePerRecord -1;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		EmployeeDto dto = null;
+		
+		try {
+			conn=DBManager.getConnection();
+			if(keyword == null || "".equals(keyword.trim())){
+				sql.append("SELECT E.emp_id, E.emp_name, E.enter_dt ,E.dept_name ,E.rank_name ");
+				sql.append("FROM ( SELECT ROWNUM Ro, E.* ");  
+					   sql.append("FROM ( SELECT E.emp_id ,E.emp_name, E.enter_dt ,E.dept_id ,E.rank_id,d.DEPT_NAME,r.RANK_NAME "); 
+				              sql.append("FROM EMPLOYEE E left outer join department d ");
+								sql.append("on E.dept_id = d.dept_id ");
+								sql.append("left outer join rank r "); 
+								sql.append("on E.rank_id = r.rank_id ");
+						 		sql.append("ORDER BY enter_dt DESC) E) E "); 
+				sql.append("WHERE Ro BETWEEN ? AND ? ");	
+				pstmt=conn.prepareStatement(sql.toString());
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, end);
+			}
+			else{
+				sql.append("SELECT E.emp_id, E.emp_name, E.enter_dt ,E.dept_name ,E.rank_name ");
+				sql.append("FROM ( SELECT ROWNUM Ro, E.* ");  
+					   sql.append("FROM ( SELECT E.emp_id ,E.emp_name, E.enter_dt ,E.dept_id ,E.rank_id,d.DEPT_NAME,r.RANK_NAME "); 
+				              sql.append("FROM EMPLOYEE E left outer join department d ");
+								sql.append("on E.dept_id = d.dept_id ");
+								sql.append("left outer join rank r "); 
+								sql.append("on E.rank_id = r.rank_id ");                                         
+								sql.append("WHERE "+searchField+" LIKE ? ");
+						 		sql.append("ORDER BY enter_dt DESC) E) E "); 
+				sql.append("WHERE Ro BETWEEN ? AND ? ");	
+				pstmt=conn.prepareStatement(sql.toString());
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, end);
+			}
+
+			rs=pstmt.executeQuery();
+			empList=new ArrayList<EmployeeDto>();
+			int seq=start;
+			while(rs.next()){
+				dto=new EmployeeDto();
+				dto.setEmp_seq(seq);
+				dto.setEmp_id(rs.getString("emp_id"));
+				dto.setEmp_name(rs.getString("emp_name"));
+				dto.setDept_name(rs.getString("dept_name"));
+				dto.setRank_name(rs.getString("rank_name"));
+				dto.setEnter_dt(rs.getString("enter_dt").substring(0, 10));
+				empList.add(dto);
+				seq++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return empList;
+	}
+	public int getSearchEmployeeCount(String searchField,String keyword)
+	{
+		Connection conn= null;
+		PreparedStatement pstmt =null;
+		ResultSet rs= null;
+		int count = 0;
+		StringBuilder sql =new StringBuilder();
+
+		try{
+			conn=DBManager.getConnection();
+			if(keyword == null || "".equals(keyword.trim())){
+				sql.append("select count(*) from employee");
+			pstmt =conn.prepareStatement(sql.toString());
+			}else{
+				sql.append("select count(*) "); 
+				sql.append("from employee  E left outer join department d ");
+				sql.append("on E.dept_id = d.dept_id "); 
+				sql.append("left outer join rank r "); 
+				sql.append("on E.rank_id = r.rank_id  WHERE "+searchField+" LIKE ?");
+	
+				pstmt =conn.prepareStatement(sql.toString());
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			rs =pstmt.executeQuery();
+			if (rs.next()){
+				count =rs.getInt(1);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			DBManager.close(conn, pstmt, rs);
+		}           
+		return count;
+	}
 }

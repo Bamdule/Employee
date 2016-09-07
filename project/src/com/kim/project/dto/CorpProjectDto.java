@@ -11,7 +11,16 @@ public class CorpProjectDto {
 	private String corp_own;
 	private String remarks;
 	private String join_num;
+	private String role;
 	
+
+
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public int getProject_seq() {
 		return project_seq;
 	}
@@ -77,7 +86,7 @@ public class CorpProjectDto {
 		return "CorpProjectDto [project_seq=" + project_seq + ", project_id=" + project_id + ", project_name="
 				+ project_name + ", corp_name=" + corp_name + ", start_dt=" + start_dt + ", end_dt=" + end_dt
 				+ ", project_content=" + project_content + ", corp_own=" + corp_own + ", remarks=" + remarks
-				+ ", join_num=" + join_num + "]";
+				+ ", join_num=" + join_num + ", role=" + role + "]";
 	}
 
 }

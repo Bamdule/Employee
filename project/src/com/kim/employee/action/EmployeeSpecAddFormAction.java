@@ -26,7 +26,7 @@ public class EmployeeSpecAddFormAction implements Action {
 		List<AcademicStatusDto> academicStatusList =null;
 		
 		
-		String emp_id = request.getParameter("emp_id");
+		String emp_id = (String)request.getAttribute("emp_id");
 		if(emp_id!=null){
 			eDto=eDao.selectEmpById(emp_id);
 			academicLevelList=eDao.selectAllAcademicLevel();

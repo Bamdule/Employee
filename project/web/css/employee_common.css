@@ -15,8 +15,8 @@ hr {
 }
 
 img {
-	width: 120px;
-	height: 130px;
+	width: 130px;
+	height: 160px;
 	background-color: #F6F6F6;
 	margin: 5px;
 }
@@ -26,20 +26,19 @@ form {
 }
 
 .staff_info {
-	margin-top:30px;
+	margin-top:50px;
 	/* height: 900px; */
 	height: auto;
 }
 
 .dept_info {
-	margin-top:30px;
+	margin-top:50px;
 	height: auto;
 }
 
 .spec_info {
-	margin-top:30px;
+	margin-top:50px;
 	height: auto;
-	background-color: #F6F6F6;
 }
 
 #main .top .title {
@@ -47,7 +46,7 @@ form {
 }
 
 #main .top_hr {
-	border: 1px solid red;
+	border: 1px solid #eee;
 }
 
 .input_title_frame {

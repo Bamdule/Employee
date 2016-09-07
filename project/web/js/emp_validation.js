@@ -1,6 +1,3 @@
-
-
-
 function addCheck(){
 	if(!addEmployee())
 	{
@@ -30,7 +27,6 @@ function inputCheck(o,name,len)
 function addEmployee()
 {
 	var valid = true;
-	
 	//에러문장
 	var nameFailMsg="이름은 한글만 입력해야하며, 3~10자 이내로 입력해야합니다.";
 	var pwdFailMsg="비밀번호는 3~20자로 입력해야합니다.";
@@ -42,7 +38,6 @@ function addEmployee()
 	var dept_FailMsg ="부서를 선택해 주세요.";
 	var rank_FailMsg ="직급을 선택해 주세요.";
 	
-
 	var zipcode_FailMsg ="주소를 선택해주세요."; 
 	var emp_addr_FailMsg ="주소를 선택해주세요.";
 	var emp_detailaddr_FailMsg = "상세주소를 입력해주세요.";

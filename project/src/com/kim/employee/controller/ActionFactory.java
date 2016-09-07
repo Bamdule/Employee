@@ -1,8 +1,10 @@
 package com.kim.employee.controller;
 
 import com.kim.common.action.AjaxAddressSearchAction;
+import com.kim.common.action.AjaxEmployeeListAction;
 import com.kim.common.controller.Action;
 import com.kim.employee.action.AjaxEmployeeSpecAddAction;
+import com.kim.employee.action.AjaxSearchEmployeeAction;
 import com.kim.employee.action.EmployeeAddAction;
 import com.kim.employee.action.EmployeeAddFormAction;
 import com.kim.employee.action.EmployeeInfoAction;
@@ -61,7 +63,8 @@ public class ActionFactory {
 			action = new EmployeeSpecAddFormAction();
 		else if(command.equals("ajax_employee_spec_add"))
 			action = new AjaxEmployeeSpecAddAction();
-		
+		else if(command.equals("ajax_search_employee"))
+			action = new AjaxSearchEmployeeAction();
 		return action;
 		
 		

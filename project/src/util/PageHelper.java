@@ -9,7 +9,6 @@ public class PageHelper {
 	private PageHelper() {
 	}
 	
-	
 	public static PageDto getBlockGroup(int curPage, int pagePerRecord, int totalRecord)
 	{
 		/*

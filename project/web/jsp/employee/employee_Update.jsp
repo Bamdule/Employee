@@ -20,7 +20,24 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <script type="text/javascript">
+
+var isManager=${sessionScope.isManager};
 $(function() {
+	
+
+	if(isManager==false){	
+		
+		$("#emp_sal").attr("disabled",true);
+		$("#dept_id").attr("disabled",true);
+		$("#rank_id").attr("disabled",true);	
+	}
+	
+	$("#frm").submit(function(){
+
+		$("#emp_sal").attr("disabled",false);
+		$("#dept_id").attr("disabled",false);
+		$("#rank_id").attr("disabled",false);		
+	});
 	
 	var dialog = $(".addr_search_dialog").dialog({
 	    autoOpen: false,
@@ -100,6 +117,15 @@ $(function() {
 
    
   });
+function cancelFunc(){
+	if(isManager){
+		location.href='EmployeeServlet?command=employee_list';
+	}
+	else{
+		location.href='EmployeeServlet?command=employee_info';
+	}
+	
+}
 </script>
 
 
@@ -398,7 +424,7 @@ $(function() {
 				<div class="bottom">
 					<hr>
 					<input type="submit" value="저장" onclick="return addCheck();">
-					<input type="button" value="취소" onclick="location='EmployeeServlet?command=employee_list';">
+					<input type="button" value="취소" onclick="cancelFunc();">
 				</div>
 			</form>
 		</div>

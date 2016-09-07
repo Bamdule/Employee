@@ -18,8 +18,42 @@
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 <script type="text/javascript">
 
+var empList = new Array();
 $( function() {
-
+	var empList ;
+	var emp_tbody = $(".empListFrame"); 
+    
+    $( "#start_dt" ).datepicker({
+	    	dateFormat: "yy-mm-dd"
+	      , changeYear: true
+	      , changeMonth: true
+	      , onSelect: function(selected) {
+	    	  $( "#end_dt" ).datepicker("option","minDate", selected)
+	    	}
+	      , prevText: '이전 달'
+	      , nextText: '다음 달'
+	      , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+	      , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+	      , dayNames: ['일', '월', '화', '수', '목', '금', '토']
+	      , dayNamesShort: ['일', '월', '화', '수', '목', '금', '토']
+	      , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토']
+	    });
+    
+    $( "#end_dt" ).datepicker({
+    	dateFormat: "yy-mm-dd"
+      , changeYear: true
+      , changeMonth: true
+      , onSelect: function(selected) {
+    	 $( "#start_dt" ).datepicker("option","maxDate", selected)
+    	}
+      , prevText: '이전 달'
+      , nextText: '다음 달'
+      , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+      , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+      , dayNames: ['일', '월', '화', '수', '목', '금', '토']
+      , dayNamesShort: ['일', '월', '화', '수', '목', '금', '토']
+      , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토']
+    });
 });
 
 function data_submit(){
@@ -99,23 +133,27 @@ table {
 						<tbody>
 							<tr>
 								<th><span>프로젝트 이름</span></th>
-								<td></td>
+								<td><input type="text" name="project_name" id="project_name" class="input_type5" maxlength="30"   placeholder="프로젝트 이름을 입력해주세요 "></td>
 							</tr>
 							<tr>
 								<th><span>회사 이름</span></th>
-								<td></td>
+								<td><input type="text" name="corp_name" id="corp_name" class="input_type4"   maxlength="20"   placeholder="회사 이름을 입력해주세요"></td>
 							</tr>
 							<tr>
 								<th><span>회사 구분</span></th>
-								<td></td>
+								<td>
+									<select id="corp_own">
+										<option value="외부" selected="selected">외부</option>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<th><span>시작 일</span></th>
-								<td></td>
+								<td><input type="text" name="start_dt" id="start_dt" class="input_type2" placeholder="프로젝트 시작일"></td>
 							</tr>
 							<tr>
 								<th><span>종료 일</span></th>
-								<td></td>
+								<td><input type="text" name="end_dt" id="end_dt" class="input_type2" placeholder="프로젝트 종료일"></td>
 							</tr>
 							<tr>
 								<th><span>프로젝트 내용</span></th>
@@ -125,7 +163,7 @@ table {
 							</tr>
 							<tr>
 								<th><span>수행역할</span></th>
-								<td></td>
+								<td><input type="text" name="role" id="role" class="input_type3"></td>
 							</tr>
 							
 						</tbody>
@@ -135,8 +173,8 @@ table {
 			</div>
 			<div class="bottom">
 				<div class="btnArea">
-					<input type="button" value="수정" >
-					<input type="button" value="목록" >
+					<input type="button" id="projectSaveBtn" value="프로젝트 저장" onclick="data_submit();">
+					<input type="button" value="취소" >
 				</div>
 			</div>
 		</div>
