@@ -15,32 +15,33 @@
 	
 	function replyElementCreate(replyArrayList)
 	{
-		  $(".replyArea").html("");
-		  for(var index=0;index<replyArrayList.length;index++)  {
-			  var replyArrayStr = JSON.stringify(replyArrayList[index]);
-			  var replyStr=JSON.parse(replyArrayStr);
-			  $(".replyArea").append(
-				"<div class='reply'>"+
-					"<div class='reply_img'></div>"
-				   +"<div class='reply_delete'>"
-				        +"<span class='"+replyStr.reply_id+"'></span>"
-				   +"</div>"
-				   +"<div class='reply_top'>"
-					   	+"<b>"+replyStr.emp_name+"</b><span>"+replyStr.register_dt+"</span>"
-				   +"</div>"
-				   +"<div class='reply_bottom'>"
-				  		 +"<p>"+replyStr.reply_content+"</p></div>"
-				   +"</div>"
-				);
-				var isManager=${sessionScope.isManager};
-				if(isManager==true){
-					$("."+replyStr.reply_id).text("삭제");
-					$("."+replyStr.reply_id).on("click",function(){
-						var pnid=${notice.notice_id};
-					    var prid=$(this).attr("class");
-						replyDelete(pnid,prid);
-					});
-				}
+		$(".replyArea").html("");
+		for(var index=0;index<replyArrayList.length;index++)  {
+		  var replyArrayStr = JSON.stringify(replyArrayList[index]);
+		  var replyStr=JSON.parse(replyArrayStr);
+		  $(".replyArea").append(
+		    "<div class='reply'>"+
+			"<div class='reply_img'></div>"
+		   +"<div class='reply_delete'>"
+		     +"<span class='"+replyStr.reply_id+"'></span>"
+		   +"</div>"
+		   +"<div class='reply_top'>"
+		   +"<b>"+replyStr.emp_name+"</b>"
+		   +"<span>"+replyStr.register_dt+"</span>"
+		   +"</div>"
+		   +"<div class='reply_bottom'>"
+		   +"<p>"+replyStr.reply_content+"</p></div>"
+		   +"</div>"
+		);
+		   var isManager=${sessionScope.isManager};
+		   if(isManager==true){
+		   $("."+replyStr.reply_id).text("삭제");
+		   $("."+replyStr.reply_id).on("click",function(){
+		     var pnid=${notice.notice_id};
+			 var prid=$(this).attr("class");
+			 replyDelete(pnid,prid);
+				});
+			}
 	      }				  
 		  $('html, body').scrollTop(document.body.scrollHeight);  
 	}

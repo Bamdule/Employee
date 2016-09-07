@@ -113,8 +113,8 @@
 			   }).get();
 			  
 			  //학력 입력폼이 한개이고, 입력 폼 안에 값들이 없을 때
-			  if(academic_count==1&& (academic_name[0].value.length==0&&major_name[0].value.length==0&&enter_dt[0].value.length==0&&graduation_dt[0].value.length==0))
-			  {
+			  if(academic_count==1&& (academic_name[0].value.length==0&&major_name[0].value.length==0
+				 &&enter_dt[0].value.length==0&&graduation_dt[0].value.length==0)){
 				academic_Flag=0;			 
 			  }
 			  //입력 폼이 한개 이상일 때, 모든 폼을 검증한다.
@@ -217,7 +217,6 @@
 			   url:"EmployeeServlet?command=ajax_employee_spec_add"
 		     , type:'post'
 			 , data:{
-		 
 				   'emp_id':'${emp_id}'
 				 , 'academic_Flag':academic_Flag
 				 , 'academic_level_selector':changeArray(academic_level_selector)  
@@ -240,7 +239,6 @@
 				 , 'licence_number':changeArray(licence_number)
 				 , 'get_dt':changeArray(get_dt)
 				 , 'ins_type':changeArray(ins_type)
-	 
 			 }
 		     , dataType:'json'
 		     , success:function(result){

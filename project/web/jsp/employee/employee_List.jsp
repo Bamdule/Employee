@@ -141,28 +141,39 @@ form {
 	     	       , 'curPage': curPage
 	    	    }
 	     	     , dataType:"json" 
-	     	     
 	    	     , success:function(result){
 	    	    	 var curPage = result.curPage;
 	    	    	 keyword_value = result.keyword;
-	    	    	 searchField_value = result.searchField;  	    	 
-	    	    	 var jsonArray=JSON.parse(result.empList);//JsonArray로 만든다.
-	    	    	 $(".employee_thead").append("<tr><th>순번</th><th>사번</th><th>이름</th><th>부서</th><th>직급</th><th>입사일</th></tr>");
+	    	    	 searchField_value = result.searchField;  
+	    	    	//JsonArray로 만든다.
+	    	    	 var jsonArray=JSON.parse(result.empList);
+	    	    	 $(".employee_thead").append(
+	    	    	   +"<tr>"
+	    	    	   +"<th>순번</th>"
+	    	    	   +"<th>사번</th>"
+	    	    	   +"<th>이름</th>"
+	    	    	   +"<th>부서</th>"
+	    	    	   +"<th>직급</th>"
+	    	    	   +"<th>입사일</th>"
+	    	    	   +"</tr>");
 	    			 var count = 0;
 	    	    	 for(;count<jsonArray.length;count++){
-	    	    	 	var JsonObject=JSON.stringify(jsonArray[count]);//JsonObject를 한개씩 꺼낸다.
-	    	    	 	var emp =JSON.parse(JsonObject);//JsonObject를 파싱한다.
+	    	    		//JsonObject를 한개씩 꺼낸다.
+	    	    	 	var JsonObject=JSON.stringify(jsonArray[count]);
+	    	    	 	//JsonObject를 파싱한다.
+	    	    	 	var emp =JSON.parse(JsonObject);
 	    	    	 	$(".employee_tbody").append(
-	    	    	 			"<tr class='empRow'>"
-	    						+"<td>"+emp.emp_seq+"</td>"
-	    						+"<td>"+emp.emp_id+"</td>"
-	    						+"<td><a href='EmployeeServlet?command=employee_info&emp_id="+emp.emp_id+"'>"+emp.emp_name+"</a></td>"
-	    						+"<td>"+emp.dept_name+"</td>"
-	    						+"<td>"+emp.rank_name+"</td>"
-	    						+"<td>"+emp.enter_dt+"</td>"
-	    					+"</tr>"	
+	    	    	 	  "<tr class='empRow'>"
+	    				 +"<td>"+emp.emp_seq+"</td>"
+	    				 +"<td>"+emp.emp_id+"</td>"
+	    				 +"<td><a href='EmployeeServlet?command=employee_info&emp_id="+emp.emp_id+"'>"+emp.emp_name+"</a></td>"
+	    				 +"<td>"+emp.dept_name+"</td>"
+	    				 +"<td>"+emp.rank_name+"</td>"
+	    				 +"<td>"+emp.enter_dt+"</td>"
+	    				 +"</tr>"	
 	    	    	 	);
-	    	    	 }
+	    	    	 }     
+	    	    	 
 	    	    	$(".empPaging").append("<div class='pageBlock'><p>");
 	    	        if(result.prevPage!=0){
 		    	    	 $(".empPaging").append("<strong id='prevPage'>[<]</strong>");

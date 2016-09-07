@@ -8,6 +8,7 @@
 <title>Project - 로그인</title>
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
 <script type="text/javascript">
 	$(function(){
 		
@@ -67,7 +68,7 @@
 					<div class="login_title"><h2>Login</h2></div>
 				</div>
 				<div class="middle">
-					<form action="NoticeServlet?command=notice_list" method="post" id="frm">
+					<form action="ProjectServlet?command=main" method="post" id="frm">
 						<div class="id_div">
 							<input type="text" name="emp_id" id="emp_id" value="201608230000" placeholder="User ID">
 						</div>

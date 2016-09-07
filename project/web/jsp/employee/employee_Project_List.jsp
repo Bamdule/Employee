@@ -67,7 +67,7 @@
 		<div class="container">
 			<div class="top">
 				<div class="title">
-					<h2>회사 프로젝트 리스트</h2>
+					<h2>개인 프로젝트 리스트</h2>
 					<hr>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 								<th>프로젝트 이름</th>
 								<th>시작일</th>
 								<th>종료일</th>
-								<th>내/외</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -94,7 +94,12 @@
 									<td>${project.corp_name}</td>
 									<td>${project.start_dt}</td>
 									<td>${project.end_dt}</td>
-									<td>${project.corp_own}</td>
+									<c:if test="${project.corp_own=='내부'}">
+										<td>개인</td>
+									</c:if>
+									<c:if test="${project.corp_own=='외부'}">
+										<td>회사</td>
+									</c:if>
 								</tr>
 							</c:forEach>
 							</c:if>
@@ -105,7 +110,6 @@
 						</c:if>	
 						</tbody>
 					</table>
-
 				</div>
 			</div>
 			<div class="bottom">

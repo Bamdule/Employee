@@ -1,6 +1,7 @@
 package com.kim.project.controller;
 
 import com.kim.common.action.AjaxEmployeeListAction;
+import com.kim.common.action.MainAction;
 import com.kim.common.controller.Action;
 import com.kim.project.action.CorpProjectAddAction;
 import com.kim.project.action.CorpProjectAddFormAction;
@@ -41,6 +42,9 @@ public class ProjectActionFactory {
 			action = new EmpProjectAddFormAction();
 		else if(command.equals("emp_project_add")) // 사원정보 list Ajax호출
 			action = new EmpProjectAddAction();
+		else if(command.equals("main")) // main
+			action = new MainAction();
+		
 		
 		return action;
 	}

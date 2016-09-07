@@ -21,7 +21,7 @@
 		<div class="main_memu">
 			<div class="container">
 				<ul>
-					<li><a href="#">HOME</a></li>
+					<li><a href="ProjectServlet?command=main">HOME</a></li>
 					<li>회사</li>
 					<li>커뮤니티</li>
 					<li>마이페이지</li>
