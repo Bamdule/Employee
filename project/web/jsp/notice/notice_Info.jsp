@@ -48,8 +48,8 @@
 	
 	
 	function replyDelete(nid,rid){
-		alert(nid+" "+rid);
-		if(nid!=undefined && rid!=undefined &&nid!=null &&rid!=null&&nid!="" &&rid!="")
+/* 		alert(nid+" "+rid);
+ */		if(nid!=undefined && rid!=undefined &&nid!=null &&rid!=null&&nid!="" &&rid!="")
 		{
 			$.ajax({
 				url: "NoticeServlet?command=noticereply_delete&notice_id="+nid+"&reply_id="+rid

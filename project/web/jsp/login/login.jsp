@@ -70,10 +70,10 @@
 				<div class="middle">
 					<form action="ProjectServlet?command=main" method="post" id="frm">
 						<div class="id_div">
-							<input type="text" name="emp_id" id="emp_id" value="201608230000" placeholder="User ID">
+							<input type="text" name="emp_id" id="emp_id"  placeholder="User ID">
 						</div>
 						<div class="password_div">
-							<input type="password" name="emp_pwd" id="emp_pwd" value="1234" placeholder="User Password">
+							<input type="password" name="emp_pwd" id="emp_pwd"  placeholder="User Password">
 						</div>
 						<div class="login_div">
 							<input type="submit" value="로그인">

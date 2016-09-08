@@ -9,6 +9,7 @@
 
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="js/project_validation.js"></script>
 <!--datePicker-->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -24,22 +25,14 @@
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
 <script type="text/javascript">
 
-/* <!-- 
-private String project_id;
-private String project_name;
-private String corp_name;
-private String start_dt;
-private String end_dt;	
-private String project_content;
-private String corp_own;
-private String remarks; --> */
-
-
 var empList = new Array();
 $( function() {
 
-	$("#projectSaveBtn").on("click",function(){
 	
+	settingDataPicker($("#start_dt"),$("#end_dt"));
+	$("#projectSaveBtn").on("click",function(){
+		if(!submitCheck())
+			return false;
 		//var skills =[];
 		var skills=$(".skillsArea :checked").map(function(){
 			return this.value;
@@ -49,14 +42,14 @@ $( function() {
 			return this.value;
 		}).get();
 		
-		for(var i=0; i<skills.length;i++){
+/* 		for(var i=0; i<skills.length;i++){
 			console.log(skills[i]);		
 		}
 		for(var j=0;j<empList.length;j++)
 			console.log(empList[j]);
 		
 		for(var j=0;j<emp_roles.length;j++)
-			console.log(emp_roles[j]);
+			console.log(emp_roles[j]); */
 		
 		
 		$.ajax({
@@ -75,11 +68,9 @@ $( function() {
     	    	 	 }
      	     , dataType:"json" 
     	     , success:function(result){
-    	    	 if(result!=false)
-    	    	 {
+    	    		console.log(result);
     	    		location.href="ProjectServlet?command=corp_project_info&project_id="+result; 
-    	    	 }else
-    	    	 	console.log('실패');
+    	    	
     	    }
     	}); 
 		
@@ -193,6 +184,41 @@ $( function() {
 	   		 }); 
     	}
         dialog.dialog( "close" );
+    }
+	
+    function settingDataPicker(start,end)
+    {
+    	start.datepicker({
+   	    	dateFormat: "yy-mm-dd"
+   	      , changeYear: true
+   	      , changeMonth: true
+   	      , onSelect: function(selected) {
+   	    	end.datepicker("option","minDate", selected)
+   	    	}
+   	      , prevText: '이전 달'
+   	      , nextText: '다음 달'
+   	      , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+   	      , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+   	      , dayNames: ['일', '월', '화', '수', '목', '금', '토']
+   	      , dayNamesShort: ['일', '월', '화', '수', '목', '금', '토']
+   	      , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토']
+   	    });
+   	    
+    	end.datepicker({
+   	    	dateFormat: "yy-mm-dd"
+   	      , changeYear: true
+   	      , changeMonth: true
+   	      , onSelect: function(selected) {
+   	    	start.datepicker("option","maxDate", selected)	
+   	   		}
+   	      , prevText: '이전 달'
+	   	  , nextText: '다음 달'
+	   	  , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+	   	  , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+	   	  , dayNames: ['일', '월', '화', '수', '목', '금', '토']
+	   	  , dayNamesShort: ['일', '월', '화', '수', '목', '금', '토']
+	   	  , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] 
+   	    });
     }
 
 });

@@ -316,11 +316,11 @@ function cancelFunc(){
 						<div class="input_frame">
 							<div class="input_title_frame">
 								<div class="input_title_name">
-									<p>급여</p>
+									<p>연봉</p>
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="text" id="emp_sal" name="emp_sal" value="${employee.emp_sal}" class="input2" placeholder="단위  : 만 " />
+								<input type="text" id="emp_sal" name="emp_sal" value="${employee.emp_sal}" class="input2" placeholder="단위  : 만 원 " />
 							</div>
 						</div>
 						<hr>

@@ -82,7 +82,7 @@
 								<th>프로젝트 이름</th>
 								<th>시작일</th>
 								<th>종료일</th>
-								<th></th>
+								<th>구분</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -90,7 +90,7 @@
 							<c:forEach var="project" items="${projectList}">
 								<tr>
 									<td>${project.project_seq}</td>
-									<td><a href="ProjectServlet?command=corp_project_info&project_id=${project.project_id}">${project.project_name}</a></td>
+									<td><a href="#">${project.project_name}</a></td>
 									<td>${project.corp_name}</td>
 									<td>${project.start_dt}</td>
 									<td>${project.end_dt}</td>

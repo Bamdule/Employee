@@ -265,11 +265,11 @@ $("#dialog_search_btn").on("click",function(){
 						<div class="input_frame">
 							<div class="input_title_frame">
 								<div class="input_title_name">
-									<p>급여</p>
+									<p>연봉</p>
 								</div>
 							</div>
 							<div class="input_content">
-								<input type="number" id="emp_sal" name="emp_sal" class="input2" placeholder="단위  : 만 " />
+								<input type="number" id="emp_sal" name="emp_sal" class="input2" placeholder="단위  : 만 원" />
 							</div>
 						</div>
 						<hr>

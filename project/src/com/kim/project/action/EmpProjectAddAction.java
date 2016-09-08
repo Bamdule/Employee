@@ -40,7 +40,7 @@ public class EmpProjectAddAction implements Action {
 			pDto.setProject_content(project_content);
 			pDto.setStart_dt(start_dt);
 			pDto.setEnd_dt(end_dt);
-			pDto.setCorp_own("외부");
+			pDto.setCorp_own("내부");
 			pDto.setRole(role);
 			
 			System.out.println(pDto);

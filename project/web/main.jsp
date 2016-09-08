@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Project - main </title>
 
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
@@ -46,10 +46,11 @@
 	border-color: #f1f1f1;
 }
 .notice {
-	width : 45%;
+	width : 47%;
 	float: right;
 }
 .notice th {
+	font-size:12px;
 	height: 25px;
 	font-weight: bold;
 	border-bottom:1px solid black;
@@ -57,9 +58,15 @@
 
 .notice td {
 
+	font-size:12px;
 	text-align: left;
 	height: 35px;
 	border-bottom: 1px solid #eee;
+	
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	
 }
 
 .notice tr {
@@ -80,7 +87,7 @@ table thead {
 text-align:center;
 }
 .projectArea {
-	width:45%;
+	width:47%;
 	float: left;
 }
 
@@ -92,13 +99,17 @@ text-align:center;
 }
 
 .projectArea th {
+	font-size:12px;
 	height: 25px;
 	font-weight: bold;
 	
+	text-align: left;
 	border-bottom: 1px solid black;
 }
 
 .projectArea td {
+
+	font-size:12px;
 	text-align: left;
 	height: 35px;
 	border-bottom: 1px solid #eee;
@@ -163,25 +174,25 @@ text-align:center;
 				<table>
 					<thead>
 						<tr>
-							<th>순번</th>
-							<th>프로젝트 이름</th>
-							<th>회사</th>
-							<th>시작일</th>
-							<th>종료일</th>
-							<th>인원</th>
-							<th>내/외</th>
+							<th style="text-align: center;">순번</th>
+							<th style="text-align: center;">프로젝트 이름</th>
+							<th style="text-align: center;">회사</th>
+							<th style="text-align: center;">시작일</th>
+							<th style="text-align: center;">종료일</th>
+							<th style="text-align: center;">인원</th>
+							<th style="text-align: center;">내/외</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="project" items="${projectList}">
 							<tr>
-								<td>${project.project_seq}</td>
+								<td style="text-align: center;">${project.project_seq}</td>
 								<td><a href="ProjectServlet?command=corp_project_info&project_id=${project.project_id}">${project.project_name}</a></td>
-								<td>${project.corp_name}</td>
-								<td>${project.start_dt}</td>
-								<td>${project.end_dt}</td>
-								<td>${project.join_num}</td>
-								<td>${project.corp_own}</td>
+								<td style="text-align: center;">${project.corp_name}</td>
+								<td style="text-align: center;">${project.start_dt}</td>
+								<td style="text-align: center;">${project.end_dt}</td>
+								<td style="text-align: center;">${project.join_num}</td>
+								<td style="text-align: center;">${project.corp_own}</td>
 							</tr>
 						</c:forEach>	
 					</tbody>
@@ -190,23 +201,23 @@ text-align:center;
 			<div class="notice">
 				<p><span>공지사항</span><a href="NoticeServlet?command=notice_list">more</a></p>
 				<table>
-					<thead class="notice_list" >
+					<thead class="notice_list">
 						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>작성일자</th>
-							<th>조회수</th>
+							<th style="text-align: center;">번호</th>
+							<th style="text-align: center;">제목</th>
+							<th style="text-align: center;">작성자</th>
+							<th style="text-align: center;">작성일</th>
+							<th style="text-align: center;">조회수</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="notice" items="${noticeList}">
 							<tr class="noticeRow">
-								<td>${notice.seq }</td>
+								<td style="text-align: center;">${notice.seq }</td>
 								<td><a href="NoticeServlet?command=notice_info&notice_id=${notice.notice_id }">${notice.notice_title }</a></td>
-								<td><a href="NoticeServlet?command=notice_info&notice_id=${notice.notice_id }">${notice.emp_name }</a></td>
-								<td>${notice.register_dt }</td>
-								<td>${notice.readcount }</td>
+								<td style="text-align: center;"><a href="NoticeServlet?command=notice_info&notice_id=${notice.notice_id }">${notice.emp_name }</a></td>
+								<td style="text-align: center;">${notice.register_dt }</td>
+								<td style="text-align: center;">${notice.readcount }</td>
 							</tr>
 						</c:forEach>
 					</tbody>

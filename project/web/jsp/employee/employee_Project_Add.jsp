@@ -143,7 +143,7 @@ table {
 								<th><span>회사 구분</span></th>
 								<td>
 									<select id="corp_own">
-										<option value="외부" selected="selected">외부</option>
+										<option value="내부" selected="selected">개인</option>
 									</select>
 								</td>
 							</tr>

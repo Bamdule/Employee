@@ -243,7 +243,7 @@
 		     , dataType:'json'
 		     , success:function(result){
 		    	console.log("result : "+result);
-		    	if(result==true)
+		    	
 		    	 location.href='EmployeeServlet?command=employee_info&emp_id=${emp_id}';
 		     },
 		     error:function(request,status,error){

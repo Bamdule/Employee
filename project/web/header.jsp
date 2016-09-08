@@ -8,7 +8,7 @@
 				<p><strong>[ ${sessionScope.emp_name} 님 ] </strong> <a href="LogoutServlet"><strong>로그아웃</strong></a></p>
 			</div>
 			<div class="main_title">
-				<h1>Community</h1>
+				<p>Community</p>
 			</div>
 			<div class="sub_title">
 				<p>Simple Style</p>

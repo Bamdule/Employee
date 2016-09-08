@@ -9,6 +9,11 @@
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript">
+	$(function(){
+		$("#frm").submit(function(){
+			return submitCheck();
+		});
+	});
 </script>
 <link type="text/css" rel="stylesheet" href="css/common.css"></link>
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
@@ -85,8 +90,8 @@ table {
 				</div>
 				<div class="bottom">
 					<div class="btnArea">
-						<input type="submit" value="저장"> <input type="button"
-							value="취소" onclick="location.href='NoticeServlet';">
+						<input type="submit" value="저장" id="frm"> 
+						<input type="button" value="취소" onclick="location.href='NoticeServlet';">
 					</div>
 				</div>
 			</form>

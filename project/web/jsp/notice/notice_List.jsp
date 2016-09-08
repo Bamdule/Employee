@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Project - 공지사항 리스트 </title>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 <script>
 	$(function() {
