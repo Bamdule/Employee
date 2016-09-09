@@ -15,7 +15,6 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-
 <!--Tabs-->
 
 
@@ -34,9 +33,8 @@
  
 
 <script type="text/javascript">
-$( function() {
+$(function(){
    
-	
 	$( "#tabs" ).tabs({
     	activate: function( event, ui ) { 
     		switch(ui.newTab.index())
@@ -53,14 +51,34 @@ $( function() {
     		}
     	}
     });
-  });
+	
+	$("#staff_spec_update_btn").click(function(){
+		$("#command").val("employee_spec_updateform");
+		$("#frm").submit();
+		
+	});
+	$("#staff_info_update_btn").click(function(){
+		$("#command").val("employee_updateform");
+		$("#frm").submit();
+		
+	});
+});
 </script>
 <style>
+
+	.btnArea{
+		margin-top:30px;
+		text-align: right;
+	}
+	.btnArea input {
+		width: 100px;
+		height: 30px;
+		
+	}
 	.spec_info table{
 		width: 100%;
 		border-collapse: collapse;
 	}
-	
 	.spec_info tr{
 	
 	}
@@ -75,6 +93,10 @@ $( function() {
 		font-size:13px;
 		border-bottom: 1px solid #eee;
 	}
+	.bottom input{
+		width:100px;
+		height:30px;
+	}
 </style>
 
 </head>
@@ -83,7 +105,7 @@ $( function() {
 	<div id="main">
 		<div class="container">
 			<form action="EmployeeServlet" method="post" name="frm" id="frm">
-				<input type="hidden" value="employee_updateform" name="command">
+				<input type="hidden" id="command" name="command">
 				<input type="hidden" name="h_empid" value="${employee.emp_id }" />
 				<div class="top">
 					<div class="title">
@@ -267,10 +289,12 @@ $( function() {
 							</div>
 						</div>
 						<hr>
-
+						<div class="btnArea">
+						<input type="button" id="staff_info_update_btn" value="사원 정보 수정">
+						</div>
 					</div> 
 					<div class="spec_info">
-						<h2>기타 정보</h2>
+						<h2>추가 정보</h2>
 						
 						<div id="tabs">
 						<ul>
@@ -358,9 +382,9 @@ $( function() {
 				</div>
 				<div class="bottom">
 				<hr>
-					<input type="submit" value="수정">
+					<input type="button" value="추가 정보 수정" id="staff_spec_update_btn">
 					<c:if test="${sessionScope.isManager!=false}">
-						<input type="button" value="목록" onclick="location='EmployeeServlet?command=employee_list';">
+						<input type="button" value="목록" onclick="history.go(-1);">
 					</c:if>
 				</div>
 			</form>

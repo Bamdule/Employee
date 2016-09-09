@@ -23,6 +23,9 @@
 #main .middle{
 	height:350px;
 }
+.container{
+	width:1300px;
+}
 .imgSize{
 
 	text-align:center;

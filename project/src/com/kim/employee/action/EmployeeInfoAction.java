@@ -24,10 +24,17 @@ public class EmployeeInfoAction  implements Action{
 		
 		String param_emp_id=(String)request.getParameter("emp_id");
 		String emp_id= (param_emp_id==null)?(String)request.getAttribute("emp_id"):param_emp_id;
+	
 		
 		HttpSession session = request.getSession();
+		String update_emp_id=(String)session.getAttribute("update_emp_id");
+		session.setAttribute("update_emp_id", null);
+		
 		if(emp_id!=null)		
 		{
+		}
+		else if(update_emp_id!=null){
+			emp_id=update_emp_id;
 		}
 		else if(session.getAttribute("emp_id")!=null)
 		{

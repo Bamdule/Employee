@@ -1,31 +1,35 @@
 @CHARSET "UTF-8";
 
-
-
 #header .top {
 	width: 100%;
 	height: 200px;
 }
 
-#header .top .container {
-	background-color: #eeeeee;
+#header .top {
+	width: 100%;
+	background-color: #F6F6F6;}
+
+#header .top .user_info {
+	height: 10%;
+	text-align: right;
 }
 
-/* #header .top h1 {
-	height: 80px;
-	line-height: 130px;
+#header .top .main_title {
+	height: 20%;
 	text-align: center;
-	font-size: 50px;
-} */
-#header .top .user_info{height:10%;text-align: right;}
-#header .top .main_title{height:20%;text-align: center; font-size: 30px;}
-#header .top .sub_title{height:30%;text-align: center; font-size: 30px;}
-
-
-#header h1{
-	display: inline-block;
-	
+	font-size: 30px;
 }
+
+#header .top .sub_title {
+	height: 30%;
+	text-align: center;
+	font-size: 30px;
+}
+
+#header h1 {
+	display: inline-block;
+}
+
 #header .bottom {
 	width: 100%;
 	height: 100px;
@@ -36,8 +40,9 @@
 	height: 50%;
 }
 
-#header .main_memu .container {
-	background-color: #eeeeee;
+#header .main_memu {
+	background-color: #F6F6F6; 
+	width: 100%;
 }
 
 #header .main_memu ul {
@@ -55,10 +60,12 @@
 }
 
 #header .sub_menu {
+	width: 100%;
 	height: 50%;
 }
 
-#header .sub_menu .container {
+#header .sub_menu {
+	width: 100%;
 	background-color: #5D5D5D;
 }
 
@@ -79,5 +86,5 @@
 
 #header .sub_menu a {
 	color: white;
-	cursor:pointer;
+	cursor: pointer;
 }

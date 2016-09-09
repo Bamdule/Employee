@@ -8,8 +8,7 @@
 
 
 #wrap{
-	width: 1200px;
-	 margin: 0 auto;
+	 
 	 
 }
 a {
@@ -23,12 +22,13 @@ ul {
 }
 
 .container {
-	width: 90%;
+	width: 1300px;
 	height: 100%;
 	margin: 0 auto;
 }
 #header .container{
-	width: 90%;
+	width: 1300px;
+	margin: 0 auto;
 }
 .content {
 	width: 100%;

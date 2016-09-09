@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,6 @@
 <script type="text/javascript" src="js/header.js"></script>
 <link type="text/css" rel="stylesheet" href="css/common.css"></link>
 <link type="text/css" rel="stylesheet" href="css/header.css"></link>
-
 <!--datePicker-->
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -22,12 +22,109 @@
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <!--Tabs-->
- <script>
+
+<style type="text/css">
+	#main{
+		height:auto;
+	}
+	
+	.emp_infoArea{
+		height:200px;
+	}
+	
+	.emp_specArea{
+		heigth:auto;
+	}
+	.emp_specArea table{
+		width: 100%;
+		border-collapse: collapse;
+	}
+	
+	.emp_specArea tr{
+	
+	}
+	.emp_specArea td{
+		height:50px;
+		border-bottom: 1px solid #eee;
+		text-align: center;
+	}
+	.emp_specArea th{
+		height:40px;
+		font-size:13px;
+		border-bottom: 1px solid #eee;
+	}
+	.emp_specArea input{
+	width: 150px;
+	}
+	
+	.btnArea {
+		height:100px;
+	}
+	
+	.emp_infoArea table{
+		width: 100%;
+		border-collapse: collapse;
+	}
+	.emp_infoArea tr{
+	
+		height:40px;
+	}
+	.emp_infoArea th{
+		width:20%;
+		border-bottom: 1px solid #eee;
+/* 		background-color: #F6F6F6;	 */
+	}
+	.emp_infoArea td{
+		width:80%;
+		padding-left:10px;
+		border-bottom: 1px solid #eee;		
+	}
+	
+	.specBtnArea{
+		height:30px;
+		text-align: right;
+	}
+	.specBtnArea input{
+		width: 100px;
+	}
+
+	
+	.bottom .btnArea{
+		text-align: right;
+	}
+	
+	.bottom .btnArea{
+		line-height:50px;
+		text-align: right;
+	}
+	
+	.bottom .btnArea input {
+		width: 100px;
+	}
+	
+	
+</style>
+<script>
 	var nameReg=/^[가-힣a-zA-z]{1,20}$/;
 	var IDReg=/^[가-힣a-zA-z0-9]{1,20}$/;
 	var date_Reg=/^(19[2-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
 	var tabSelector=0;
 	
+	  function specDelete(id) {
+	
+		switch(tabSelector)
+	    {
+	    case 0://academic
+	  	  alert("academic : "+id);
+	    	break;
+	    case 1://career
+	    	alert("career : "+id);
+	    	break;
+	    case 2://licence
+	    	alert("licence : "+id);
+	    	break;
+	   	}
+	  }
 	  //스펙 입력란 삭제
 	  function specFormDelete(o)
 	  {
@@ -57,7 +154,7 @@
 		  return o;
 	  }
 	
-  $( function() {
+  $(function() {
 	   //저장 버튼을 눌렀을 때
 	   $("#saveBtn").click(function(){
 
@@ -423,97 +520,17 @@
   });
 </script>
 
-<style type="text/css">
-	#main{
-		height:auto;
-	}
-	
-	.emp_infoArea{
-		height:200px;
-	}
-	
-	.emp_specArea{
-		heigth:auto;
-	}
-	.emp_specArea table{
-		width: 100%;
-		border-collapse: collapse;
-	}
-	
-	.emp_specArea tr{
-	
-	}
-	.emp_specArea td{
-		height:50px;
-		border-bottom: 1px solid #eee;
-		text-align: center;
-	}
-	.emp_specArea th{
-		height:40px;
-		font-size:13px;
-		border-bottom: 1px solid #eee;
-	}
-	.emp_specArea input{
-	width: 150px;
-	}
-	
-	.btnArea {
-		height:100px;
-	}
-	
-	.emp_infoArea table{
-		width: 100%;
-		border-collapse: collapse;
-	}
-	.emp_infoArea tr{
-	
-		height:40px;
-	}
-	.emp_infoArea th{
-		width:20%;
-		border-bottom: 1px solid #eee;
-/* 		background-color: #F6F6F6;	 */
-	}
-	.emp_infoArea td{
-		width:80%;
-		padding-left:10px;
-		border-bottom: 1px solid #eee;		
-	}
-	
-	.specBtnArea{
-		height:30px;
-		text-align: right;
-	}
-	.specBtnArea input{
-		width: 100px;
-	}
 
-	
-	.bottom .btnArea{
-		text-align: right;
-	}
-	
-	.bottom .btnArea{
-		line-height:50px;
-		text-align: right;
-	}
-	
-	.bottom .btnArea input {
-		width: 100px;
-	}
-	
-	
-</style>
 </head>
 <body>
-	<div id="wrap">
+<div id="wrap">
 	
 	<jsp:include page="/header.jsp"></jsp:include>
 	<div id="main">
 		<div class="container">
 			<div class="top">
 				<div class="title">
-					<h2>사원 추가 정보</h2>
+					<h2>사원 추가 정보 수정</h2>
 					<hr>
 				</div>
 			</div>
@@ -568,6 +585,17 @@
 									</tr>
 								</thead>
 								<tbody id="academic_tbody">
+									<c:forEach var="academic" items="${academicList}">
+										<tr>
+											<td>${academic.academic_lev_name}</td>
+											<td>${academic.academic_name}</td>
+											<td>${academic.major_name}</td>
+											<td>${academic.academic_status_name}</td>
+											<td>${academic.enter_dt}</td>
+											<td>${academic.graduation_dt}</td>
+											<td onclick="specDelete(${academic.academic_seq});">삭제</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -584,6 +612,16 @@
 									</tr>
 								</thead>
 								<tbody id="career_tbody">	
+									<c:forEach var="career" items="${careerList}">
+										<tr>
+											<td>${career.corp_name}</td>
+											<td>${career.rank_name}</td>
+											<td>${career.emp_role}</td>
+											<td>${career.career_enter_dt}</td>
+											<td>${career.career_retire_dt}</td>
+											<td onclick="specDelete(${career.career_seq});">삭제</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>	
 						</div>
@@ -600,6 +638,16 @@
 									</tr>
 								</thead>
 								<tbody id="licence_tbody">
+									<c:forEach var="licence" items="${licenceList}">
+										<tr>
+											<td>${licence.institution}</td>
+											<td>${licence.licence_name}</td>
+											<td>${licence.licence_number}</td>
+											<td>${licence.get_dt}</td>
+											<td>${licence.ins_type}</td>
+											<td onclick="specDelete(${licence.licence_seq});">삭제</td>
+										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

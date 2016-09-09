@@ -1,6 +1,7 @@
 package com.kim.employee.dto;
 
 public class EmpAcademicDto {
+	private String academic_seq;
 	private String emp_id;
 	private String academic_lev_id;
 	private String academic_lev_name;
@@ -13,6 +14,12 @@ public class EmpAcademicDto {
 	
 	
 	
+	public String getAcademic_seq() {
+		return academic_seq;
+	}
+	public void setAcademic_seq(String academic_seq) {
+		this.academic_seq = academic_seq;
+	}
 	public String getAcademic_lev_name() {
 		return academic_lev_name;
 	}
@@ -69,10 +76,11 @@ public class EmpAcademicDto {
 	}
 	@Override
 	public String toString() {
-		return "EmpAcademicDto [emp_id=" + emp_id + ", academic_lev_id=" + academic_lev_id + ", academic_lev_name="
-				+ academic_lev_name + ", academic_status_id=" + academic_status_id + ", academic_status_name="
-				+ academic_status_name + ", academic_name=" + academic_name + ", major_name=" + major_name
-				+ ", enter_dt=" + enter_dt + ", graduation_dt=" + graduation_dt + "]";
+		return "EmpAcademicDto [academic_seq=" + academic_seq + ", emp_id=" + emp_id + ", academic_lev_id="
+				+ academic_lev_id + ", academic_lev_name=" + academic_lev_name + ", academic_status_id="
+				+ academic_status_id + ", academic_status_name=" + academic_status_name + ", academic_name="
+				+ academic_name + ", major_name=" + major_name + ", enter_dt=" + enter_dt + ", graduation_dt="
+				+ graduation_dt + "]";
 	}
 	
 	

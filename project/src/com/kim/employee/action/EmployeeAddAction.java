@@ -2,13 +2,13 @@ package com.kim.employee.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kim.common.controller.Action;
 import com.kim.common.dto.SkillDto;
@@ -16,7 +16,6 @@ import com.kim.employee.dao.EmployeeDao;
 import com.kim.employee.dto.EmployeeDto;
 import com.oreilly.servlet.MultipartRequest;
 
-import util.CreateEmployeeID;
 import util.UploadManager;
 
 public class EmployeeAddAction implements Action {
@@ -26,6 +25,8 @@ public class EmployeeAddAction implements Action {
 		request.setCharacterEncoding("UTF-8");
 		String url = "EmployeeServlet?command=employee_spec_addform";
 
+		
+		HttpSession session =request.getSession();
 		EmployeeDao dao = EmployeeDao.getInstance();
 		EmployeeDto dto = new EmployeeDto();
 		MultipartRequest multi = UploadManager.getMultiPartRequest(request);
@@ -62,12 +63,14 @@ public class EmployeeAddAction implements Action {
 		
 		if (!dao.insertEmployeeInfo(dto)) {
 			url = "EmployeeServlet?command=employee_addform";
+			RequestDispatcher disp = request.getRequestDispatcher(url);
+			disp.forward(request, response);
 		}
-		else
-			request.setAttribute("emp_id", dto.getEmp_id());
-		
-		RequestDispatcher disp = request.getRequestDispatcher(url);
-		disp.forward(request, response);
+		else{
+			session.setAttribute("new_emp_id", dto.getEmp_id());
+			response.sendRedirect(url);
+			
+		}
 
 	}
 

@@ -1,12 +1,20 @@
 package com.kim.employee.dto;
 
 public class EmpLicenceDto {
+	private String licence_seq;
 	private String institution;
 	private String licence_name;
 	private String licence_number;
 	private String get_dt;
 	private String ins_type;
 	
+	
+	public String getLicence_seq() {
+		return licence_seq;
+	}
+	public void setLicence_seq(String licence_seq) {
+		this.licence_seq = licence_seq;
+	}
 	public String getInstitution() {
 		return institution;
 	}
@@ -39,8 +47,9 @@ public class EmpLicenceDto {
 	}
 	@Override
 	public String toString() {
-		return "EmpLicenceDto [institution=" + institution + ", licence_name=" + licence_name + ", licence_number="
-				+ licence_number + ", get_dt=" + get_dt + ", ins_type=" + ins_type + "]";
+		return "EmpLicenceDto [licence_seq=" + licence_seq + ", institution=" + institution + ", licence_name="
+				+ licence_name + ", licence_number=" + licence_number + ", get_dt=" + get_dt + ", ins_type=" + ins_type
+				+ "]";
 	}
 	
 	

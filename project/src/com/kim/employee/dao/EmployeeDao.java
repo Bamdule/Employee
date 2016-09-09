@@ -583,8 +583,8 @@ public class EmployeeDao {
 				pstmt.setString(2, careerList.get(i).getCorp_name());
 				pstmt.setString(3, careerList.get(i).getRank_name());
 				pstmt.setString(4, careerList.get(i).getEmp_role());
-				pstmt.setString(5, careerList.get(i).getCareer_enter_dt());
-				pstmt.setString(6, careerList.get(i).getCareer_retire_dt());
+				pstmt.setString(5, careerList.get(i).getCareer_enter_dt().substring(0, 10));
+				pstmt.setString(6, careerList.get(i).getCareer_retire_dt().substring(0, 10));
 			
 				if(pstmt.executeUpdate()!=1)
 					result=false;
@@ -612,7 +612,7 @@ public class EmployeeDao {
 				pstmt.setString(2, licenceList.get(i).getInstitution());
 				pstmt.setString(3, licenceList.get(i).getLicence_name());
 				pstmt.setString(4, licenceList.get(i).getLicence_number());
-				pstmt.setString(5, licenceList.get(i).getGet_dt());
+				pstmt.setString(5, licenceList.get(i).getGet_dt().substring(0, 10));
 				pstmt.setString(6, licenceList.get(i).getIns_type());
 			
 				if(pstmt.executeUpdate()!=1)
@@ -653,10 +653,11 @@ public class EmployeeDao {
 				eaDto =new EmpAcademicDto();
 				eaDto.setAcademic_lev_name(rs.getString(1));
 				eaDto.setAcademic_status_name(rs.getString(2));
+				eaDto.setAcademic_seq(rs.getString("academic_seq"));
 				eaDto.setAcademic_name(rs.getString("academic_name"));
 				eaDto.setMajor_name(rs.getString("major_name"));
-				eaDto.setEnter_dt(rs.getString("enter_dt"));
-				eaDto.setGraduation_dt(rs.getString("graduation_dt"));
+				eaDto.setEnter_dt(rs.getString("enter_dt").substring(0, 10));
+				eaDto.setGraduation_dt(rs.getString("graduation_dt").substring(0, 10));
 				academicList.add(eaDto);
 			}
 		} catch (SQLException e) {
@@ -687,6 +688,7 @@ public class EmployeeDao {
 			while(rs.next())
 			{
 				ecDto =new EmpCareerDto();
+				ecDto.setCareer_seq(rs.getString("career_seq"));
 				ecDto.setCorp_name(rs.getString("corp_name"));
 				ecDto.setRank_name(rs.getString("RANK_NAME"));
 				ecDto.setEmp_role(rs.getString("emp_role"));
@@ -721,6 +723,7 @@ public class EmployeeDao {
 			while(rs.next())
 			{
 				elDto =new EmpLicenceDto();
+				elDto.setLicence_seq(rs.getString("licence_seq"));
 				elDto.setInstitution(rs.getString("institution"));
 				elDto.setLicence_name(rs.getString("licence_name"));
 				elDto.setLicence_number(rs.getString("licence_number"));

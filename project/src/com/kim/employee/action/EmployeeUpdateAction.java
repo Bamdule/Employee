@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kim.common.controller.Action;
 import com.kim.common.dto.SkillDto;
@@ -78,11 +79,14 @@ public class EmployeeUpdateAction implements Action {
 			if(dao.employeeUpdate(dto))
 			{
 				//dto가 성공적으로 업데이트 되었다면 유저id를 setAttribute한다.
-				request.setAttribute("emp_id", dto.getEmp_id());
+				HttpSession session =request.getSession();
+				session.setAttribute("update_emp_id", dto.getEmp_id());
+				response.sendRedirect(url);
 			}
-			
-		RequestDispatcher disp =request.getRequestDispatcher(url);
-		disp.forward(request, response);
+			else{
+				url="EmployeeServlet?command=employee_list";
+				response.sendRedirect(url);
+			}
 		
 		
 	}

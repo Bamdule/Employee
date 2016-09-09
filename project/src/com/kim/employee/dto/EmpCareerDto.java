@@ -1,12 +1,20 @@
 package com.kim.employee.dto;
 
 public class EmpCareerDto {
+	private String career_seq;
 	private String corp_name;
 	private String rank_name;
 	private String emp_role;
 	private String career_enter_dt;
 	private String career_retire_dt;
 	
+	
+	public String getCareer_seq() {
+		return career_seq;
+	}
+	public void setCareer_seq(String career_seq) {
+		this.career_seq = career_seq;
+	}
 	public String getCorp_name() {
 		return corp_name;
 	}
@@ -39,8 +47,9 @@ public class EmpCareerDto {
 	}
 	@Override
 	public String toString() {
-		return "EmpCareerDto [corp_name=" + corp_name + ", rank_name=" + rank_name + ", emp_role=" + emp_role
-				+ ", career_enter_dt=" + career_enter_dt + ", career_retire_dt=" + career_retire_dt + "]";
+		return "EmpCareerDto [career_seq=" + career_seq + ", corp_name=" + corp_name + ", rank_name=" + rank_name
+				+ ", emp_role=" + emp_role + ", career_enter_dt=" + career_enter_dt + ", career_retire_dt="
+				+ career_retire_dt + "]";
 	}
 	
 	
