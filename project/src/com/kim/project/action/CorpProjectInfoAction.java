@@ -32,13 +32,13 @@ public class CorpProjectInfoAction implements Action {
 			skillList=pDao.selectCorpPorjectSkillsById(project_id);
 			empList=pDao.selectCorpPorjectJoinEmpById(project_id);
 			
-			
+		/*	
 			System.out.println("project_id : " + project_id);
 			System.out.println(cpDto);
 			System.out.println(skillList);
 			System.out.println(empList);
-			
-			
+			*/
+			request.setAttribute("project_id", project_id);
 			request.setAttribute("corpProject", cpDto);
 			request.setAttribute("skillList", skillList);
 			request.setAttribute("empList", empList);

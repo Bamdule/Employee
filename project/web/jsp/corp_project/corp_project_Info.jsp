@@ -192,7 +192,7 @@ table {
 		<div class="container">
 			<div class="top">
 				<div class="title">
-					<h2>프로젝트 작성</h2>
+					<h2>프로젝트 상세</h2>
 					<hr>
 				</div>
 			</div>
@@ -237,7 +237,9 @@ table {
 								<th><span>사용 기술</span></th>
 								<td>
 									<c:forEach var="skill" items="${skillList}">
-										<span>${skill.skill_name }, </span>
+										<c:if test="${skill.isChecked =='y'}">
+											<span>${skill.skill_name }, </span>
+										</c:if>								
 									</c:forEach>
 								</td>	
 							</tr>
@@ -287,7 +289,7 @@ table {
 			<div class="bottom">
 				<div class="btnArea">
 					<c:if test="${sessionScope.isManager!=false}">
-						<input type="button" id="projectSaveBtn" value="수정">
+						<input type="button" id="projectSaveBtn" value="수정" onclick="location.href='ProjectServlet?command=corp_project_updateform&project_id=${project_id}'">
 					</c:if>
 					<input type="button" value="목록" onclick="location.href='ProjectServlet?command=corp_project_list';">
 				</div>

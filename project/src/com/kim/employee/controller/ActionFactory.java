@@ -3,6 +3,7 @@ package com.kim.employee.controller;
 import com.kim.common.action.AjaxAddressSearchAction;
 import com.kim.common.controller.Action;
 import com.kim.employee.action.AjaxEmployeeSpecAddAction;
+import com.kim.employee.action.AjaxEmployeeSpecDeleteAction;
 import com.kim.employee.action.AjaxSearchEmployeeAction;
 import com.kim.employee.action.EmployeeAddAction;
 import com.kim.employee.action.EmployeeAddFormAction;
@@ -67,6 +68,9 @@ public class ActionFactory {
 			action = new AjaxSearchEmployeeAction();
 		else if(command.equals("employee_spec_updateform"))
 			action = new EmployeeSpecUpdateFormAction();
+		else if(command.equals("ajax_employee_spec_delete"))
+			action = new AjaxEmployeeSpecDeleteAction();
+		
 		return action;
 		
 		

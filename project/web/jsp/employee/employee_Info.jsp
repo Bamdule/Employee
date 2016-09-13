@@ -383,8 +383,8 @@ $(function(){
 				<div class="bottom">
 				<hr>
 					<input type="button" value="추가 정보 수정" id="staff_spec_update_btn">
-					<c:if test="${sessionScope.isManager!=false}">
-						<input type="button" value="목록" onclick="history.go(-1);">
+ 					<c:if test="${sessionScope.isManager!=false}">
+						<input type="button" value="목록" onclick="location.href='EmployeeServlet?command=employee_list'">
 					</c:if>
 				</div>
 			</form>

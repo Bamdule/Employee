@@ -416,10 +416,6 @@ function cancelFunc(){
 						<hr>
 
 					</div>
-					<div class="spec_info">
-						<h2>기타 정보</h2>
-						<hr class="top_hr">
-					</div>
 				</div>
 				<div class="bottom">
 					<hr>

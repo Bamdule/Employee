@@ -1,10 +1,7 @@
 package com.kim.project.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,19 +10,14 @@ import com.kim.common.controller.Action;
 import com.kim.project.dao.ProjectDao;
 import com.kim.project.dto.CorpProjectDto;
 
-public class CorpProjectAddAction implements Action {
+public class CorpProjectUpdateAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		boolean result=false;
-		String data = request.getParameter("projectInfo");
-		System.out.println(data);
-		ProjectDao pDao = ProjectDao.getInstance();
-		String project_id = pDao.getNextCorpProjectId();
 	
 		CorpProjectDto cpDto =new CorpProjectDto();
-		cpDto.setProject_id(project_id);
+		cpDto.setProject_id(request.getParameter("project_id"));
 		cpDto.setProject_name(request.getParameter("project_name"));
 		cpDto.setCorp_name(request.getParameter("corp_name"));
 		cpDto.setStart_dt(request.getParameter("start_dt"));
@@ -33,18 +25,22 @@ public class CorpProjectAddAction implements Action {
 		cpDto.setProject_content(request.getParameter("project_content"));
 		cpDto.setCorp_own(request.getParameter("corp_own"));
 		cpDto.setRemarks(request.getParameter("remarks"));
-		System.out.println(cpDto);
+
 
 		String[] skills=request.getParameterValues("skills[]");
 		String[] empList=request.getParameterValues("empList[]");
 		String[] emp_Roles=request.getParameterValues("emp_roles[]");
 		
+		System.out.println(cpDto);
+		System.out.println(skills);
+		System.out.println(empList);
+		System.out.println(emp_Roles);
 
 		boolean corp_projec_skills=true;
 		boolean corp_project_join_emp=true;
 		
 	
-		boolean insertCorpProject = pDao.insertCorpProject(cpDto);
+	/*	boolean insertCorpProject = pDao.insertCorpProject(cpDto);
 		if(insertCorpProject){
 			System.out.println(cpDto);
 			if(empList!=null && empList.length!=0){
@@ -64,9 +60,10 @@ public class CorpProjectAddAction implements Action {
 		
 		
 		System.out.println(result);
+		*/
 		response.setContentType("application/x-json; charset=UTF-8");
 		if(result){
-			response.getWriter().print(project_id);
+			response.getWriter().print(cpDto.getProject_id());
 		}
 		else{
 			response.getWriter().print("false");

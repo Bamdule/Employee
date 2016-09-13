@@ -7,6 +7,8 @@ import com.kim.project.action.CorpProjectAddAction;
 import com.kim.project.action.CorpProjectAddFormAction;
 import com.kim.project.action.CorpProjectInfoAction;
 import com.kim.project.action.CorpProjectListAction;
+import com.kim.project.action.CorpProjectUpdateAction;
+import com.kim.project.action.CorpProjectUpdateFormAction;
 import com.kim.project.action.EmpProjectAddAction;
 import com.kim.project.action.EmpProjectAddFormAction;
 import com.kim.project.action.EmpProjectListAction;
@@ -36,14 +38,18 @@ public class ProjectActionFactory {
 			action = new CorpProjectInfoAction();
 		else if(command.equals("ajax_emp_list")) // 사원정보 list Ajax호출
 			action = new AjaxEmployeeListAction();	
-		else if(command.equals("emp_project_list")) // 사원정보 list Ajax호출
+		else if(command.equals("emp_project_list")) // 
 			action = new EmpProjectListAction();
-		else if(command.equals("emp_project_addform")) // 사원정보 list Ajax호출
+		else if(command.equals("emp_project_addform")) // 
 			action = new EmpProjectAddFormAction();
-		else if(command.equals("emp_project_add")) // 사원정보 list Ajax호출
+		else if(command.equals("emp_project_add")) // 
 			action = new EmpProjectAddAction();
 		else if(command.equals("main")) // main
 			action = new MainAction();
+		else if(command.equals("corp_project_updateform")) //
+			action = new CorpProjectUpdateFormAction();
+		else if(command.equals("corp_project_update")) //
+			action = new CorpProjectUpdateAction();
 		
 		
 		return action;

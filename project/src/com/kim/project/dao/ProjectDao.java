@@ -199,14 +199,13 @@ public class ProjectDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, project_id);
 			rs=pstmt.executeQuery();
-			if(rs.next())
-			{
+			if(rs.next()){
 				cpDto=new CorpProjectDto();
 				cpDto.setProject_id(rs.getString("PROJECT_ID"));
 				cpDto.setProject_name(rs.getString("PROJECT_NAME"));
 				cpDto.setCorp_name(rs.getString("CORP_NAME"));
-				cpDto.setStart_dt(rs.getString("START_DT"));
-				cpDto.setEnd_dt(rs.getString("END_DT"));
+				cpDto.setStart_dt(rs.getString("START_DT").substring(0, 10));
+				cpDto.setEnd_dt(rs.getString("END_DT").substring(0, 10));
 				cpDto.setProject_content(rs.getString("PROJECT_CONTENT"));
 				cpDto.setCorp_own(rs.getString("CORP_OWN"));
 				cpDto.setRemarks(rs.getString("REMARKS"));
@@ -258,10 +257,11 @@ public class ProjectDao {
 	
 	public List<SkillDto> selectCorpPorjectSkillsById(String project_id){
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT cps.* , s.SKILL_NAME ");
-		sql.append("FROM CORP_PROJECT_SKILL cps, SKILL s ");
-		sql.append("WHERE cps.project_id=? ");
-		sql.append("AND cps.SKILL_ID=s.SKILL_ID");
+		
+		sql.append("SELECT s.SKILL_ID, s.SKILL_NAME, NVL2(ps.skill_id, 'y', 'n') isChecked ");
+		sql.append("FROM SKILL s left outer JOIN (SELECT * FROM CORP_PROJECT_SKILL WHERE PROJECT_ID =?) ps ");
+		sql.append("ON s.SKILL_ID = ps.SKILL_ID ");
+		
 		List<SkillDto> skillList = null;
 		SkillDto sDto = null;
 	
@@ -279,6 +279,7 @@ public class ProjectDao {
 				sDto=new SkillDto();
 				sDto.setSkill_id(rs.getString("skill_id"));
 				sDto.setSkill_name(rs.getString("skill_name"));
+				sDto.setIsChecked(rs.getString("isChecked"));
 				skillList.add(sDto);
 			}
 		}

@@ -15,6 +15,7 @@ import com.kim.employee.dto.DepartmentDto;
 import com.kim.employee.dto.EmpAcademicDto;
 import com.kim.employee.dto.EmpCareerDto;
 import com.kim.employee.dto.EmpLicenceDto;
+import com.kim.employee.dto.Emp_Role;
 import com.kim.employee.dto.EmployeeDto;
 import com.kim.employee.dto.RankDto;
 
@@ -770,13 +771,13 @@ public class EmployeeDao {
 			else{
 				sql.append("SELECT E.emp_id, E.emp_name, E.enter_dt ,E.dept_name ,E.rank_name ");
 				sql.append("FROM ( SELECT ROWNUM Ro, E.* ");  
-					   sql.append("FROM ( SELECT E.emp_id ,E.emp_name, E.enter_dt ,E.dept_id ,E.rank_id,d.DEPT_NAME,r.RANK_NAME "); 
-				              sql.append("FROM EMPLOYEE E left outer join department d ");
-								sql.append("on E.dept_id = d.dept_id ");
-								sql.append("left outer join rank r "); 
-								sql.append("on E.rank_id = r.rank_id ");                                         
-								sql.append("WHERE "+searchField+" LIKE ? ");
-						 		sql.append("ORDER BY enter_dt DESC) E) E "); 
+				sql.append("FROM ( SELECT E.emp_id ,E.emp_name, E.enter_dt ,E.dept_id ,E.rank_id,d.DEPT_NAME,r.RANK_NAME "); 
+				sql.append("FROM EMPLOYEE E left outer join department d ");
+				sql.append("on E.dept_id = d.dept_id ");
+				sql.append("left outer join rank r "); 
+				sql.append("on E.rank_id = r.rank_id ");                                         
+				sql.append("WHERE "+searchField+" LIKE ? ");
+				sql.append("ORDER BY enter_dt DESC) E) E "); 
 				sql.append("WHERE Ro BETWEEN ? AND ? ");	
 				pstmt=conn.prepareStatement(sql.toString());
 				pstmt.setString(1, "%"+keyword+"%");
@@ -805,8 +806,7 @@ public class EmployeeDao {
 		}
 		return empList;
 	}
-	public int getSearchEmployeeCount(String searchField,String keyword)
-	{
+	public int getSearchEmployeeCount(String searchField,String keyword){
 		Connection conn= null;
 		PreparedStatement pstmt =null;
 		ResultSet rs= null;
@@ -838,5 +838,96 @@ public class EmployeeDao {
 			DBManager.close(conn, pstmt, rs);
 		}           
 		return count;
+	}
+	
+	public boolean deleteEmployeeAcademic(String academic_seq){
+		System.out.println("deleteEmployeeAcademic");
+		boolean result=false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from emp_academic where academic_seq = ?";
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, academic_seq);
+			if(pstmt.executeUpdate()==1)
+				result=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = false;
+		}finally{
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public boolean deleteEmployeeCareer(String career_seq){
+		boolean result=false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from emp_career where career_seq = ?";
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, career_seq);
+			if(pstmt.executeUpdate()==1)
+				result=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = false;
+		}finally{
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public boolean deleteEmployeeLicence(String licence_seq){
+		boolean result=false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		String sql = "delete from emp_licence where licence_seq = ?";
+		
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, licence_seq);
+			if(pstmt.executeUpdate()==1)
+				result=true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			result = false;
+		}finally{
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public List<Emp_Role> selectAllEmpRole(){
+		String sql ="select * from emp_role";
+		List<Emp_Role> roleList = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Emp_Role empRole=null;
+		
+		try {
+			conn=DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			roleList=new ArrayList<Emp_Role>();
+			while(rs.next()){
+				empRole=new Emp_Role();
+				empRole.setRole_id(rs.getString("role_id"));
+				empRole.setRole_name(rs.getString("role_name"));
+				roleList.add(empRole);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DBManager.close(conn, pstmt, rs);
+		}
+		
+		return roleList;
 	}
 }

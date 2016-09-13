@@ -110,20 +110,43 @@
 	var date_Reg=/^(19[2-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
 	var tabSelector=0;
 	
-	  function specDelete(id) {
-	
-		switch(tabSelector)
-	    {
-	    case 0://academic
-	  	  alert("academic : "+id);
-	    	break;
-	    case 1://career
-	    	alert("career : "+id);
-	    	break;
-	    case 2://licence
-	    	alert("licence : "+id);
-	    	break;
-	   	}
+	  function specDelete(o,seq) {
+		  if(confirm("정말로 삭제하시겠습니까?")==false)
+			  return false;
+		  var spec_name=null;
+		  switch(tabSelector)
+		  {
+		  case 0://academic
+			  spec_name="academic";
+			  break;
+		  case 1://career
+			  spec_name="career";
+			  break;
+		  case 2://licence
+			  spec_name="licence";
+			  break;
+		  }
+		
+		$.ajax({
+			url:"EmployeeServlet?command=ajax_employee_spec_delete"
+		  , data:{
+			  'spec_name':spec_name
+			, 'spec_seq':seq
+		  }
+		  , dataType:"json"
+		  , type:"post"
+		  , success:function(result){
+			  if(result.delete_result==true){
+				  o.remove();
+			  } 
+			  else{
+				  alert('삭제가 처리되지 않았습니다.');
+			  }
+		  }, 
+		  error:function(m1,m2,m3){
+			  alert(m1+" "+m2+" "+m3);
+		  }
+		});
 	  }
 	  //스펙 입력란 삭제
 	  function specFormDelete(o)
@@ -190,22 +213,22 @@
 		   
 		  //학력 Check
 		  if(academic_count>0){
-			  academic_level_selector = $("#academic_tbody #academicArea #academic_level_selector").map(function(){
+			  academic_level_selector = $("#academic_tbody #dynamic_academicArea #academic_level_selector").map(function(){
 				   return this;
 			   }).get();
-			  academic_name = $("#academic_tbody #academicArea #academic_name").map(function(){
+			  academic_name = $("#academic_tbody #dynamic_academicArea #academic_name").map(function(){
 				   return this;
 			   }).get();
-			  major_name = $("#academic_tbody #academicArea #major_name").map(function(){
+			  major_name = $("#academic_tbody #dynamic_academicArea #major_name").map(function(){
 				   return this;
 			   }).get();
-			  academic_status_selector = $("#academic_tbody #academicArea #academic_status_selector").map(function(){
+			  academic_status_selector = $("#academic_tbody #dynamic_academicArea #academic_status_selector").map(function(){
 				   return this;
 			   }).get();
-			  enter_dt = $("#academic_tbody #academicArea .enter_dt").map(function(){
+			  enter_dt = $("#academic_tbody #dynamic_academicArea .enter_dt").map(function(){
 				   return this;
 			   }).get();
-			  graduation_dt = $("#academic_tbody #academicArea .graduation_dt").map(function(){
+			  graduation_dt = $("#academic_tbody #dynamic_academicArea .graduation_dt").map(function(){
 				   return this;
 			   }).get();
 			  
@@ -233,19 +256,19 @@
 
 		  //학력 Check
 		  if(career_count>0){
-			  corp_name = $("#career_tbody #careerArea #corp_name").map(function(){
+			  corp_name = $("#career_tbody #dynamic_careerArea #corp_name").map(function(){
 				   return this;
 			   }).get();
-			  rank_name = $("#career_tbody #careerArea #rank_name").map(function(){
+			  rank_name = $("#career_tbody #dynamic_careerArea #rank_name").map(function(){
 				   return this;
 			   }).get();
-			  emp_role = $("#career_tbody #careerArea #emp_role").map(function(){
+			  emp_role = $("#career_tbody #dynamic_careerArea #emp_role").map(function(){
 				   return this;
 			   }).get();
-			  career_enter_dt = $("#career_tbody #careerArea .career_enter_dt").map(function(){
+			  career_enter_dt = $("#career_tbody #dynamic_careerArea .career_enter_dt").map(function(){
 				   return this;
 			   }).get();
-			  career_retire_dt = $("#career_tbody #careerArea .career_retire_dt").map(function(){
+			  career_retire_dt = $("#career_tbody #dynamic_careerArea .career_retire_dt").map(function(){
 				   return this;
 			   }).get();
 			  
@@ -273,19 +296,19 @@
 		   var ins_type=[];
 		  //경력 check
 		  if(licence_count>0){
-			  institution = $("#licence_tbody #licenceArea #institution").map(function(){
+			  institution = $("#licence_tbody #dynamic_licenceArea #institution").map(function(){
 				   return this;
 			   }).get();
-			  licence_name = $("#licence_tbody #licenceArea #licence_name").map(function(){
+			  licence_name = $("#licence_tbody #dynamic_licenceArea #licence_name").map(function(){
 				   return this;
 			   }).get();
-			  licence_number = $("#licence_tbody #licenceArea #licence_number").map(function(){
+			  licence_number = $("#licence_tbody #dynamic_licenceArea #licence_number").map(function(){
 				   return this;
 			   }).get();
-			  get_dt = $("#licence_tbody #licenceArea .get_dt").map(function(){
+			  get_dt = $("#licence_tbody #dynamic_licenceArea .get_dt").map(function(){
 				   return this;
 			   }).get();
-			  ins_type = $("#licence_tbody #licenceArea #ins_type").map(function(){
+			  ins_type = $("#licence_tbody #dynamic_licenceArea #ins_type").map(function(){
 				   return this;
 			   }).get();
 			  
@@ -404,7 +427,7 @@
     {
     	var index=$("#academic_tbody").children().length;
    		$("#academic_tbody").append(
-   				"<tr id='academicArea'><td>"
+   				"<tr id='dynamic_academicArea'><td>"
    					+"<select id='academic_level_selector'>"
    						+"<c:forEach var='academic_level' items='${academicLevelList}'>"
    							+"<option value='${academic_level.academic_lev_id}'>${academic_level.academic_lev_name}</option>"
@@ -442,7 +465,7 @@
     function createCareerForm(){
        	var index=$("#career_tbody").children().length;
    		$("#career_tbody").append(
-   			"<tr id='careerArea'>"														
+   			"<tr id='dynamic_careerArea'>"														
 				+"<td>"
 					+"<input type='text' id='corp_name' name='corp_name' >"
 				+"</td>"									
@@ -469,7 +492,7 @@
     {
     	var index=$("#licence_tbody").children().length;
 		$("#licence_tbody").append(
-    	"<tr id='licenceArea'>"														
+    	"<tr id='dynamic_licenceArea'>"														
 			+"<td>"
 				+"<input type='text' id='institution' name='institution' >"
 			+"</td>"									
@@ -513,10 +536,6 @@
     	}
     });
     
-    
-    createAcademicForm();
-    createCareerForm();
-    createLicenceForm();
   });
 </script>
 
@@ -593,7 +612,7 @@
 											<td>${academic.academic_status_name}</td>
 											<td>${academic.enter_dt}</td>
 											<td>${academic.graduation_dt}</td>
-											<td onclick="specDelete(${academic.academic_seq});">삭제</td>
+											<td onclick="specDelete($(this).parent(),${academic.academic_seq});">삭제</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -619,7 +638,7 @@
 											<td>${career.emp_role}</td>
 											<td>${career.career_enter_dt}</td>
 											<td>${career.career_retire_dt}</td>
-											<td onclick="specDelete(${career.career_seq});">삭제</td>
+											<td onclick="specDelete($(this).parent(),${career.career_seq});">삭제</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -645,7 +664,7 @@
 											<td>${licence.licence_number}</td>
 											<td>${licence.get_dt}</td>
 											<td>${licence.ins_type}</td>
-											<td onclick="specDelete(${licence.licence_seq});">삭제</td>
+											<td onclick="specDelete($(this).parent(),${licence.licence_seq});">삭제</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -657,7 +676,7 @@
 			<div class="bottom">
 				<div class="btnArea">
 					<input type="button" id="saveBtn" value="모두 저장">
-					<input type="button" id="cancelBtn" value="취소">
+					<input type="button" id="cancelBtn" value="취소" onclick="location.href='EmployeeServlet?command=employee_info&emp_id=${emp_id}'">
 				</div>
 			</div>
 		</div>
